@@ -1,0 +1,196 @@
+{
+  "updated_at": "2026-11-13T22:55:00+09:00",
+  "executive_summary": "글로벌 AI 시장은 구글의 에이전트 특화 경량 모델 'Gemini 4 Hydrogen'과 앤트로픽의 'Claude Fable 5.2'가 잇따라 출시되며 초저비용·고속 멀티 에이전트 실행 환경으로 빠르게 재편되고 있습니다. 이러한 AI 인프라 투자 붐에 힘입어 한국은 11월 초 반도체 수출이 전년 대비 331.2% 폭증하며 사상 첫 연간 수출 1조 달러 달성을 눈앞에 두고 있으나, 국제 유가 급등과 증시 외국인 매도세로 인한 단기 환율 변동성은 여전히 경계 요인입니다. 한편 골프 및 스포츠 테크 업계에서는 여성 스크린골프 리그 WTGL의 성공적인 출범과 함께 시뮬레이터 웨지 스핀 정밀도 논란, 그리고 200달러대 보급형 런치 모니터의 약진이 동시에 부각되며 하드웨어 가성비와 센서 트래킹 신뢰성이 핵심 경쟁력으로 떠오르고 있습니다.",
+  "articles": [
+    {
+      "id": "2026-11-13-ai-01",
+      "category": "AI Agents & LLM",
+      "importance_score": 10,
+      "published_date": "2026-11-12",
+      "source_name": "Google Blog",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+      "original_title": "Introducing Gemini 4 Hydrogen for Agentic Workflows",
+      "korean_title": "구글, 에이전트 워크플로우와 일일 코딩에 특화된 초고속 모델 'Gemini 4 Hydrogen' 공개",
+      "summary": "구글이 일상적인 소프트웨어 개발과 자율 에이전트 워크플로우 실행에 최적화된 고효율 모델 'Gemini 4 Hydrogen'을 정식 출시했습니다. 입력 100만 토큰당 1.50달러, 출력 100만 토큰당 7.50달러의 공격적인 가격 책정과 빠른 응답 속도를 앞세워 구글 검색, 제미나이 앱, 개발자 API 전반에 즉시 통합되었습니다. 또한 대규모 병렬 의사결정 요청을 처리하는 'Decisions API'도 함께 선보이며 프로덕션 환경의 멀티 에이전트 도입 장벽을 대폭 낮췄습니다.",
+      "pm_insights": "실시간 음성·비전 피드백이 필수적인 AI 골프 코칭 에이전트에 100만 입력 토큰당 1.50달러 수준의 고속 모델을 적용하면 시뮬레이터 라운드 중 샷 분석 지연을 1초 이내로 단축하면서도 클라우드 API 원가를 획기적으로 절감할 수 있습니다. 자사 런치 모니터 앱의 스윙 진단 파이프라인에 Gemini 4 Hydrogen 기반의 경량 에이전트 아키텍처 도입을 위한 기술 검증(PoC)을 즉시 추진할 만합니다.",
+      "tags": [
+        "Google",
+        "Gemini 4 Hydrogen",
+        "AI Agents",
+        "LLM Pricing",
+        "Decisions API"
+      ]
+    },
+    {
+      "id": "2026-11-13-macro-01",
+      "category": "US-Korea Macro Economy",
+      "importance_score": 9,
+      "published_date": "2026-11-11",
+      "source_name": "The Korea Herald",
+      "source_url": "https://www.koreaherald.com/article/10360029",
+      "original_title": "Exports more than double in 1st 10 days of Nov.",
+      "korean_title": "11월 초순 한국 수출 111.9% 폭증하며 335억 달러 돌파, 반도체가 절반 견인",
+      "summary": "관세청 발표에 따르면 11월 1일부터 10일까지 한국의 수출액은 전년 동기 대비 111.9% 급증한 334억 6,000만 달러를 기록해 역대 11월 초순 기준 최고치를 경신했습니다. 특히 글로벌 AI 인프라 수요 폭증에 힘입어 반도체 수출이 331.2% 늘어난 166억 달러로 전체 수출의 49.7%를 차지했으며, 대미 수출(67억 9,000만 달러, +163.6%)과 대중 수출(91억 6,000만 달러, +148.0%) 모두 큰 폭으로 뛰었습니다. 이로써 올해 누적 수출액은 9,636억 달러에 달해 사상 최초 연간 수출 1조 달러 달성이 유력해졌습니다.",
+      "pm_insights": "AI 데이터센터발 메모리·반도체 초호황이 이어지면서 고사양 비전 센서 및 온디바이스 AI 칩셋 부품의 공급 리드타임과 단가 상승 압력이 내년 상반기까지 지속될 가능성이 높습니다. 차세대 카메라 기반 런치 모니터 및 시뮬레이터 하드웨어 BOM(자재명세서) 원가 산정 시 메모리·프로세서 재고를 선제 확보하고, 대미 무역 흑자 확대에 따른 미국발 관세 리스크 시나리오를 북미 수출 가격 정책에 반영해야 합니다.",
+      "tags": [
+        "한국 수출",
+        "반도체 슈퍼사이클",
+        "무역수지",
+        "대미 수출",
+        "관세청"
+      ]
+    },
+    {
+      "id": "2026-11-13-ai-02",
+      "category": "AI Agents & LLM",
+      "importance_score": 9,
+      "published_date": "2026-11-09",
+      "source_name": "Anthropic",
+      "source_url": "https://www.anthropic.com/news/claude-fable-5-2",
+      "original_title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+      "korean_title": "앤트로픽, 토큰 생성 속도 30% 높인 차세대 추론·코딩 모델 'Claude Fable 5.2' 출시",
+      "summary": "앤트로픽이 고난도 기술 추론과 복잡한 코딩 및 멀티 에이전트 오케스트레이션을 겨냥한 'Claude Fable 5.2'와 보안·바이오 특화 검증 모델 'Claude Mythos 5.2'를 출시했습니다. 이번 모델은 이전 세대 대비 토큰 생성 속도를 30% 향상시키면서도 API 요금을 입력 100만 토큰당 8달러, 출력 100만 토큰당 40달러로 낮춰 주요 인공지능 벤치마크 상위권을 석권했습니다. 엔터프라이즈 환경에서 장시간 자율적으로 동작하는 백그라운드 에이전트 작업의 정확도와 복구력을 크게 끌어올린 것이 특징입니다.",
+      "pm_insights": "복잡한 물리 엔진 코드 리팩토링과 구질 탄도 알고리즘 고도화 작업에 Claude Fable 5.2를 사내 개발팀의 주력 코딩 에이전트로 배치해 R&D 생산성을 극대화할 수 있습니다. 특히 멀티 에이전트 오케스트레이션 성능이 대폭 개선된 만큼, 매장 장비 원격 관제 및 자동 장애 진단 에이전트 구축에 활용하면 운영 유지보수 비용을 크게 줄일 수 있습니다.",
+      "tags": [
+        "Anthropic",
+        "Claude Fable 5.2",
+        "Coding Agent",
+        "Multi-Agent",
+        "LLM Benchmark"
+      ]
+    },
+    {
+      "id": "2026-11-13-golf-01",
+      "category": "Golf & Sports Tech",
+      "importance_score": 9,
+      "published_date": "2026-11-13",
+      "source_name": "Golf Business News",
+      "source_url": "https://www.golfbusinessnews.com/news/products/shot-scope-lm1-recognized-as-best-launch-monitor-under-500-in-mygolfspys-2026-official-testing/",
+      "original_title": "Shot Scope LM1 recognized as Best Launch Monitor Under $500 in MyGolfSpy's 2026 Official Testing",
+      "korean_title": "샷스코프 LM1, 마이골프스파이 2026년 공식 테스트에서 '500달러 미만 최고 런치 모니터' 선정",
+      "summary": "골프 테크 기업 샷스코프(Shot Scope)의 휴대용 도플러 레이더 런치 모니터 'LM1'이 마이골프스파이(MyGolfSpy)의 2026년 공식 런치 모니터 테스트에서 500달러 미만 부문 최고 제품으로 선정되었습니다. 총 17개 모델을 대상으로 500회 이상의 샷을 비교 검증한 이번 평가에서, 199.99달러 가격의 LM1은 별도 구독료 없이 캐리 거리, 토탈 거리, 볼 스피드, 클럽헤드 스피드, 정타율(스매시 팩터) 등 5대 핵심 데이터를 높은 일관성으로 제공해 호평을 받았습니다.",
+      "pm_insights": "200달러 미만의 무구독(No-subscription) 보급형 런치 모니터가 데이터 정확도까지 확보하면서 입문용 휴대용 하드웨어 시장의 가격 파괴가 가속화되고 있습니다. 중고가 런치 모니터 및 가정용 시뮬레이터 라인업은 단순 거리·스피드 측정을 넘어 스핀축 정밀 분석, 임팩트 비전 리플레이, 코칭 AI 연동 등 확실한 소프트웨어 부가가치로 유료 구독 정당성을 증명해야 합니다.",
+      "tags": [
+        "Shot Scope LM1",
+        "MyGolfSpy",
+        "런치 모니터",
+        "도플러 레이더",
+        "무구독 모델"
+      ]
+    },
+    {
+      "id": "2026-11-13-macro-02",
+      "category": "US-Korea Macro Economy",
+      "importance_score": 8,
+      "published_date": "2026-11-13",
+      "source_name": "The Korea Times",
+      "source_url": "https://www.koreatimes.co.kr/www/biz/2026/11/126_389232.html",
+      "original_title": "Korean economy continues to 'grow at solid pace': finance ministry",
+      "korean_title": "기획재정부, 11월 그린북서 한국 경제 진단 '회복세'에서 '견조한 성장세'로 1년 만에 상향",
+      "summary": "기획재정부가 11월 13일 발간한 '최근 경제동향(그린북)'에서 한국 경제에 대한 공식 진단을 기존 '회복 흐름'에서 1년 만에 '견조한 성장 지속'으로 한 단계 상향 조정했습니다. 3분기 실질 GDP가 전분기 대비 1.0% 성장하고 설비투자가 4.1% 증가한 가운데, 10월 수출이 반도체와 컴퓨터 호조에 힘입어 전년 동월 대비 93.7% 급증한 1,152억 8,000만 달러를 기록한 점이 주효했습니다. 다만 3분기 민간소비가 전분기 대비 0.2% 감소하고 10월 소비자심리지수(CCSI)가 105.4로 소폭 하락하는 등 내수 체감 경기는 수출과 온도차를 보였습니다.",
+      "pm_insights": "수출 주도의 거시 성장에도 불구하고 국내 민간소비(-0.2%)와 소비심리가 다소 둔화된 양극화 국면에서는 국내 오프라인 스크린골프 매장주들의 신규 장비 교체 투자(CAPEX)가 보수적으로 흐를 수 있습니다. 국내 영업에서는 초기 도입 비용을 낮춘 렌탈·구독형 금융 패키지를 강화하고, 성장을 주도하는 북미·아시아 수출 시장으로 매출 비중을 다변화하는 전략이 유효합니다.",
+      "tags": [
+        "기획재정부",
+        "그린북",
+        "한국 GDP",
+        "설비투자",
+        "내수 경기"
+      ]
+    },
+    {
+      "id": "2026-11-13-golf-02",
+      "category": "Golf & Sports Tech",
+      "importance_score": 8,
+      "published_date": "2026-11-09",
+      "source_name": "Golf Digest",
+      "source_url": "https://www.golfdigest.com/story/michelle-wie-befuddled-by-backspin-on-tgl-launch-monitor-that-wasnt-a-spinny-shot",
+      "original_title": "Michelle Wie befuddled by backspin on TGL launch monitor: 'That wasn't a spinny shot'",
+      "korean_title": "미셸 위 웨스트, WTGL 개막전서 시뮬레이터 웨지 백스핀 판정에 의문 제기… 정밀도 논쟁 점화",
+      "summary": "여자 테크 골프 리그 WTGL 개막전에 로스앤젤레스 골프 클럽 소속으로 출전한 미셸 위 웨스트가 98야드 웨지 샷 직후 시뮬레이터 화면에 과도한 백스핀이 걸리며 공이 그린 아래로 굴러 내려가자 '스핀이 많이 걸린 샷이 아니었다'며 당혹감을 드러냈습니다. 소파이(SoFi) 센터에 구축된 풀스윙(Full Swing) 런치 모니터와 가상 그린 물리 엔진이 투어 프로의 숏게임 스핀량과 경사면 반발력을 얼마나 실제와 같게 구현하는지를 두고 생중계 시청자와 업계 전문가들 사이에서 뜨거운 논쟁이 일었습니다.",
+      "pm_insights": "상급자와 프로 골퍼들이 실내 시뮬레이터를 평가할 때 가장 민감하게 반응하는 영역이 100야드 이내 웨지 샷의 백스핀 측정값과 그린 바운스 물리 엔진의 일치성입니다. 자사 시뮬레이터의 초고속 카메라 실측 스핀 데이터와 인게임 그린 프린지·경사면 마찰 계수 알고리즘을 정밀 보정하고, 이를 마케팅 포인트로 삼아 경쟁사 대비 '숏게임 리얼리즘' 우위를 적극 소구해야 합니다.",
+      "tags": [
+        "WTGL",
+        "Michelle Wie West",
+        "Full Swing",
+        "웨지 백스핀",
+        "시뮬레이터 물리엔진"
+      ]
+    },
+    {
+      "id": "2026-11-13-ai-03",
+      "category": "AI Agents & LLM",
+      "importance_score": 8,
+      "published_date": "2026-11-12",
+      "source_name": "Al Jazeera",
+      "source_url": "https://www.aljazeera.com/news/2026/11/12/us-nonprofits-sue-tech-giants-to-halt-ai-development",
+      "original_title": "US nonprofits sue tech giants to halt AI development",
+      "korean_title": "미국 시민단체 연합, 오픈AI·구글·앤트로픽 등 빅테크 5개사에 차세대 프론티어 AI 개발 중단 가처분 소송 제기",
+      "summary": "퍼블릭 시티즌(Public Citizen)과 안전한 AI를 위한 연합 등 미국 내 4개 비영리 단체가 11월 12일 샌프란시스코 고등법원에 오픈AI, 앤트로픽, 구글, 메타, 스페이스X를 상대로 차세대 프론티어 AI 모델의 학습 및 배포 중단을 요구하는 민사 소송을 제기했습니다. 원고 측은 빅테크 기업들이 자율 에이전트로 인한 사이버 공격 및 통제력 상실 위험을 인지하고도 안전 장치가 입증되지 않은 모델을 무리하게 출시해 캘리포니아주의 불공정경쟁법 및 공공 불법행위 법리를 위반했다고 주장했습니다.",
+      "pm_insights": "자율형 AI 에이전트에 대한 미국 내 법적·규제적 압박이 거세지면서 빅테크의 프론티어 모델 API 정책이나 안전 필터링 기준이 예고 없이 강화될 위험이 있습니다. 제품 내 AI 기능을 특정 단일 벤더의 클라우드 모델에만 의존하지 않도록 멀티 모델 라우팅 구조를 설계하고, 사용자 스윙 영상 및 생체 데이터의 온디바이스 처리 비중을 높여 규제 리스크를 회피해야 합니다.",
+      "tags": [
+        "AI 규제",
+        "Public Citizen",
+        "프론티어 AI 소송",
+        "AI 안전성",
+        "빅테크"
+      ]
+    },
+    {
+      "id": "2026-11-13-golf-03",
+      "category": "Golf & Sports Tech",
+      "importance_score": 7,
+      "published_date": "2026-11-08",
+      "source_name": "Front Office Sports",
+      "source_url": "https://frontofficesports.com/wtgl-has-surreal-debut-as-newest-womens-sports-league",
+      "original_title": "WTGL Has 'Surreal' Debut As Newest Women's Sports League",
+      "korean_title": "여성 스크린골프 테크 리그 'WTGL' 화려한 개막… 1,500석 매진 속 LA 골프 클럽 첫 승",
+      "summary": "TMRW 스포츠와 LPGA가 합작한 여성 팀 골프 리그 'WTGL'이 플로리다주 팜비치가든스 소파이(SoFi) 센터에서 1,500석 전석 매진을 기록하며 성공적인 첫 시즌 개막전을 치렀습니다. 총상금 1,100만 달러 규모로 5개 팀 25명의 스타 선수가 참가하는 이 리그는 15홀 팀 매치 포맷으로 진행되었으며, 개막전에서는 미셸 위 웨스트·앨리슨 리·가비 로페즈가 활약한 로스앤젤레스 골프 클럽이 리디아 고·로즈 장이 속한 뉴욕 골프 클럽을 3대 1로 꺾었습니다.",
+      "pm_insights": "WTGL의 흥행은 실내 골프 시뮬레이터가 단순 개인 연습 도구를 넘어 여성 및 젊은 층이 열광하는 팀 기반 스포테인먼트(Sportainment) 관람·참여 콘텐츠로 확장되었음을 보여줍니다. 매장 및 홈 시뮬레이터 소프트웨어에 15홀 고속 팀 매치, 샷클락 도입 등 WTGL 스타일의 박진감 넘치는 소셜 게임 모드를 발 빠르게 추가해 여성 골퍼와 신규 유입층의 체류 시간을 늘려야 합니다.",
+      "tags": [
+        "WTGL",
+        "LPGA",
+        "TMRW Sports",
+        "스크린골프 리그",
+        "스포테인먼트"
+      ]
+    },
+    {
+      "id": "2026-11-13-macro-03",
+      "category": "US-Korea Macro Economy",
+      "importance_score": 7,
+      "published_date": "2026-11-13",
+      "source_name": "The Korea Times",
+      "source_url": "https://www.koreatimes.co.kr/economy/20261113/korean-won-weakens-against-us-dollar-as-oil-prices-surge",
+      "original_title": "Korean won weakens against US dollar as oil prices surge",
+      "korean_title": "국제 유가 급등과 외국인 주식 순매도에 원/달러 환율 1,336.7원으로 약세 마감",
+      "summary": "11월 13일 서울 외환시장에서 원/달러 환율은 전 거래일 대비 6.0원 오른(원화 가치 하락) 1,336.7원에 주간 거래를 마감했습니다. 브렌트유 선물 가격이 배럴당 95.82달러로 3.3% 급등하며 인플레이션 우려를 자극한 데다, 유가증권시장에서 외국인 투자자들이 5,500억 원(약 4억 1,100만 달러) 규모의 주식을 순매도하면서 코스피 지수도 0.98% 하락한 5,290.53에 장을 마쳤습니다.",
+      "pm_insights": "대규모 무역수지 흑자 기조 속에서도 국제 유가가 배럴당 95달러를 돌파하며 에너지발 인플레이션과 환율 변동성을 재점화하고 있습니다. 해외 물류비 상승과 달러 결제 클라우드·부품 비용의 변동성에 대비해 하드웨어 운송 계약을 장기 고정 단가로 전환하고, 북미 현지 법인의 달러 매출을 활용한 자연 헤지(Natural Hedge) 비중을 점검해야 합니다.",
+      "tags": [
+        "원달러 환율",
+        "국제 유가",
+        "코스피",
+        "외국인 순매도",
+        "인플레이션"
+      ]
+    },
+    {
+      "id": "2026-11-13-ai-04",
+      "category": "AI Agents & LLM",
+      "importance_score": 7,
+      "published_date": "2026-11-10",
+      "source_name": "Rediff Money",
+      "source_url": "https://www.rediff.com/money/report/cognizant-launches-new-ai-capability-group-with-25000-professionals/20261110.htm",
+      "original_title": "Cognizant Launches New AI Capability Group With 25,000 Professionals",
+      "korean_title": "코그니전트, 앤트로픽 클로드 전담 인력 2만 5,000명 규모 '프론티어 AI 조직' 신설",
+      "summary": "글로벌 IT 서비스 기업 코그니전트(Cognizant)가 엔터프라이즈 고객의 프로덕션 AI 에이전트 도입을 가속화하기 위해 2만 5,000명 이상의 전문 인력으로 구성된 '클로드 프론티어 역량 그룹(Claude Frontier Capability Group)'을 공식 출범했습니다. 코그니전트는 클로드, 오픈AI, 제미나이 등 빅테크 모델별로 중복되지 않는 전담 딜리버리 조직을 분리 구축해 기업들의 레거시 시스템 현대화와 자율 에이전트 구축 수요에 대응하고 있습니다.",
+      "pm_insights": "글로벌 SI 업계가 단일 범용 AI 조직에서 모델별 특화 에이전트 구축 전담 조직으로 재편되고 있는 것은 엔터프라이즈 현장에서 AI가 실험 단계를 지나 본격적인 시스템 통합(SI) 단계에 진입했음을 뜻합니다. 골프장 ERP, 예약 시스템, 시뮬레이터 매장 관리 솔루션을 공급할 때도 외부 파트너사들이 즉시 연동할 수 있도록 MCP(Model Context Protocol) 기반의 표준 에이전트 API 인터페이스를 제공해야 B2B 확장성을 선점할 수 있습니다.",
+      "tags": [
+        "Cognizant",
+        "Anthropic Claude",
+        "엔터프라이즈 AI",
+        "SI 조직개편",
+        "AI 에이전트 도입"
+      ]
+    }
+  ]
+}

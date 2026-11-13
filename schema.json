@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Daily Market Briefing",
+  "description": "data/news.json 규격. scripts/validate_and_deploy.py 가 이 파일을 읽어 검증한다.",
+  "type": "object",
+  "required": ["updated_at", "executive_summary", "articles"],
+  "additionalProperties": false,
+  "properties": {
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "갱신 시각, ISO 8601 + 시간대. 예: 2026-11-13T07:00:00+09:00"
+    },
+    "executive_summary": {
+      "type": "string",
+      "minLength": 50,
+      "description": "오늘의 핵심 흐름을 3~5문장으로 정리한 한국어 요약"
+    },
+    "articles": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "category",
+          "importance_score",
+          "published_date",
+          "source_name",
+          "source_url",
+          "original_title",
+          "korean_title",
+          "summary",
+          "pm_insights",
+          "tags"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "기사 고유 ID, 파일 내 중복 금지. 예: 2026-11-13-golf-01"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Golf & Sports Tech",
+              "AI Agents & LLM",
+              "US-Korea Macro Economy"
+            ]
+          },
+          "importance_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "PM 관점 중요도 (10이 가장 중요)"
+          },
+          "published_date": {
+            "type": "string",
+            "format": "date",
+            "description": "원문 발행일 YYYY-MM-DD"
+          },
+          "source_name": { "type": "string", "minLength": 1 },
+          "source_url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://",
+            "description": "실제 접속 가능한 원문 URL"
+          },
+          "original_title": { "type": "string", "minLength": 1 },
+          "korean_title": { "type": "string", "minLength": 1 },
+          "summary": {
+            "type": "string",
+            "minLength": 50,
+            "description": "한국어 요약 2~4문장"
+          },
+          "pm_insights": {
+            "type": "string",
+            "minLength": 30,
+            "description": "제품/사업 관점 시사점 (한국어)"
+          },
+          "tags": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 6,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}

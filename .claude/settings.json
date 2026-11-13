@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./data/*.json)",
+      "Read(./index.html)",
+      "Read(./app.js)",
+      "Read(./**/*.css)"
+    ]
+  }
+}
