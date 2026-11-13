@@ -51,39 +51,35 @@
 - 스키마에 없는 필드는 추가하지 않는다. 파일은 UTF-8(BOM 없음), 유효한 JSON이어야 한다.
 - `articles`는 `importance_score` 내림차순으로 정렬한다.
 
-## 3. UI 스펙 — Financial Times + Morning Brew 스타일
+## 3. UI 스펙 — 디자인은 Antigravity가 주도
 ### 3.1 기술 조건
 - 정적 사이트: `index.html` + `app.js`. 빌드 단계 없음, GitHub Pages(main 브랜치 루트)에서 그대로 동작.
 - Tailwind CSS는 CDN(`https://cdn.tailwindcss.com`)으로 불러오고 `tailwind.config`를 인라인으로 확장한다.
 - 데이터는 `fetch('./data/news.json')` 상대 경로로 읽는다(절대 경로 금지 — Pages 하위 경로에서 깨진다).
 - 외부 JS 프레임워크 없이 바닐라 JS. 기사 텍스트는 `textContent`로 넣어 HTML 주입을 막는다.
 
-### 3.2 디자인 토큰
-| 항목 | 값 |
-|---|---|
-| 배경 | FT 살몬 `#FFF1E5`, 카드 `#FFF7EF`, 구분선 `#E6D9CE` |
-| 본문 색 | `#33302E`, 보조 `#66605C` |
-| 강조 | FT 클라렛 `#990F3D`, 링크 틸 `#0D7680` |
-| 다크 모드 | 배경 `#1A1817`, 카드 `#262321`, 본문 `#F2E9E1` (`prefers-color-scheme` 추종 + 토글) |
-| 제목 서체 | 세리프: `Playfair Display`, 한글 `Noto Serif KR` |
-| 본문 서체 | 산세리프: `Inter`, 한글 `Pretendard` 또는 `Noto Sans KR` |
-| 카테고리 색 | Golf `#0F7B4F` / AI `#3B5BDB` / Macro `#B45309` |
+### 3.2 디자인 방향
+- 색·서체·레이아웃·모션은 정해 두지 않는다. Antigravity가 최신 웹 디자인 트렌드를 웹 검색으로 조사한 뒤, 이 제품에 가장 어울리는 방향 하나를 골라 일관되게 적용한다.
+- 제품 성격: 골프 테크 PM 한 사람이 매일 아침 5분 안에 읽는 개인 전문 브리핑. 신뢰감 있고 읽기 편해야 하며, 흔한 템플릿처럼 보이면 안 된다.
+- 한국어 본문이 주가 되므로 한글 가독성(서체, 행간, 줄 길이)을 최우선으로 한다.
+- 라이트·다크 모드를 모두 제공한다(`prefers-color-scheme` 추종 + 토글).
+- 세 카테고리는 색이나 형태로 한눈에 구분되어야 한다.
+- 고른 방향과 근거를 `index.html` 맨 위 주석에 3줄 이내로 적는다.
 
-### 3.3 화면 구성 (위에서 아래)
-1. **마스트헤드**: 신문 제호 느낌의 세리프 로고(가칭 "The Daily Brief"), 오늘 날짜(한국어 요일 포함), `updated_at` 기준 "마지막 갱신" 표시, 다크 모드 토글. 아래에 가는 이중 괘선.
-2. **Executive Summary**: Morning Brew처럼 친근한 인사 한 줄 + `executive_summary`를 큰 세리프 본문으로. 왼쪽에 클라렛 세로 막대.
-3. **지표 줄**: 총 기사 수, 카테고리별 기사 수, 평균 중요도를 작은 숫자 타일로.
-4. **필터 바**(스크롤 시 상단 고정): 전체/3개 카테고리 탭, 정렬(중요도순·최신순), 제목·요약·태그 대상 검색창.
-5. **톱 스토리**: `importance_score`가 가장 높은 기사 1개를 전폭 대형 카드로.
-6. **기사 그리드**: 데스크톱 3열, 태블릿 2열, 모바일 1열.
-7. **푸터**: 출처 고지("요약은 AI 생성, 원문 확인 필요"), 생성 시각.
+### 3.3 반드시 들어가야 하는 내용 (배치와 표현은 자유)
+- 제호, 오늘 날짜(한국어 요일 포함), `updated_at` 기준 마지막 갱신 시각, 다크 모드 토글
+- `executive_summary`
+- 총 기사 수, 카테고리별 기사 수, 평균 중요도
+- 카테고리 필터, 정렬(중요도순·최신순), 제목·요약·태그 검색
+- `importance_score`가 가장 높은 기사는 눈에 띄게
+- 출처 고지("요약은 AI 생성, 원문 확인 필요")
 
-### 3.4 기사 카드
-- 상단: 카테고리 색 라벨(대문자 소형), 중요도 배지(예: `8/10`, 9 이상은 클라렛으로 강조)
-- `korean_title`(세리프, 굵게) → `original_title`(작은 회색 이탤릭)
-- `summary` 본문
-- **PM Insight** 박스: 옅은 배경 + 왼쪽 강조선, `pm_insights` 표시
-- 하단: `source_name` · `published_date`, 태그 칩(클릭 시 해당 태그로 검색), "원문 보기 →" 링크(`target="_blank" rel="noopener noreferrer"`)
+### 3.4 기사마다 보여야 하는 정보
+- `category`, `importance_score`
+- `korean_title`, `original_title`
+- `summary`
+- `pm_insights` — 요약과 구분되어 보이게
+- `source_name`, `published_date`, `tags`(클릭 시 해당 태그로 검색), 원문 링크(`target="_blank" rel="noopener noreferrer"`)
 
 ### 3.5 동작·품질 조건
 - 로딩 중 스켈레톤, `fetch` 실패 시 안내 문구, 필터 결과가 없을 때 빈 상태 문구.

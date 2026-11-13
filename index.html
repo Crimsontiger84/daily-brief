@@ -1,18 +1,20 @@
 <!DOCTYPE html>
+<!-- [디자인 방향] Swiss Architectural Bento & Quiet Luxury Memo: 스위스 타이포그래피 그리드와 비대칭 벤토 모듈을 결합한 모닝 인텔리전스 브리핑 UI.
+     [선정 근거] 골프 테크 PM이 매일 아침 5분 안에 3대 분야(●Golf·◆AI·■Macro) 핵심 지표와 시사점을 직관적으로 스캔하도록 한글 가독성(Pretendard)과 시각 위계를 극대화함. -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Daily Brief</title>
-  <meta name="description" content="Golf &amp; Sports Tech, AI Agents &amp; LLM, US-Korea Macro Economy 일일 브리핑" />
+  <title>THE PM BRIEF — Daily Executive Intelligence</title>
+  <meta name="description" content="Golf &amp; Sports Tech, AI Agents &amp; LLM, US-Korea Macro Economy 일일 PM 인텔리전스 브리핑" />
 
-  <!-- Google Fonts & Pretendard (SPEC.md 3.2) -->
+  <!-- Fonts: Pretendard (한글 본문/UI), Noto Serif KR & Newsreader (에디토리얼 헤드라인), JetBrains Mono (지표/테이블 숫자) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
 
-  <!-- Tailwind CSS CDN & Inline Config (SPEC.md 3.1 & 3.2) -->
+  <!-- Tailwind CSS CDN & Inline Config (SPEC.md 3.1) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -20,30 +22,56 @@
       theme: {
         extend: {
           colors: {
-            ft: {
-              bg: '#FFF1E5',
-              card: '#FFF7EF',
-              divider: '#E6D9CE',
-              text: '#33302E',
-              muted: '#66605C',
-              claret: '#990F3D',
-              teal: '#0D7680',
-              darkBg: '#1A1817',
-              darkCard: '#262321',
-              darkDivider: '#3A3532',
-              darkText: '#F2E9E1',
-              darkMuted: '#B8AFA6',
-              darkTeal: '#2BB3C0'
+            paper: {
+              bg: '#F6F5F0',
+              surface: '#FFFFFF',
+              subtle: '#EFECE6',
+              dossier: '#F4F1EA',
+              border: '#D8D4CA',
+              borderStrong: '#18181B',
+              ink: '#141517',
+              body: '#2C2E33',
+              muted: '#52565E'
             },
-            category: {
-              golf: '#0F7B4F',
-              ai: '#3B5BDB',
-              macro: '#B45309'
+            carbon: {
+              bg: '#0C0E12',
+              surface: '#14171E',
+              subtle: '#1B1F28',
+              dossier: '#181C26',
+              border: '#262B36',
+              borderStrong: '#E4E2DD',
+              ink: '#F1EFEA',
+              body: '#D0CEC7',
+              muted: '#9CA3AF'
+            },
+            signal: {
+              DEFAULT: '#B92B19',
+              light: '#FDECE9',
+              dark: '#F87171',
+              darkBg: '#2C1618'
+            },
+            cat: {
+              golf: '#0A5C36',
+              golfBg: '#E6F4ED',
+              golfBorder: '#86EFAC',
+              golfDark: '#4ADE80',
+              golfDarkBg: '#0F291E',
+              ai: '#1E3FAE',
+              aiBg: '#E8EDFF',
+              aiBorder: '#93C5FD',
+              aiDark: '#93C5FD',
+              aiDarkBg: '#152042',
+              macro: '#8A3E00',
+              macroBg: '#FEF0E1',
+              macroBorder: '#FCD34D',
+              macroDark: '#FCD34D',
+              macroDarkBg: '#2E1F0F'
             }
           },
           fontFamily: {
-            serif: ['"Playfair Display"', '"Noto Serif KR"', 'Georgia', 'serif'],
-            sans: ['"Inter"', '"Pretendard"', '"Noto Sans KR"', 'sans-serif']
+            sans: ['"Pretendard"', '"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            serif: ['"Newsreader"', '"Noto Serif KR"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
           }
         }
       }
@@ -51,24 +79,47 @@
   </script>
 
   <style>
-    /* 가는 이중 괘선 (SPEC.md 3.3.1) */
-    .double-rule {
-      border-top: 1px solid #33302E;
-      border-bottom: 1px solid #33302E;
-      height: 4px;
+    /* 한글 가독성 최적화 및 수치 정렬 (SPEC.md 3.2) */
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
     }
-    .dark .double-rule {
-      border-top-color: #F2E9E1;
-      border-bottom-color: #F2E9E1;
+    body {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      font-feature-settings: "calt" 1, "kern" 1;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
     }
 
-    /* 키보드 포커스 표시 (SPEC.md 3.5) */
+    /* 스위스 아키텍처 이중 헤비 룰 */
+    .swiss-rule {
+      border-top: 2px solid #141517;
+      border-bottom: 1px solid #D8D4CA;
+      height: 5px;
+    }
+    .dark .swiss-rule {
+      border-top-color: #F1EFEA;
+      border-bottom-color: #262B36;
+    }
+
+    /* 카테고리 상단 액센트 바 */
+    .cat-bar-golf { border-top: 3px solid #0A5C36; }
+    .dark .cat-bar-golf { border-top-color: #4ADE80; }
+    .cat-bar-ai { border-top: 3px solid #1E3FAE; }
+    .dark .cat-bar-ai { border-top-color: #93C5FD; }
+    .cat-bar-macro { border-top: 3px solid #8A3E00; }
+    .dark .cat-bar-macro { border-top-color: #FCD34D; }
+
+    /* 키보드 포커스 표시 — WCAG AA 명도 대비 준수 (SPEC.md 3.5) */
     :focus-visible {
-      outline: 2px solid #990F3D;
+      outline: 2px solid #B92B19;
       outline-offset: 2px;
     }
     .dark :focus-visible {
-      outline-color: #F2E9E1;
+      outline: 2px solid #FCD34D;
+      outline-offset: 2px;
     }
 
     /* 인쇄 스타일: 필터 바 숨김 및 1열 배치 (SPEC.md 3.5) */
@@ -78,116 +129,230 @@
         color: #000000 !important;
       }
       #filter-bar,
-      #theme-toggle {
+      #theme-toggle,
+      #back-to-top {
         display: none !important;
       }
-      #articles-grid {
+      #articles-grid,
+      #bento-top-deck,
+      #top-story-grid {
         grid-template-columns: 1fr !important;
       }
-      article {
+      article,
+      section {
         break-inside: avoid;
         page-break-inside: avoid;
+        box-shadow: none !important;
       }
     }
   </style>
 </head>
-<body class="min-h-screen bg-ft-bg text-ft-text dark:bg-ft-darkBg dark:text-ft-darkText font-sans antialiased transition-colors duration-150 overflow-x-hidden">
+<body class="min-h-screen bg-paper-bg text-paper-ink dark:bg-carbon-bg dark:text-carbon-ink font-sans antialiased transition-colors duration-150 overflow-x-hidden">
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+  <!-- 최상단 스위스 인덱스 스트립 -->
+  <div class="border-b border-paper-border dark:border-carbon-border bg-paper-subtle/70 dark:bg-carbon-surface/80">
+    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono tracking-wider text-paper-muted dark:text-carbon-muted">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="inline-block w-2 h-2 rounded-full bg-signal dark:bg-signal-dark shrink-0" aria-hidden="true"></span>
+        <span class="font-semibold text-paper-ink dark:text-carbon-ink truncate">PM DAILY INTELLIGENCE BRIEF</span>
+        <span class="hidden md:inline text-paper-border dark:text-carbon-border">|</span>
+        <span class="hidden md:inline truncate">GOLF &amp; SPORTS TECH · AI AGENTS · US-KR MACRO</span>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="hidden sm:inline tabular-nums">EST. READ: 5 MIN</span>
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="다크 모드 전환"
+          aria-pressed="false"
+          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border border-paper-border dark:border-carbon-border bg-paper-surface dark:bg-carbon-subtle text-xs font-sans font-semibold text-paper-ink dark:text-carbon-ink hover:border-paper-borderStrong dark:hover:border-carbon-borderStrong transition-colors"
+        >
+          <span id="theme-icon" aria-hidden="true" class="text-xs">☾</span>
+          <span id="theme-label">다크 모드</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
-    <!-- 1. 마스트헤드 (SPEC.md 3.3.1) -->
+  <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8">
+
+    <!-- 1. 마스트헤드 (SPEC.md 3.3: 제호, 오늘 날짜(한국어 요일), updated_at 기준 마지막 갱신 시각) -->
     <header class="mb-6">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4">
-        <div class="space-y-1 text-xs sm:text-sm text-ft-muted dark:text-ft-darkMuted">
-          <p id="today-date" class="font-semibold text-ft-text dark:text-ft-darkText">날짜 확인 중...</p>
-          <p id="last-updated">마지막 갱신: -</p>
-        </div>
-
-        <div class="sm:text-center">
-          <h1 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-ft-text dark:text-ft-darkText">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-5">
+        <div class="min-w-0">
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
+            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-widest bg-paper-ink text-paper-surface dark:bg-carbon-ink dark:text-carbon-bg">
+              MORNING DESK EDITION
+            </span>
+            <span class="text-xs font-medium text-paper-muted dark:text-carbon-muted">
+              골프 테크 PM을 위한 모닝 전략 브리핑
+            </span>
+          </div>
+          <h1 class="font-serif text-3xl sm:text-5xl lg:text-[52px] font-bold tracking-tight text-paper-ink dark:text-carbon-ink leading-none">
             The Daily Brief
           </h1>
         </div>
 
-        <div class="flex sm:justify-end">
-          <button
-            id="theme-toggle"
-            type="button"
-            aria-label="다크 모드 전환"
-            aria-pressed="false"
-            class="inline-flex items-center gap-2 px-3 py-1.5 rounded border border-ft-divider dark:border-ft-darkDivider bg-ft-card dark:bg-ft-darkCard text-xs sm:text-sm font-medium text-ft-text dark:text-ft-darkText hover:border-ft-claret transition-colors"
-          >
-            <span id="theme-icon" aria-hidden="true">☾</span>
-            <span id="theme-label">다크 모드</span>
-          </button>
+        <!-- 날짜 및 갱신 시각 텔레메트리 블록 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-paper-border dark:bg-carbon-border border border-paper-border dark:border-carbon-border sm:min-w-[360px]">
+          <div class="bg-paper-surface dark:bg-carbon-surface px-3.5 py-2.5">
+            <p class="text-[10px] font-mono uppercase tracking-widest text-paper-muted dark:text-carbon-muted">TODAY (KST)</p>
+            <p id="today-date" class="text-xs sm:text-sm font-bold text-paper-ink dark:text-carbon-ink mt-0.5 tabular-nums">날짜 확인 중...</p>
+          </div>
+          <div class="bg-paper-surface dark:bg-carbon-surface px-3.5 py-2.5">
+            <p class="text-[10px] font-mono uppercase tracking-widest text-paper-muted dark:text-carbon-muted">LAST UPDATED</p>
+            <p id="last-updated" class="text-xs sm:text-sm font-semibold text-paper-body dark:text-carbon-body mt-0.5 tabular-nums">마지막 갱신: -</p>
+          </div>
         </div>
       </div>
 
-      <!-- 가는 이중 괘선 -->
-      <div class="double-rule w-full" role="separator"></div>
+      <div class="swiss-rule w-full" role="separator"></div>
     </header>
 
-    <!-- 2. Executive Summary (SPEC.md 3.3.2) -->
-    <section aria-label="Executive Summary" class="mb-6">
-      <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded-lg p-5 sm:p-6">
-        <div class="border-l-4 border-ft-claret pl-4 sm:pl-5">
-          <p class="text-xs sm:text-sm font-semibold text-ft-claret dark:text-[#F472B6] mb-2">
-            ☕ 좋은 아침입니다! 오늘의 글로벌 테크·거시경제 핵심 브리핑입니다.
-          </p>
-          <div id="exec-summary-skeleton" class="space-y-2 animate-pulse">
-            <div class="h-5 bg-ft-divider dark:bg-ft-darkDivider rounded w-11/12"></div>
-            <div class="h-5 bg-ft-divider dark:bg-ft-darkDivider rounded w-full"></div>
-            <div class="h-5 bg-ft-divider dark:bg-ft-darkDivider rounded w-4/5"></div>
+    <!-- 2 & 3. 비대칭 벤토 탑 데크: Executive Summary + 핵심 지표 매트릭스 (SPEC.md 3.3) -->
+    <section aria-label="핵심 요약 및 브리핑 지표" class="mb-6">
+      <div id="bento-top-deck" class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+
+        <!-- 좌측 벤토 (7열): Executive Summary -->
+        <div class="lg:col-span-7 bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border p-5 sm:p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-paper-border dark:border-carbon-border">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-signal dark:text-signal-dark">01 //</span>
+                <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-paper-ink dark:text-carbon-ink">
+                  Executive Summary · 오늘의 핵심 흐름
+                </h2>
+              </div>
+              <span class="text-[11px] font-mono text-paper-muted dark:text-carbon-muted">
+                CROSS-SECTOR SYNTHESIS
+              </span>
+            </div>
+
+            <!-- 스켈레톤 -->
+            <div id="exec-summary-skeleton" class="space-y-2.5 animate-pulse py-1">
+              <div class="h-4 bg-paper-subtle dark:bg-carbon-subtle rounded-sm w-11/12"></div>
+              <div class="h-4 bg-paper-subtle dark:bg-carbon-subtle rounded-sm w-full"></div>
+              <div class="h-4 bg-paper-subtle dark:bg-carbon-subtle rounded-sm w-10/12"></div>
+              <div class="h-4 bg-paper-subtle dark:bg-carbon-subtle rounded-sm w-4/5"></div>
+            </div>
+
+            <!-- 본문: 한글 장문 가독성 최적화 -->
+            <p
+              id="exec-summary-text"
+              class="hidden text-[15px] sm:text-[16.5px] leading-[1.8] text-paper-ink dark:text-carbon-ink font-normal tracking-[-0.01em]"
+            ></p>
           </div>
-          <p
-            id="exec-summary-text"
-            class="hidden font-serif text-base sm:text-lg lg:text-xl leading-relaxed text-ft-text dark:text-ft-darkText"
-          ></p>
+
+          <div class="mt-5 pt-3 border-t border-paper-subtle dark:border-carbon-subtle flex flex-wrap items-center justify-between gap-2 text-[11px] text-paper-muted dark:text-carbon-muted">
+            <span>분야별 기호 범례: <strong class="text-cat-golf dark:text-cat-golfDark">● Golf &amp; Sports Tech</strong> · <strong class="text-cat-ai dark:text-cat-aiDark">◆ AI Agents &amp; LLM</strong> · <strong class="text-cat-macro dark:text-cat-macroDark">■ US-Korea Macro</strong></span>
+            <span class="font-mono">PM BRIEFING MATRIX</span>
+          </div>
         </div>
+
+        <!-- 우측 벤토 (5열): 브리핑 지표 매트릭스 (총 기사 수, 카테고리별 기사 수, 평균 중요도) -->
+        <div class="lg:col-span-5 bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border p-5 sm:p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 pb-3 mb-4 border-b border-paper-border dark:border-carbon-border">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-signal dark:text-signal-dark">02 //</span>
+                <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-paper-ink dark:text-carbon-ink">
+                  Briefing Telemetry · 지표 요약
+                </h2>
+              </div>
+              <span class="text-[11px] font-mono text-paper-muted dark:text-carbon-muted">METRICS</span>
+            </div>
+
+            <!-- 상단 2개 핵심 KPI: 총 기사 수 & 평균 중요도 -->
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div class="bg-paper-subtle/70 dark:bg-carbon-subtle/70 border border-paper-border dark:border-carbon-border p-3.5">
+                <p class="text-[11px] font-medium text-paper-muted dark:text-carbon-muted">총 기사 수</p>
+                <div class="flex items-baseline justify-between gap-2 mt-1">
+                  <p id="stat-total" class="font-mono text-2xl sm:text-3xl font-bold text-paper-ink dark:text-carbon-ink tabular-nums">-</p>
+                  <span class="text-[11px] font-mono text-paper-muted dark:text-carbon-muted">ARTICLES</span>
+                </div>
+              </div>
+
+              <div class="bg-paper-subtle/70 dark:bg-carbon-subtle/70 border border-paper-border dark:border-carbon-border p-3.5">
+                <p class="text-[11px] font-semibold text-signal dark:text-signal-dark">평균 중요도</p>
+                <div class="flex items-baseline justify-between gap-2 mt-1">
+                  <p id="stat-avg" class="font-mono text-2xl sm:text-3xl font-bold text-signal dark:text-signal-dark tabular-nums">-</p>
+                  <span class="text-[11px] font-mono text-paper-muted dark:text-carbon-muted">SCORE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 하단 3개 카테고리별 기사 수 (색 + 형태 기호 ● ◆ ■ 구분, 클릭 시 해당 카테고리 필터 연동) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <button
+                type="button"
+                data-metric-category="Golf & Sports Tech"
+                class="metric-cat-btn text-left bg-cat-golfBg/60 dark:bg-cat-golfDarkBg/70 border border-cat-golf/30 dark:border-cat-golfDark/30 hover:border-cat-golf dark:hover:border-cat-golfDark p-3 transition-colors"
+              >
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-[11px] font-bold text-cat-golf dark:text-cat-golfDark">● Golf &amp; Sports</span>
+                </div>
+                <p class="text-[10px] text-paper-muted dark:text-carbon-muted truncate mt-0.5">Golf &amp; Sports Tech</p>
+                <p id="stat-golf" class="font-mono text-xl font-bold text-paper-ink dark:text-carbon-ink mt-1 tabular-nums">-</p>
+              </button>
+
+              <button
+                type="button"
+                data-metric-category="AI Agents & LLM"
+                class="metric-cat-btn text-left bg-cat-aiBg/60 dark:bg-cat-aiDarkBg/70 border border-cat-ai/30 dark:border-cat-aiDark/30 hover:border-cat-ai dark:hover:border-cat-aiDark p-3 transition-colors"
+              >
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-[11px] font-bold text-cat-ai dark:text-cat-aiDark">◆ AI Agents</span>
+                </div>
+                <p class="text-[10px] text-paper-muted dark:text-carbon-muted truncate mt-0.5">AI Agents &amp; LLM</p>
+                <p id="stat-ai" class="font-mono text-xl font-bold text-paper-ink dark:text-carbon-ink mt-1 tabular-nums">-</p>
+              </button>
+
+              <button
+                type="button"
+                data-metric-category="US-Korea Macro Economy"
+                class="metric-cat-btn text-left bg-cat-macroBg/60 dark:bg-cat-macroDarkBg/70 border border-cat-macro/30 dark:border-cat-macroDark/30 hover:border-cat-macro dark:hover:border-cat-macroDark p-3 transition-colors"
+              >
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-[11px] font-bold text-cat-macro dark:text-cat-macroDark">■ US-KR Macro</span>
+                </div>
+                <p class="text-[10px] text-paper-muted dark:text-carbon-muted truncate mt-0.5">US-Korea Macro Economy</p>
+                <p id="stat-macro" class="font-mono text-xl font-bold text-paper-ink dark:text-carbon-ink mt-1 tabular-nums">-</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- 카테고리 분포 비율 바 -->
+          <div class="mt-4 pt-3 border-t border-paper-subtle dark:border-carbon-subtle">
+            <div class="flex items-center justify-between text-[10px] font-mono text-paper-muted dark:text-carbon-muted mb-1.5">
+              <span>SECTOR DISTRIBUTION</span>
+              <span id="stat-high-priority">9+ CRITICAL: -</span>
+            </div>
+            <div class="w-full h-2 bg-paper-subtle dark:bg-carbon-subtle overflow-hidden flex rounded-none" aria-hidden="true">
+              <div id="bar-golf" class="h-full bg-cat-golf dark:bg-cat-golfDark transition-all duration-300" style="width: 33.3%"></div>
+              <div id="bar-ai" class="h-full bg-cat-ai dark:bg-cat-aiDark transition-all duration-300" style="width: 33.3%"></div>
+              <div id="bar-macro" class="h-full bg-cat-macro dark:bg-cat-macroDark transition-all duration-300" style="width: 33.4%"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- 3. 지표 줄 (SPEC.md 3.3.3) -->
-    <section aria-label="기사 지표 요약" class="mb-6">
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
-        <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded px-3.5 py-2.5">
-          <p class="text-[11px] text-ft-muted dark:text-ft-darkMuted font-medium">총 기사 수</p>
-          <p id="stat-total" class="font-serif text-lg sm:text-xl font-bold text-ft-text dark:text-ft-darkText mt-0.5">-</p>
-        </div>
-        <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded px-3.5 py-2.5 border-l-4 border-l-category-golf">
-          <p class="text-[11px] text-category-golf dark:text-emerald-400 font-semibold">Golf &amp; Sports Tech</p>
-          <p id="stat-golf" class="font-serif text-lg sm:text-xl font-bold text-ft-text dark:text-ft-darkText mt-0.5">-</p>
-        </div>
-        <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded px-3.5 py-2.5 border-l-4 border-l-category-ai">
-          <p class="text-[11px] text-category-ai dark:text-indigo-400 font-semibold">AI Agents &amp; LLM</p>
-          <p id="stat-ai" class="font-serif text-lg sm:text-xl font-bold text-ft-text dark:text-ft-darkText mt-0.5">-</p>
-        </div>
-        <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded px-3.5 py-2.5 border-l-4 border-l-category-macro">
-          <p class="text-[11px] text-category-macro dark:text-amber-400 font-semibold">US-Korea Macro Economy</p>
-          <p id="stat-macro" class="font-serif text-lg sm:text-xl font-bold text-ft-text dark:text-ft-darkText mt-0.5">-</p>
-        </div>
-        <div class="col-span-2 sm:col-span-1 bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded px-3.5 py-2.5">
-          <p class="text-[11px] text-ft-claret dark:text-[#F472B6] font-semibold">평균 중요도</p>
-          <p id="stat-avg" class="font-serif text-lg sm:text-xl font-bold text-ft-claret dark:text-[#F472B6] mt-0.5">-</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. 필터 바: 스크롤 시 상단 고정, 인쇄 시 숨김 (SPEC.md 3.3.4 & 3.5) -->
+    <!-- 4. 스티키 컨트롤 바: 카테고리 필터, 정렬(중요도순·최신순), 제목·요약·태그 검색 (SPEC.md 3.3 & 3.5) -->
     <nav
       id="filter-bar"
       aria-label="기사 필터 및 검색"
-      class="sticky top-0 z-30 bg-ft-bg/95 dark:bg-ft-darkBg/95 backdrop-blur border-y border-ft-divider dark:border-ft-darkDivider py-3 mb-6 print:hidden"
+      class="sticky top-0 z-30 bg-paper-bg/95 dark:bg-carbon-bg/95 backdrop-blur-md border-y border-paper-border dark:border-carbon-border py-3 mb-7 print:hidden"
     >
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-        <!-- 전체 / 3개 카테고리 탭 -->
-        <div id="category-tabs" role="tablist" aria-label="카테고리 탭" class="flex flex-wrap items-center gap-1.5">
+        <!-- 카테고리 탭 (색 + 기호 ● ◆ ■ 구분) -->
+        <div id="category-tabs" role="tablist" aria-label="카테고리 필터" class="flex flex-wrap items-center gap-1.5">
           <button
             type="button"
             role="tab"
             data-category="all"
             aria-selected="true"
-            class="cat-tab px-3 py-1.5 rounded text-xs sm:text-sm font-semibold transition-colors"
+            class="cat-tab px-3 py-1.5 text-xs sm:text-sm font-semibold transition-colors"
           >
             전체
           </button>
@@ -196,80 +361,94 @@
             role="tab"
             data-category="Golf & Sports Tech"
             aria-selected="false"
-            class="cat-tab px-3 py-1.5 rounded text-xs sm:text-sm font-semibold transition-colors"
+            class="cat-tab px-3 py-1.5 text-xs sm:text-sm font-semibold transition-colors"
           >
-            Golf &amp; Sports Tech
+            ● Golf &amp; Sports Tech
           </button>
           <button
             type="button"
             role="tab"
             data-category="AI Agents & LLM"
             aria-selected="false"
-            class="cat-tab px-3 py-1.5 rounded text-xs sm:text-sm font-semibold transition-colors"
+            class="cat-tab px-3 py-1.5 text-xs sm:text-sm font-semibold transition-colors"
           >
-            AI Agents &amp; LLM
+            ◆ AI Agents &amp; LLM
           </button>
           <button
             type="button"
             role="tab"
             data-category="US-Korea Macro Economy"
             aria-selected="false"
-            class="cat-tab px-3 py-1.5 rounded text-xs sm:text-sm font-semibold transition-colors"
+            class="cat-tab px-3 py-1.5 text-xs sm:text-sm font-semibold transition-colors"
           >
-            US-Korea Macro Economy
+            ■ US-Korea Macro Economy
           </button>
         </div>
 
-        <!-- 정렬(중요도순·최신순) 및 제목·요약·태그 검색창 -->
+        <!-- 정렬 및 검색 컨트롤 -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-          <div class="flex items-center gap-1.5 bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded px-2.5 py-1.5">
-            <label for="sort-select" class="text-xs text-ft-muted dark:text-ft-darkMuted font-medium shrink-0">정렬</label>
+          <div class="flex items-center justify-between sm:justify-start gap-2 bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border px-3 py-1.5">
+            <label for="sort-select" class="text-[11px] font-mono uppercase tracking-wider text-paper-muted dark:text-carbon-muted shrink-0">
+              SORT
+            </label>
             <select
               id="sort-select"
               aria-label="기사 정렬 기준"
-              class="bg-transparent text-xs sm:text-sm font-semibold text-ft-text dark:text-ft-darkText focus:outline-none cursor-pointer"
+              class="bg-transparent text-xs sm:text-sm font-semibold text-paper-ink dark:text-carbon-ink focus:outline-none cursor-pointer"
             >
-              <option value="importance" class="bg-ft-card dark:bg-ft-darkCard">중요도순</option>
-              <option value="latest" class="bg-ft-card dark:bg-ft-darkCard">최신순</option>
+              <option value="importance" class="bg-paper-surface dark:bg-carbon-surface">중요도순</option>
+              <option value="latest" class="bg-paper-surface dark:bg-carbon-surface">최신순</option>
             </select>
           </div>
 
-          <div class="relative flex-1 sm:w-64">
+          <div class="relative flex-1 sm:w-72">
             <input
               id="search-input"
               type="search"
-              placeholder="제목·요약·태그 검색..."
+              placeholder="제목·요약·태그 검색... (/ 키)"
               aria-label="제목, 요약, 태그 검색"
-              class="w-full px-3 pr-8 py-1.5 rounded border border-ft-divider dark:border-ft-darkDivider bg-ft-card dark:bg-ft-darkCard text-xs sm:text-sm text-ft-text dark:text-ft-darkText placeholder:text-ft-muted dark:placeholder:text-ft-darkMuted"
+              class="w-full pl-3 pr-8 py-1.5 border border-paper-border dark:border-carbon-border bg-paper-surface dark:bg-carbon-surface text-xs sm:text-sm text-paper-ink dark:text-carbon-ink placeholder:text-paper-muted dark:placeholder:text-carbon-muted"
             />
             <button
               id="search-clear"
               type="button"
               aria-label="검색어 지우기"
-              class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-xs text-ft-muted dark:text-ft-darkMuted hover:text-ft-text dark:hover:text-ft-darkText px-1"
+              class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-xs font-mono text-paper-muted dark:text-carbon-muted hover:text-paper-ink dark:hover:text-carbon-ink px-1"
             >
               ✕
             </button>
           </div>
         </div>
       </div>
+
+      <!-- 활성 필터 상태 표시줄 -->
+      <div id="active-filter-status" class="hidden mt-2.5 pt-2 border-t border-paper-border/60 dark:border-carbon-border/60 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <p id="active-filter-text" class="text-paper-muted dark:text-carbon-muted font-medium"></p>
+        <button
+          id="inline-reset-btn"
+          type="button"
+          class="font-mono text-[11px] font-semibold text-signal dark:text-signal-dark hover:underline"
+        >
+          [필터 전체 해제 ↺]
+        </button>
+      </div>
     </nav>
 
-    <!-- 본문 영역 -->
+    <!-- 메인 콘텐츠 -->
     <main id="main-content">
 
       <!-- 로딩 중 스켈레톤 (SPEC.md 3.5) -->
       <div id="loading-skeleton" class="space-y-6" aria-busy="true" aria-label="기사 불러오는 중">
-        <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded-lg p-6 animate-pulse space-y-3">
-          <div class="h-4 bg-ft-divider dark:bg-ft-darkDivider rounded w-28"></div>
-          <div class="h-7 bg-ft-divider dark:bg-ft-darkDivider rounded w-3/4"></div>
-          <div class="h-4 bg-ft-divider dark:bg-ft-darkDivider rounded w-1/2"></div>
-          <div class="h-16 bg-ft-divider dark:bg-ft-darkDivider rounded w-full"></div>
+        <div class="bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border p-6 animate-pulse space-y-4">
+          <div class="h-4 bg-paper-subtle dark:bg-carbon-subtle w-36"></div>
+          <div class="h-8 bg-paper-subtle dark:bg-carbon-subtle w-3/4"></div>
+          <div class="h-4 bg-paper-subtle dark:bg-carbon-subtle w-1/2"></div>
+          <div class="h-20 bg-paper-subtle dark:bg-carbon-subtle w-full"></div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded-lg p-5 animate-pulse h-72"></div>
-          <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded-lg p-5 animate-pulse h-72"></div>
-          <div class="bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded-lg p-5 animate-pulse h-72"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border p-5 animate-pulse h-80"></div>
+          <div class="bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border p-5 animate-pulse h-80"></div>
+          <div class="bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border p-5 animate-pulse h-80"></div>
         </div>
       </div>
 
@@ -277,18 +456,19 @@
       <div
         id="error-state"
         role="alert"
-        class="hidden bg-ft-card dark:bg-ft-darkCard border border-ft-claret rounded-lg p-8 text-center my-6"
+        class="hidden bg-paper-surface dark:bg-carbon-surface border-2 border-signal dark:border-signal-dark p-8 text-center my-6"
       >
-        <p class="font-serif text-lg sm:text-xl font-bold text-ft-text dark:text-ft-darkText mb-2">
-          뉴스 데이터를 불러오지 못했습니다.
+        <p class="font-mono text-xs uppercase tracking-widest text-signal dark:text-signal-dark mb-1">DATA FETCH ERROR</p>
+        <p class="font-serif text-xl sm:text-2xl font-bold text-paper-ink dark:text-carbon-ink mb-2">
+          뉴스 브리핑 데이터를 불러오지 못했습니다.
         </p>
-        <p id="error-message" class="text-xs sm:text-sm text-ft-muted dark:text-ft-darkMuted mb-4">
-          데이터 파일(./data/news.json)을 읽는 중 문제가 발생했습니다. 로컬 서버 환경인지 확인해 주세요.
+        <p id="error-message" class="text-xs sm:text-sm text-paper-muted dark:text-carbon-muted mb-5">
+          데이터 파일(./data/news.json)을 읽는 중 문제가 발생했습니다. 로컬 서버 환경을 확인해 주세요.
         </p>
         <button
           id="retry-btn"
           type="button"
-          class="px-4 py-2 rounded bg-ft-claret text-white text-xs sm:text-sm font-semibold hover:opacity-90"
+          class="px-5 py-2 bg-signal text-white text-xs sm:text-sm font-semibold hover:opacity-90 transition-opacity"
         >
           다시 시도
         </button>
@@ -297,48 +477,83 @@
       <!-- 필터 결과가 없을 때 빈 상태 문구 (SPEC.md 3.5) -->
       <div
         id="empty-state"
-        class="hidden bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded-lg p-8 text-center my-6"
+        class="hidden bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border p-10 text-center my-6"
       >
-        <p class="font-serif text-lg sm:text-xl font-bold text-ft-text dark:text-ft-darkText mb-2">
-          조건에 일치하는 기사가 없습니다.
+        <p class="font-mono text-xs uppercase tracking-widest text-paper-muted dark:text-carbon-muted mb-1">NO MATCHING INTELLIGENCE</p>
+        <p class="font-serif text-xl sm:text-2xl font-bold text-paper-ink dark:text-carbon-ink mb-2">
+          선택한 조건에 일치하는 기사가 없습니다.
         </p>
-        <p class="text-xs sm:text-sm text-ft-muted dark:text-ft-darkMuted mb-4">
-          다른 카테고리를 선택하거나 검색어를 변경해 보세요.
+        <p class="text-xs sm:text-sm text-paper-muted dark:text-carbon-muted mb-5">
+          다른 카테고리를 선택하거나 검색어를 초기화해 보세요.
         </p>
         <button
           id="reset-filter-btn"
           type="button"
-          class="px-4 py-2 rounded bg-ft-claret text-white text-xs sm:text-sm font-semibold hover:opacity-90"
+          class="px-5 py-2 bg-paper-ink text-paper-surface dark:bg-carbon-ink dark:text-carbon-bg text-xs sm:text-sm font-semibold hover:opacity-90 transition-opacity"
         >
           필터 초기화
         </button>
       </div>
 
-      <!-- 5. 톱 스토리: importance_score가 가장 높은 기사 1개 전폭 대형 카드 (SPEC.md 3.3.5) -->
-      <section id="top-story-section" aria-label="톱 스토리" class="hidden mb-8">
-        <div class="flex items-center gap-2 mb-2.5">
-          <span class="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider bg-ft-claret text-white rounded">
-            Top Story
+      <!-- 5. 톱 스토리: importance_score가 가장 높은 기사 하이라이트 (SPEC.md 3.3) -->
+      <section id="top-story-section" aria-label="최고 중요도 핵심 기사" class="hidden mb-9">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 text-[11px] font-mono font-bold uppercase tracking-wider bg-signal text-white">
+              LEAD DISPATCH
+            </span>
+            <span class="text-xs sm:text-sm font-bold text-paper-ink dark:text-carbon-ink">
+              오늘의 최고 중요도 핵심 기사
+            </span>
+          </div>
+          <span class="text-[11px] font-mono text-paper-muted dark:text-carbon-muted">
+            PRIORITY #1 SPOTLIGHT
           </span>
-          <span class="text-xs font-semibold text-ft-muted dark:text-ft-darkMuted">오늘의 최고 중요도 기사</span>
         </div>
         <div id="top-story-container"></div>
       </section>
 
-      <!-- 6. 기사 그리드: 데스크톱 3열, 태블릿 2열, 모바일 1열, 인쇄 1열 (SPEC.md 3.3.6 & 3.5) -->
-      <section id="articles-grid-section" aria-label="기사 목록" class="hidden">
+      <!-- 6. 기사 그리드: 데스크톱 3열, 태블릿 2열, 모바일 1열, 인쇄 1열 (SPEC.md 3.4 & 3.5) -->
+      <section id="articles-grid-section" aria-label="전체 브리핑 기사 목록" class="hidden">
+        <div class="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-paper-border dark:border-carbon-border">
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-xs font-bold text-signal dark:text-signal-dark">03 //</span>
+            <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-paper-ink dark:text-carbon-ink">
+              Sector Intelligence Feed · 분야별 상세 브리핑
+            </h2>
+          </div>
+          <span id="feed-count-label" class="text-[11px] font-mono text-paper-muted dark:text-carbon-muted tabular-nums"></span>
+        </div>
         <div
           id="articles-grid"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 print:grid-cols-1"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 print:grid-cols-1"
         ></div>
       </section>
 
     </main>
 
-    <!-- 7. 푸터: 출처 고지 및 생성 시각 (SPEC.md 3.3.7) -->
-    <footer class="mt-12 pt-6 border-t border-ft-divider dark:border-ft-darkDivider text-xs text-ft-muted dark:text-ft-darkMuted flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-      <p>출처 고지: 요약은 AI 생성, 원문 확인 필요</p>
-      <p id="footer-updated-at">생성 시각: -</p>
+    <!-- 7. 푸터: 출처 고지 및 생성 시각 (SPEC.md 3.3) -->
+    <footer class="mt-14 pt-6 border-t-2 border-paper-ink dark:border-carbon-ink text-xs text-paper-muted dark:text-carbon-muted">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="space-y-1">
+          <p class="font-semibold text-paper-ink dark:text-carbon-ink">
+            출처 고지: 요약은 AI 생성, 원문 확인 필요
+          </p>
+          <p class="text-[11px]">
+            본 브리핑은 골프·스포츠 테크 PM 의사결정을 돕기 위해 자동 수집·요약되었으며, 정확한 수치와 맥락은 반드시 각 기사의 원문 링크를 통해 확인하시기 바랍니다.
+          </p>
+        </div>
+        <div class="flex flex-col sm:items-end gap-1 shrink-0 font-mono text-[11px]">
+          <p id="footer-updated-at">생성 시각: -</p>
+          <button
+            id="back-to-top"
+            type="button"
+            class="text-left sm:text-right text-paper-ink dark:text-carbon-ink hover:underline"
+          >
+            ↑ 맨 위로 이동
+          </button>
+        </div>
+      </div>
     </footer>
 
   </div>

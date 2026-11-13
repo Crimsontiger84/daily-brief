@@ -1,6 +1,7 @@
 /**
- * The Daily Brief — app.js
- * SPEC.md 3장 규격 준수 (바닐라 JS, 상대 경로 fetch, textContent 바인딩)
+ * THE PM BRIEF — app.js
+ * Swiss Architectural Bento & Quiet Luxury Memo
+ * SPEC.md 3장 규격 준수 (바닐라 JS, 상대 경로 fetch('./data/news.json'), 모든 텍스트 textContent 바인딩)
  */
 (function () {
   'use strict';
@@ -11,18 +12,42 @@
     SORT: 'daily_brief_sort'
   };
 
-  const CATEGORY_STYLES = {
+  const CATEGORY_META = {
     'Golf & Sports Tech': {
-      label: 'GOLF & SPORTS TECH',
-      classes: 'bg-[#0F7B4F]/10 text-[#0F7B4F] dark:bg-[#0F7B4F]/25 dark:text-emerald-300 border-[#0F7B4F]/30'
+      symbol: '●',
+      shortCode: 'GOLF · TECH',
+      label: 'Golf & Sports Tech',
+      topBarClass: 'cat-bar-golf',
+      badgeClass:
+        'bg-cat-golfBg text-cat-golf border-cat-golf/30 dark:bg-cat-golfDarkBg dark:text-cat-golfDark dark:border-cat-golfDark/40',
+      activeTabClass:
+        'bg-cat-golf text-white border-cat-golf dark:bg-cat-golfDark dark:text-carbon-bg dark:border-cat-golfDark',
+      pmAccentClass: 'border-l-cat-golf dark:border-l-cat-golfDark',
+      pmLabelClass: 'text-cat-golf dark:text-cat-golfDark'
     },
     'AI Agents & LLM': {
-      label: 'AI AGENTS & LLM',
-      classes: 'bg-[#3B5BDB]/10 text-[#3B5BDB] dark:bg-[#3B5BDB]/25 dark:text-indigo-300 border-[#3B5BDB]/30'
+      symbol: '◆',
+      shortCode: 'AI · AGENT',
+      label: 'AI Agents & LLM',
+      topBarClass: 'cat-bar-ai',
+      badgeClass:
+        'bg-cat-aiBg text-cat-ai border-cat-ai/30 dark:bg-cat-aiDarkBg dark:text-cat-aiDark dark:border-cat-aiDark/40',
+      activeTabClass:
+        'bg-cat-ai text-white border-cat-ai dark:bg-cat-aiDark dark:text-carbon-bg dark:border-cat-aiDark',
+      pmAccentClass: 'border-l-cat-ai dark:border-l-cat-aiDark',
+      pmLabelClass: 'text-cat-ai dark:text-cat-aiDark'
     },
     'US-Korea Macro Economy': {
-      label: 'US-KOREA MACRO ECONOMY',
-      classes: 'bg-[#B45309]/10 text-[#B45309] dark:bg-[#B45309]/25 dark:text-amber-300 border-[#B45309]/30'
+      symbol: '■',
+      shortCode: 'MACRO · FX',
+      label: 'US-Korea Macro Economy',
+      topBarClass: 'cat-bar-macro',
+      badgeClass:
+        'bg-cat-macroBg text-cat-macro border-cat-macro/30 dark:bg-cat-macroDarkBg dark:text-cat-macroDark dark:border-cat-macroDark/40',
+      activeTabClass:
+        'bg-cat-macro text-white border-cat-macro dark:bg-cat-macroDark dark:text-carbon-bg dark:border-cat-macroDark',
+      pmAccentClass: 'border-l-cat-macro dark:border-l-cat-macroDark',
+      pmLabelClass: 'text-cat-macro dark:text-cat-macroDark'
     }
   };
 
@@ -49,7 +74,7 @@
     try {
       window.localStorage.setItem(key, value);
     } catch (_) {
-      // localStorage 실패 시에도 화면은 정상 동작 (SPEC.md 3.5)
+      // localStorage 접근 불가 시에도 정상 동작 보장 (SPEC.md 3.5)
     }
   }
 
@@ -86,6 +111,20 @@
         window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
     applyTheme();
+
+    if (window.matchMedia) {
+      try {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        mq.addEventListener('change', (e) => {
+          if (getStorage(STORAGE_KEYS.THEME, null) === null) {
+            state.darkMode = e.matches;
+            applyTheme();
+          }
+        });
+      } catch (_) {
+        // 구형 브라우저 호환
+      }
+    }
   }
 
   function applyTheme() {
@@ -135,17 +174,49 @@
 
   function updateCategoryTabsUI() {
     const tabs = document.querySelectorAll('.cat-tab');
+    const counts = {
+      all: state.articles.length,
+      'Golf & Sports Tech': state.articles.filter((a) => a.category === 'Golf & Sports Tech').length,
+      'AI Agents & LLM': state.articles.filter((a) => a.category === 'AI Agents & LLM').length,
+      'US-Korea Macro Economy': state.articles.filter((a) => a.category === 'US-Korea Macro Economy').length
+    };
+
     tabs.forEach((tab) => {
-      const cat = tab.getAttribute('data-category');
+      const cat = tab.getAttribute('data-category') || 'all';
       const active = cat === state.category;
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
 
+      const meta = CATEGORY_META[cat];
+      const countSuffix = state.articles.length > 0 ? ` (${counts[cat] ?? 0})` : '';
+      if (cat === 'all') {
+        tab.textContent = `전체${countSuffix}`;
+      } else if (meta) {
+        tab.textContent = `${meta.symbol} ${meta.label}${countSuffix}`;
+      }
+
       if (active) {
-        tab.className =
-          'cat-tab px-3 py-1.5 rounded text-xs sm:text-sm font-bold bg-ft-claret text-white transition-colors';
+        if (cat === 'all') {
+          tab.className =
+            'cat-tab px-3 py-1.5 text-xs sm:text-sm font-bold border bg-paper-ink text-paper-surface border-paper-ink dark:bg-carbon-ink dark:text-carbon-bg dark:border-carbon-ink transition-colors';
+        } else {
+          tab.className = `cat-tab px-3 py-1.5 text-xs sm:text-sm font-bold border transition-colors ${meta.activeTabClass}`;
+        }
       } else {
         tab.className =
-          'cat-tab px-3 py-1.5 rounded text-xs sm:text-sm font-semibold bg-ft-card dark:bg-ft-darkCard text-ft-text dark:text-ft-darkText border border-ft-divider dark:border-ft-darkDivider hover:border-ft-claret transition-colors';
+          'cat-tab px-3 py-1.5 text-xs sm:text-sm font-semibold border bg-paper-surface dark:bg-carbon-surface text-paper-ink dark:text-carbon-ink border-paper-border dark:border-carbon-border hover:border-paper-borderStrong dark:hover:border-carbon-borderStrong transition-colors';
+      }
+    });
+
+    // 지표 박스의 카테고리 버튼 선택 강조 동기화
+    const metricBtns = document.querySelectorAll('.metric-cat-btn');
+    metricBtns.forEach((btn) => {
+      const cat = btn.getAttribute('data-metric-category');
+      const isSelected = state.category === cat;
+      btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+      if (isSelected) {
+        btn.classList.add('ring-2', 'ring-paper-ink', 'dark:ring-carbon-ink');
+      } else {
+        btn.classList.remove('ring-2', 'ring-paper-ink', 'dark:ring-carbon-ink');
       }
     });
   }
@@ -155,6 +226,7 @@
     const golf = articles.filter((a) => a.category === 'Golf & Sports Tech').length;
     const ai = articles.filter((a) => a.category === 'AI Agents & LLM').length;
     const macro = articles.filter((a) => a.category === 'US-Korea Macro Economy').length;
+    const highPriority = articles.filter((a) => (Number(a.importance_score) || 0) >= 9).length;
     const avg =
       total > 0
         ? (
@@ -167,96 +239,70 @@
     const elAi = document.getElementById('stat-ai');
     const elMacro = document.getElementById('stat-macro');
     const elAvg = document.getElementById('stat-avg');
+    const elHigh = document.getElementById('stat-high-priority');
 
-    if (elTotal) elTotal.textContent = String(total);
-    if (elGolf) elGolf.textContent = String(golf);
-    if (elAi) elAi.textContent = String(ai);
-    if (elMacro) elMacro.textContent = String(macro);
+    if (elTotal) elTotal.textContent = `${total}건`;
+    if (elGolf) elGolf.textContent = `${golf}건`;
+    if (elAi) elAi.textContent = `${ai}건`;
+    if (elMacro) elMacro.textContent = `${macro}건`;
     if (elAvg) elAvg.textContent = `${avg} / 10`;
+    if (elHigh) elHigh.textContent = `9+ CRITICAL: ${highPriority}건`;
+
+    if (total > 0) {
+      const barGolf = document.getElementById('bar-golf');
+      const barAi = document.getElementById('bar-ai');
+      const barMacro = document.getElementById('bar-macro');
+      if (barGolf) barGolf.style.width = `${(golf / total) * 100}%`;
+      if (barAi) barAi.style.width = `${(ai / total) * 100}%`;
+      if (barMacro) barMacro.style.width = `${(macro / total) * 100}%`;
+    }
   }
 
-  // SPEC.md 3.4 기사 카드 생성 (모든 기사 텍스트는 textContent로 삽입)
-  function createArticleCard(article, isTopStory) {
-    const card = document.createElement('article');
-    card.className = isTopStory
-      ? 'bg-ft-card dark:bg-ft-darkCard border-2 border-ft-claret/50 rounded-lg p-6 sm:p-7 flex flex-col justify-between'
-      : 'bg-ft-card dark:bg-ft-darkCard border border-ft-divider dark:border-ft-darkDivider rounded-lg p-5 flex flex-col justify-between';
+  function createScoreMeter(score) {
+    const wrap = document.createElement('div');
+    wrap.className = 'inline-flex items-center gap-2';
 
-    const bodyWrap = document.createElement('div');
+    const dots = document.createElement('div');
+    dots.className = 'hidden sm:flex items-center gap-0.5';
+    dots.setAttribute('aria-hidden', 'true');
 
-    // 상단: 카테고리 색 라벨(대문자 소형) + 중요도 배지(예: 8/10, 9 이상은 클라렛 강조)
-    const topBar = document.createElement('div');
-    topBar.className = 'flex items-center justify-between gap-2 mb-3';
+    for (let i = 1; i <= 10; i += 1) {
+      const seg = document.createElement('span');
+      if (i <= score) {
+        seg.className =
+          score >= 9
+            ? 'w-1.5 h-2.5 bg-signal dark:bg-signal-dark'
+            : 'w-1.5 h-2.5 bg-paper-ink dark:bg-carbon-ink';
+      } else {
+        seg.className = 'w-1.5 h-2.5 bg-paper-border dark:bg-carbon-border';
+      }
+      dots.appendChild(seg);
+    }
 
-    const catInfo = CATEGORY_STYLES[article.category] || {
-      label: String(article.category || '').toUpperCase(),
-      classes: 'bg-ft-bg text-ft-text border-ft-divider'
-    };
+    const badge = document.createElement('span');
+    if (score >= 9) {
+      badge.className =
+        'px-2 py-0.5 font-mono text-xs font-bold bg-signal text-white tabular-nums';
+      badge.textContent = `CRITICAL ${score}/10`;
+    } else if (score >= 6) {
+      badge.className =
+        'px-2 py-0.5 font-mono text-xs font-bold bg-paper-subtle dark:bg-carbon-subtle text-paper-ink dark:text-carbon-ink border border-paper-border dark:border-carbon-border tabular-nums';
+      badge.textContent = `SCORE ${score}/10`;
+    } else {
+      badge.className =
+        'px-2 py-0.5 font-mono text-xs font-medium bg-paper-subtle dark:bg-carbon-subtle text-paper-muted dark:text-carbon-muted border border-paper-border dark:border-carbon-border tabular-nums';
+      badge.textContent = `REF ${score}/10`;
+    }
 
-    const catLabel = document.createElement('span');
-    catLabel.className = `inline-block px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider border ${catInfo.classes}`;
-    catLabel.textContent = catInfo.label;
+    wrap.appendChild(dots);
+    wrap.appendChild(badge);
+    return wrap;
+  }
 
-    const score = Number(article.importance_score) || 0;
-    const scoreBadge = document.createElement('span');
-    scoreBadge.className =
-      score >= 9
-        ? 'inline-block px-2 py-0.5 rounded text-xs font-bold bg-ft-claret text-white'
-        : 'inline-block px-2 py-0.5 rounded text-xs font-semibold bg-ft-bg dark:bg-ft-darkBg text-ft-muted dark:text-ft-darkMuted border border-ft-divider dark:border-ft-darkDivider';
-    scoreBadge.textContent = `${score}/10`;
-
-    topBar.appendChild(catLabel);
-    topBar.appendChild(scoreBadge);
-    bodyWrap.appendChild(topBar);
-
-    // korean_title (세리프, 굵게)
-    const korTitle = document.createElement('h2');
-    korTitle.className = isTopStory
-      ? 'font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-ft-text dark:text-ft-darkText leading-snug mb-1.5'
-      : 'font-serif text-lg sm:text-xl font-bold text-ft-text dark:text-ft-darkText leading-snug mb-1.5';
-    korTitle.textContent = article.korean_title || '';
-    bodyWrap.appendChild(korTitle);
-
-    // original_title (작은 회색 이탤릭)
-    const origTitle = document.createElement('p');
-    origTitle.className =
-      'text-xs sm:text-sm italic text-ft-muted dark:text-ft-darkMuted mb-3.5 leading-relaxed';
-    origTitle.textContent = article.original_title || '';
-    bodyWrap.appendChild(origTitle);
-
-    // summary 본문
-    const summaryP = document.createElement('p');
-    summaryP.className = isTopStory
-      ? 'text-sm sm:text-base text-ft-text dark:text-ft-darkText leading-relaxed mb-4'
-      : 'text-sm text-ft-text dark:text-ft-darkText leading-relaxed mb-4';
-    summaryP.textContent = article.summary || '';
-    bodyWrap.appendChild(summaryP);
-
-    // PM Insight 박스: 옅은 배경 + 왼쪽 강조선, pm_insights 표시
-    const pmBox = document.createElement('div');
-    pmBox.className =
-      'bg-ft-bg/80 dark:bg-ft-darkBg/80 border-l-4 border-ft-claret rounded-r p-3.5 mb-4';
-
-    const pmHeading = document.createElement('p');
-    pmHeading.className =
-      'text-[11px] font-bold uppercase tracking-wider text-ft-claret dark:text-[#F472B6] mb-1';
-    pmHeading.textContent = 'PM Insight';
-
-    const pmText = document.createElement('p');
-    pmText.className =
-      'text-xs sm:text-sm text-ft-text dark:text-ft-darkText leading-relaxed';
-    pmText.textContent = article.pm_insights || '';
-
-    pmBox.appendChild(pmHeading);
-    pmBox.appendChild(pmText);
-    bodyWrap.appendChild(pmBox);
-
-    card.appendChild(bodyWrap);
-
-    // 하단: source_name · published_date, 태그 칩(클릭 시 해당 태그로 검색), "원문 보기 →" 링크
+  function createFooterBlock(article) {
     const footerWrap = document.createElement('div');
     footerWrap.className =
-      'pt-3 border-t border-ft-divider dark:border-ft-darkDivider space-y-2.5';
+      'pt-3.5 mt-4 border-t border-paper-border dark:border-carbon-border space-y-3';
 
     if (Array.isArray(article.tags) && article.tags.length > 0) {
       const tagsContainer = document.createElement('div');
@@ -266,7 +312,7 @@
         const chip = document.createElement('button');
         chip.type = 'button';
         chip.className =
-          'px-2 py-0.5 rounded text-[11px] bg-ft-bg dark:bg-ft-darkBg text-ft-muted dark:text-ft-darkMuted border border-ft-divider dark:border-ft-darkDivider hover:border-ft-claret hover:text-ft-claret dark:hover:text-[#F472B6] transition-colors';
+          'px-2 py-0.5 text-[11px] font-medium bg-paper-subtle dark:bg-carbon-subtle text-paper-body dark:text-carbon-body border border-paper-border dark:border-carbon-border hover:border-signal hover:text-signal dark:hover:border-signal-dark dark:hover:text-signal-dark transition-colors';
         chip.textContent = `#${tag}`;
         chip.addEventListener('click', () => {
           setSearchQuery(String(tag));
@@ -278,10 +324,10 @@
     }
 
     const bottomRow = document.createElement('div');
-    bottomRow.className = 'flex items-center justify-between gap-2 text-xs';
+    bottomRow.className = 'flex items-center justify-between gap-2 text-xs font-mono';
 
     const metaText = document.createElement('span');
-    metaText.className = 'text-ft-muted dark:text-ft-darkMuted truncate';
+    metaText.className = 'text-paper-muted dark:text-carbon-muted truncate tabular-nums';
     metaText.textContent = `${article.source_name || ''} · ${article.published_date || ''}`;
 
     const sourceLink = document.createElement('a');
@@ -289,15 +335,217 @@
     sourceLink.target = '_blank';
     sourceLink.rel = 'noopener noreferrer';
     sourceLink.className =
-      'shrink-0 font-semibold text-ft-teal dark:text-ft-darkTeal hover:underline';
-    sourceLink.textContent = '원문 보기 →';
+      'shrink-0 inline-flex items-center gap-1 font-sans font-bold text-xs text-paper-ink dark:text-carbon-ink hover:text-signal dark:hover:text-signal-dark underline underline-offset-4 transition-colors';
+    sourceLink.textContent = '원문 보기 ↗';
 
     bottomRow.appendChild(metaText);
     bottomRow.appendChild(sourceLink);
     footerWrap.appendChild(bottomRow);
 
-    card.appendChild(footerWrap);
+    return footerWrap;
+  }
+
+  // SPEC.md 3.4: 기사 카드 생성 (모든 기사 텍스트는 textContent로 바인딩)
+  function createArticleCard(article, isTopStory, displayIndex) {
+    const catMeta = CATEGORY_META[article.category] || {
+      symbol: '●',
+      shortCode: 'BRIEF',
+      label: String(article.category || ''),
+      topBarClass: 'cat-bar-golf',
+      badgeClass: 'bg-paper-subtle text-paper-ink border-paper-border',
+      pmAccentClass: 'border-l-signal',
+      pmLabelClass: 'text-signal dark:text-signal-dark'
+    };
+
+    const score = Number(article.importance_score) || 0;
+
+    if (isTopStory) {
+      const heroCard = document.createElement('article');
+      heroCard.className = `bg-paper-surface dark:bg-carbon-surface border-2 border-paper-ink dark:border-carbon-ink ${catMeta.topBarClass} p-5 sm:p-7`;
+
+      // 상단 메타 헤더
+      const topBar = document.createElement('div');
+      topBar.className =
+        'flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-paper-border dark:border-carbon-border';
+
+      const leftMeta = document.createElement('div');
+      leftMeta.className = 'flex flex-wrap items-center gap-2';
+
+      const idxBadge = document.createElement('span');
+      idxBadge.className =
+        'font-mono text-xs font-bold text-paper-muted dark:text-carbon-muted tabular-nums';
+      idxBadge.textContent = 'NO. 01 // LEAD';
+
+      const catBadge = document.createElement('span');
+      catBadge.className = `inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-bold border ${catMeta.badgeClass}`;
+      catBadge.textContent = `${catMeta.symbol} ${catMeta.label}`;
+
+      leftMeta.appendChild(idxBadge);
+      leftMeta.appendChild(catBadge);
+
+      topBar.appendChild(leftMeta);
+      topBar.appendChild(createScoreMeter(score));
+      heroCard.appendChild(topBar);
+
+      // 비대칭 2열 본문 그리드 (좌측: 제목 + 요약 / 우측: PM Strategic Insight 도시에 + 메타)
+      const grid = document.createElement('div');
+      grid.id = 'top-story-grid';
+      grid.className = 'grid grid-cols-1 lg:grid-cols-12 gap-6 items-start';
+
+      const leftCol = document.createElement('div');
+      leftCol.className = 'lg:col-span-7 space-y-3';
+
+      const korTitle = document.createElement('h2');
+      korTitle.className =
+        'font-serif text-xl sm:text-2xl lg:text-[28px] font-bold text-paper-ink dark:text-carbon-ink leading-[1.36] tracking-tight';
+      korTitle.textContent = article.korean_title || '';
+
+      const origTitle = document.createElement('p');
+      origTitle.className =
+        'text-xs sm:text-sm italic text-paper-muted dark:text-carbon-muted leading-relaxed';
+      origTitle.textContent = article.original_title || '';
+
+      const summaryP = document.createElement('p');
+      summaryP.className =
+        'text-sm sm:text-[15.5px] text-paper-body dark:text-carbon-body leading-[1.78] pt-1';
+      summaryP.textContent = article.summary || '';
+
+      leftCol.appendChild(korTitle);
+      leftCol.appendChild(origTitle);
+      leftCol.appendChild(summaryP);
+
+      const rightCol = document.createElement('div');
+      rightCol.className =
+        'lg:col-span-5 bg-paper-dossier dark:bg-carbon-dossier border border-paper-border dark:border-carbon-border p-4 sm:p-5 flex flex-col justify-between h-full';
+
+      const pmWrap = document.createElement('div');
+      pmWrap.className = `border-l-4 ${catMeta.pmAccentClass} pl-3.5`;
+
+      const pmHeader = document.createElement('div');
+      pmHeader.className = 'flex items-center justify-between gap-2 mb-1.5';
+
+      const pmHeading = document.createElement('p');
+      pmHeading.className = `font-mono text-[11px] font-bold uppercase tracking-wider ${catMeta.pmLabelClass}`;
+      pmHeading.textContent = 'PM INSIGHT · 제품/사업 시사점';
+
+      pmHeader.appendChild(pmHeading);
+
+      const pmText = document.createElement('p');
+      pmText.className =
+        'text-xs sm:text-sm text-paper-ink dark:text-carbon-ink leading-[1.72] font-medium';
+      pmText.textContent = article.pm_insights || '';
+
+      pmWrap.appendChild(pmHeader);
+      pmWrap.appendChild(pmText);
+
+      rightCol.appendChild(pmWrap);
+      rightCol.appendChild(createFooterBlock(article));
+
+      grid.appendChild(leftCol);
+      grid.appendChild(rightCol);
+      heroCard.appendChild(grid);
+
+      return heroCard;
+    }
+
+    // 일반 그리드 카드
+    const card = document.createElement('article');
+    card.className = `bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border ${catMeta.topBarClass} p-5 flex flex-col justify-between transition-colors hover:border-paper-borderStrong dark:hover:border-carbon-borderStrong`;
+
+    const bodyWrap = document.createElement('div');
+
+    const topBar = document.createElement('div');
+    topBar.className = 'flex items-center justify-between gap-2 mb-3';
+
+    const leftGroup = document.createElement('div');
+    leftGroup.className = 'flex items-center gap-1.5 min-w-0';
+
+    const idxSpan = document.createElement('span');
+    idxSpan.className =
+      'font-mono text-[11px] font-bold text-paper-muted dark:text-carbon-muted shrink-0 tabular-nums';
+    idxSpan.textContent = `NO.${String(displayIndex).padStart(2, '0')}`;
+
+    const catLabel = document.createElement('span');
+    catLabel.className = `inline-block px-2 py-0.5 text-[11px] font-bold border truncate ${catMeta.badgeClass}`;
+    catLabel.textContent = `${catMeta.symbol} ${catMeta.label}`;
+
+    leftGroup.appendChild(idxSpan);
+    leftGroup.appendChild(catLabel);
+
+    const scoreBadge = document.createElement('span');
+    scoreBadge.className =
+      score >= 9
+        ? 'shrink-0 px-2 py-0.5 font-mono text-xs font-bold bg-signal text-white tabular-nums'
+        : 'shrink-0 px-2 py-0.5 font-mono text-xs font-semibold bg-paper-subtle dark:bg-carbon-subtle text-paper-ink dark:text-carbon-ink border border-paper-border dark:border-carbon-border tabular-nums';
+    scoreBadge.textContent = `${score}/10`;
+
+    topBar.appendChild(leftGroup);
+    topBar.appendChild(scoreBadge);
+    bodyWrap.appendChild(topBar);
+
+    const korTitle = document.createElement('h3');
+    korTitle.className =
+      'font-serif text-lg sm:text-[19px] font-bold text-paper-ink dark:text-carbon-ink leading-[1.4] mb-1.5';
+    korTitle.textContent = article.korean_title || '';
+    bodyWrap.appendChild(korTitle);
+
+    const origTitle = document.createElement('p');
+    origTitle.className =
+      'text-xs italic text-paper-muted dark:text-carbon-muted mb-3.5 leading-relaxed';
+    origTitle.textContent = article.original_title || '';
+    bodyWrap.appendChild(origTitle);
+
+    const summaryP = document.createElement('p');
+    summaryP.className =
+      'text-sm text-paper-body dark:text-carbon-body leading-[1.74] mb-4';
+    summaryP.textContent = article.summary || '';
+    bodyWrap.appendChild(summaryP);
+
+    // PM Insight 박스 — 요약과 시각적으로 명확히 구분 (SPEC.md 3.4)
+    const pmBox = document.createElement('div');
+    pmBox.className = `bg-paper-dossier dark:bg-carbon-dossier border border-paper-border dark:border-carbon-border border-l-4 ${catMeta.pmAccentClass} p-3.5`;
+
+    const pmHeading = document.createElement('p');
+    pmHeading.className = `font-mono text-[11px] font-bold uppercase tracking-wider ${catMeta.pmLabelClass} mb-1`;
+    pmHeading.textContent = 'PM INSIGHT · 시사점';
+
+    const pmText = document.createElement('p');
+    pmText.className =
+      'text-xs sm:text-[13px] text-paper-ink dark:text-carbon-ink leading-[1.68] font-medium';
+    pmText.textContent = article.pm_insights || '';
+
+    pmBox.appendChild(pmHeading);
+    pmBox.appendChild(pmText);
+    bodyWrap.appendChild(pmBox);
+
+    card.appendChild(bodyWrap);
+    card.appendChild(createFooterBlock(article));
+
     return card;
+  }
+
+  function updateActiveFilterBar(filteredCount) {
+    const statusBox = document.getElementById('active-filter-status');
+    const statusText = document.getElementById('active-filter-text');
+    if (!statusBox || !statusText) return;
+
+    const hasCategory = state.category !== 'all';
+    const hasSearch = state.search.trim().length > 0;
+
+    if (!hasCategory && !hasSearch) {
+      statusBox.classList.add('hidden');
+      return;
+    }
+
+    const parts = [];
+    if (hasCategory) {
+      parts.push(`카테고리: ${state.category}`);
+    }
+    if (hasSearch) {
+      parts.push(`검색어: "${state.search.trim()}"`);
+    }
+    statusText.textContent = `적용된 필터 (${ parts.join(' · ') }) — 총 ${filteredCount}건 표시 중`;
+    statusBox.classList.remove('hidden');
   }
 
   function setSearchQuery(query) {
@@ -309,16 +557,35 @@
     renderArticles();
   }
 
+  function resetAllFilters() {
+    state.category = 'all';
+    state.sort = 'importance';
+    state.search = '';
+    setStorage(STORAGE_KEYS.CATEGORY, 'all');
+    setStorage(STORAGE_KEYS.SORT, 'importance');
+
+    const sortEl = document.getElementById('sort-select');
+    const searchInput = document.getElementById('search-input');
+    const searchClear = document.getElementById('search-clear');
+
+    if (sortEl) sortEl.value = 'importance';
+    if (searchInput) searchInput.value = '';
+    if (searchClear) searchClear.classList.add('hidden');
+
+    updateCategoryTabsUI();
+    renderArticles();
+  }
+
   function renderArticles() {
     const topStorySection = document.getElementById('top-story-section');
     const topStoryContainer = document.getElementById('top-story-container');
     const gridSection = document.getElementById('articles-grid-section');
     const gridContainer = document.getElementById('articles-grid');
     const emptyState = document.getElementById('empty-state');
+    const feedCountLabel = document.getElementById('feed-count-label');
 
     const q = state.search.trim().toLowerCase();
 
-    // 카테고리 및 검색 필터 (제목·요약·태그 대상)
     const filtered = state.articles.filter((article) => {
       if (state.category !== 'all' && article.category !== state.category) {
         return false;
@@ -335,6 +602,8 @@
       return inKor || inOrig || inSum || inTags;
     });
 
+    updateActiveFilterBar(filtered.length);
+
     if (filtered.length === 0) {
       if (topStorySection) topStorySection.classList.add('hidden');
       if (gridSection) gridSection.classList.add('hidden');
@@ -344,7 +613,7 @@
 
     if (emptyState) emptyState.classList.add('hidden');
 
-    // 톱 스토리: importance_score가 가장 높은 기사 1개 선정 (SPEC.md 3.3.5)
+    // 최고 중요도 기사 1건 선정 (SPEC.md 3.3)
     let topIndex = 0;
     let highestScore = -1;
     filtered.forEach((article, idx) => {
@@ -358,7 +627,7 @@
     const topArticle = filtered[topIndex];
     const restArticles = filtered.filter((_, idx) => idx !== topIndex);
 
-    // 나머지 기사 정렬 (중요도순 · 최신순)
+    // 정렬 (중요도순 / 최신순)
     restArticles.sort((a, b) => {
       if (state.sort === 'latest') {
         const byDate = String(b.published_date).localeCompare(String(a.published_date));
@@ -371,16 +640,19 @@
     });
 
     if (topStoryContainer && topStorySection) {
-      topStoryContainer.replaceChildren(createArticleCard(topArticle, true));
+      topStoryContainer.replaceChildren(createArticleCard(topArticle, true, 1));
       topStorySection.classList.remove('hidden');
     }
 
     if (gridContainer && gridSection) {
       gridContainer.replaceChildren();
       if (restArticles.length > 0) {
-        restArticles.forEach((article) => {
-          gridContainer.appendChild(createArticleCard(article, false));
+        restArticles.forEach((article, idx) => {
+          gridContainer.appendChild(createArticleCard(article, false, idx + 2));
         });
+        if (feedCountLabel) {
+          feedCountLabel.textContent = `SHOWING ${restArticles.length} ADDITIONAL ARTICLES`;
+        }
         gridSection.classList.remove('hidden');
       } else {
         gridSection.classList.add('hidden');
@@ -430,6 +702,7 @@
       }
 
       renderMetrics(state.articles);
+      updateCategoryTabsUI();
       if (loadingSkeleton) loadingSkeleton.classList.add('hidden');
       renderArticles();
     } catch (err) {
@@ -459,6 +732,17 @@
       });
     });
 
+    const metricCatBtns = document.querySelectorAll('.metric-cat-btn');
+    metricCatBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cat = btn.getAttribute('data-metric-category') || 'all';
+        state.category = state.category === cat ? 'all' : cat;
+        setStorage(STORAGE_KEYS.CATEGORY, state.category);
+        updateCategoryTabsUI();
+        renderArticles();
+      });
+    });
+
     const sortSelect = document.getElementById('sort-select');
     if (sortSelect) {
       sortSelect.addEventListener('change', (e) => {
@@ -479,6 +763,12 @@
         }
         renderArticles();
       });
+
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && state.search) {
+          setSearchQuery('');
+        }
+      });
     }
 
     if (searchClear) {
@@ -488,28 +778,40 @@
       });
     }
 
+    // '/' 단축키로 검색창 포커스
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.key === '/' &&
+        document.activeElement !== searchInput &&
+        !['INPUT', 'TEXTAREA', 'SELECT'].includes(
+          (document.activeElement && document.activeElement.tagName) || ''
+        )
+      ) {
+        e.preventDefault();
+        if (searchInput) searchInput.focus();
+      }
+    });
+
     const resetBtn = document.getElementById('reset-filter-btn');
     if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        state.category = 'all';
-        state.sort = 'importance';
-        state.search = '';
-        setStorage(STORAGE_KEYS.CATEGORY, 'all');
-        setStorage(STORAGE_KEYS.SORT, 'importance');
+      resetBtn.addEventListener('click', resetAllFilters);
+    }
 
-        const sortEl = document.getElementById('sort-select');
-        if (sortEl) sortEl.value = 'importance';
-        if (searchInput) searchInput.value = '';
-        if (searchClear) searchClear.classList.add('hidden');
-
-        updateCategoryTabsUI();
-        renderArticles();
-      });
+    const inlineResetBtn = document.getElementById('inline-reset-btn');
+    if (inlineResetBtn) {
+      inlineResetBtn.addEventListener('click', resetAllFilters);
     }
 
     const retryBtn = document.getElementById('retry-btn');
     if (retryBtn) {
       retryBtn.addEventListener('click', fetchNews);
+    }
+
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
   }
 
