@@ -10,9 +10,9 @@
 |---|---|---|
 | Claude | 아키텍처 관리, 스키마 검증, GitHub Pages 배포 | `CLAUDE.md`, `SPEC.md`, `schema.json`, `scripts\*`, `.claudeignore`, `.claude\settings.json` |
 | Antigravity (앱, 수동) | UI 구현, 첫 빌드 | `index.html`, `app.js`, `*.css` |
-| Gemini CLI (`gemini -p`, 자동) | 일일 웹 리서치, 뉴스 데이터 작성 | `data\news.json` |
+| Antigravity CLI (`agy -p`, 자동) | 일일 웹 리서치, 뉴스 데이터 작성 | `data\news.json` |
 
-Antigravity의 CLI(`agentapi`)는 앱 내부 터미널에서만 동작해 스케줄 실행이 불가능하다. 그래서 일일 갱신은 Gemini CLI가 맡는다.
+`agy`는 데스크톱 앱과 별개 제품이다(`winget install --id Google.AntigravityCLI -e`). 앱 내부의 `agentapi`는 앱 터미널에서만 동작하고, Gemini CLI는 무료 개인 계정에서 지원이 끊겨 쓰지 않는다.
 
 ## Claude 금지 사항
 1. UI 직접 코딩 금지 — `index.html`, `app.js`, `*.css`를 작성·수정·열람하지 않는다.
@@ -25,7 +25,7 @@ Antigravity의 CLI(`agentapi`)는 앱 내부 터미널에서만 동작해 스케
 - 큰 파일 내용 대신 검증 스크립트의 결과(통과/오류 목록)만 본다.
 
 ## 작업 흐름
-1. `scripts\run_daily_pipeline.ps1` → Gemini CLI가 `data\news.json` 갱신
+1. `scripts\run_daily_pipeline.ps1` → `agy`가 `data\news.json` 갱신
 2. `scripts\validate_and_deploy.py` → `schema.json` 기준 검증
 3. 통과 시 `git add .` → `git commit -m "chore: daily market briefing update"` → `git push origin main`
 4. 실패 시 배포하지 않고 오류 목록을 Antigravity에 전달해 재생성

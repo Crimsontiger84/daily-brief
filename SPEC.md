@@ -1,6 +1,6 @@
-# SPEC.md — Antigravity / Gemini CLI 작업 지시서
+# SPEC.md — Antigravity 작업 지시서
 
-첫 빌드(1장 A)는 Antigravity 앱에서, 일일 갱신(1장 B)은 Gemini CLI가 헤드리스로 수행한다.
+첫 빌드(1장 A)는 Antigravity 앱에서, 일일 갱신(1장 B)은 Antigravity CLI(`agy -p`)가 무인으로 수행한다.
 
 프로젝트 루트: `C:\Users\a\Documents\Tech`
 이 문서와 `schema.json`이 유일한 기준이다. 둘이 충돌하면 `schema.json`이 우선한다.

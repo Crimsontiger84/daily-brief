@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-13T22:55:00+09:00",
-  "executive_summary": "글로벌 AI 시장은 구글의 에이전트 특화 경량 모델 'Gemini 4 Hydrogen'과 앤트로픽의 'Claude Fable 5.2'가 잇따라 출시되며 초저비용·고속 멀티 에이전트 실행 환경으로 빠르게 재편되고 있습니다. 이러한 AI 인프라 투자 붐에 힘입어 한국은 11월 초 반도체 수출이 전년 대비 331.2% 폭증하며 사상 첫 연간 수출 1조 달러 달성을 눈앞에 두고 있으나, 국제 유가 급등과 증시 외국인 매도세로 인한 단기 환율 변동성은 여전히 경계 요인입니다. 한편 골프 및 스포츠 테크 업계에서는 여성 스크린골프 리그 WTGL의 성공적인 출범과 함께 시뮬레이터 웨지 스핀 정밀도 논란, 그리고 200달러대 보급형 런치 모니터의 약진이 동시에 부각되며 하드웨어 가성비와 센서 트래킹 신뢰성이 핵심 경쟁력으로 떠오르고 있습니다.",
+  "updated_at": "2026-11-13T23:50:00+09:00",
+  "executive_summary": "글로벌 AI 시장은 구글의 에이전트 특화 경량 모델 'Gemini 4 Hydrogen'과 앤트로픽의 'Claude Fable 5.2' 출시, 그리고 젯브레인즈(JetBrains)의 실전 에이전트 스케일링 보고서 발표가 맞물리며 초저비용 멀티 에이전트 운영과 MCP 인프라 표준화 단계로 진입하고 있습니다. 거시경제에서는 AI 데이터센터 수요에 힘입어 한국의 11월 초 반도체 수출이 331.2% 폭증하고 10월 수출물량지수가 사상 최대폭(43.9%)으로 뛰었으나, 미국 10월 소비자물가지수(CPI)가 전월 대비 0.4% 상승하며 연준의 12월 빅스텝(0.50%p) 금리 인상 가능성과 원/달러 환율 변동성을 동시에 자극하고 있습니다. 한편 골프 및 스포츠 테크 업계에서는 여성 스크린골프 리그 WTGL 개막전이 ESPN 최고 시청자 13만 8,000명을 기록하며 흥행성을 입증한 가운데, 시뮬레이터 웨지 백스핀 정밀도 논쟁과 200달러 미만 무구독 런치 모니터의 약진이 하드웨어·소프트웨어 차별화 과제를 던지고 있습니다.",
   "articles": [
     {
       "id": "2026-11-13-ai-01",
@@ -11,7 +11,7 @@
       "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
       "original_title": "Introducing Gemini 4 Hydrogen for Agentic Workflows",
       "korean_title": "구글, 에이전트 워크플로우와 일일 코딩에 특화된 초고속 모델 'Gemini 4 Hydrogen' 공개",
-      "summary": "구글이 일상적인 소프트웨어 개발과 자율 에이전트 워크플로우 실행에 최적화된 고효율 모델 'Gemini 4 Hydrogen'을 정식 출시했습니다. 입력 100만 토큰당 1.50달러, 출력 100만 토큰당 7.50달러의 공격적인 가격 책정과 빠른 응답 속도를 앞세워 구글 검색, 제미나이 앱, 개발자 API 전반에 즉시 통합되었습니다. 또한 대규모 병렬 의사결정 요청을 처리하는 'Decisions API'도 함께 선보이며 프로덕션 환경의 멀티 에이전트 도입 장벽을 대폭 낮췄습니다.",
+      "summary": "구글이 일상적인 소프트웨어 개발과 자율 에이전트 워크플로우 실행에 최적화된 고효율 모델 'Gemini 4 Hydrogen'을 정식 출시했습니다. 100만 토큰 컨텍스트 창과 함께 입력 100만 토큰당 1.50달러, 출력 100만 토큰당 7.50달러의 공격적인 가격을 책정했으며 구글 검색, 제미나이 앱, 개발자 API 전반에 즉시 통합되었습니다. 또한 대규모 병렬 의사결정 요청을 처리하는 'Decisions API'도 함께 선보이며 프로덕션 환경의 멀티 에이전트 도입 장벽을 대폭 낮췄습니다.",
       "pm_insights": "실시간 음성·비전 피드백이 필수적인 AI 골프 코칭 에이전트에 100만 입력 토큰당 1.50달러 수준의 고속 모델을 적용하면 시뮬레이터 라운드 중 샷 분석 지연을 1초 이내로 단축하면서도 클라우드 API 원가를 획기적으로 절감할 수 있습니다. 자사 런치 모니터 앱의 스윙 진단 파이프라인에 Gemini 4 Hydrogen 기반의 경량 에이전트 아키텍처 도입을 위한 기술 검증(PoC)을 즉시 추진할 만합니다.",
       "tags": [
         "Google",
@@ -31,13 +31,32 @@
       "original_title": "Exports more than double in 1st 10 days of Nov.",
       "korean_title": "11월 초순 한국 수출 111.9% 폭증하며 335억 달러 돌파, 반도체가 절반 견인",
       "summary": "관세청 발표에 따르면 11월 1일부터 10일까지 한국의 수출액은 전년 동기 대비 111.9% 급증한 334억 6,000만 달러를 기록해 역대 11월 초순 기준 최고치를 경신했습니다. 특히 글로벌 AI 인프라 수요 폭증에 힘입어 반도체 수출이 331.2% 늘어난 166억 달러로 전체 수출의 49.7%를 차지했으며, 대미 수출(67억 9,000만 달러, +163.6%)과 대중 수출(91억 6,000만 달러, +148.0%) 모두 큰 폭으로 뛰었습니다. 이로써 올해 누적 수출액은 9,636억 달러에 달해 사상 최초 연간 수출 1조 달러 달성이 유력해졌습니다.",
-      "pm_insights": "AI 데이터센터발 메모리·반도체 초호황이 이어지면서 고사양 비전 센서 및 온디바이스 AI 칩셋 부품의 공급 리드타임과 단가 상승 압력이 내년 상반기까지 지속될 가능성이 높습니다. 차세대 카메라 기반 런치 모니터 및 시뮬레이터 하드웨어 BOM(자재명세서) 원가 산정 시 메모리·프로세서 재고를 선제 확보하고, 대미 무역 흑자 확대에 따른 미국발 관세 리스크 시나리오를 북미 수출 가격 정책에 반영해야 합니다.",
+      "pm_insights": "AI 데이터센터발 메모리·반도체 초호황이 이어지면서 고사양 비전 센서 및 온디바이스 AI 칩셋 부품의 공급 리드타임과 단가 상승 압력이 내년 상반기까지 지속될 가능성이 높습니다. 차세대 카메라 기반 런치 모니터 및 시뮬레이터 하드웨어 BOM(자재명세서) 원가 산정 시 메모리·프로세서 재고를 선제 확보하고, 대미 무역 흑자 확대에 따른 통상 압박 시나리오를 북미 수출 가격 정책에 반영해야 합니다.",
       "tags": [
         "한국 수출",
         "반도체 슈퍼사이클",
         "무역수지",
         "대미 수출",
         "관세청"
+      ]
+    },
+    {
+      "id": "2026-11-13-macro-02",
+      "category": "US-Korea Macro Economy",
+      "importance_score": 9,
+      "published_date": "2026-11-10",
+      "source_name": "CFO Dive",
+      "source_url": "https://www.cfodive.com/news/inflation-rises-faster-than-expected-boosting-odds-of-fed-rate-hike/765000/",
+      "original_title": "Inflation rises faster than expected, boosting odds of Fed rate hike",
+      "korean_title": "미국 10월 CPI 예상 웃돈 0.4% 상승… 연준 12월 금리 인상 및 '빅스텝' 가능성 부상",
+      "summary": "미국 노동통계국(BLS)이 발표한 10월 소비자물가지수(CPI)가 전월 대비 0.4% 상승해 시장 예상치(0.3%)를 상회했으며, 근원 CPI 역시 3개월 연속 0.3% 오르며 끈적한 물가 압력을 드러냈습니다. 주거비와 의료비뿐만 아니라 수입 관세 영향이 본격화된 자동차 부품 및 수리비 상승이 물가를 끌어올리면서, 금리 선물 시장은 12월 FOMC의 금리 인상 확률을 사실상 100%로 반영했습니다. 크리스토퍼 월러 연준 이사는 인플레이션 고착화를 막기 위해 통상적인 0.25%p 대신 0.50%p(50bp) 인상도 검토할 수 있다고 경고했습니다.",
+      "pm_insights": "미국 내 관세 비용 전가와 고금리 기조 재강화로 인해 북미 소비자의 고가 내구재 할부 금리 부담과 상업용 매장주들의 금융 조달 비용이 다시 높아질 위험이 있습니다. 북미 가정용 시뮬레이터 및 하이엔드 런치 모니터 판매 시 무이자·저금리 할부 프로모션 파트너십을 보강하고, 하드웨어 일시불 구매 부담을 낮춘 하드웨어+소프트웨어 결합 구독(HaaS) 모델을 전면에 배치해야 합니다.",
+      "tags": [
+        "미국 CPI",
+        "연준 금리인상",
+        "Christopher Waller",
+        "관세 영향",
+        "인플레이션"
       ]
     },
     {
@@ -79,26 +98,64 @@
       ]
     },
     {
-      "id": "2026-11-13-macro-02",
-      "category": "US-Korea Macro Economy",
+      "id": "2026-11-13-ai-03",
+      "category": "AI Agents & LLM",
       "importance_score": 8,
       "published_date": "2026-11-13",
-      "source_name": "The Korea Times",
-      "source_url": "https://www.koreatimes.co.kr/www/biz/2026/11/126_389232.html",
-      "original_title": "Korean economy continues to 'grow at solid pace': finance ministry",
-      "korean_title": "기획재정부, 11월 그린북서 한국 경제 진단 '회복세'에서 '견조한 성장세'로 1년 만에 상향",
-      "summary": "기획재정부가 11월 13일 발간한 '최근 경제동향(그린북)'에서 한국 경제에 대한 공식 진단을 기존 '회복 흐름'에서 1년 만에 '견조한 성장 지속'으로 한 단계 상향 조정했습니다. 3분기 실질 GDP가 전분기 대비 1.0% 성장하고 설비투자가 4.1% 증가한 가운데, 10월 수출이 반도체와 컴퓨터 호조에 힘입어 전년 동월 대비 93.7% 급증한 1,152억 8,000만 달러를 기록한 점이 주효했습니다. 다만 3분기 민간소비가 전분기 대비 0.2% 감소하고 10월 소비자심리지수(CCSI)가 105.4로 소폭 하락하는 등 내수 체감 경기는 수출과 온도차를 보였습니다.",
-      "pm_insights": "수출 주도의 거시 성장에도 불구하고 국내 민간소비(-0.2%)와 소비심리가 다소 둔화된 양극화 국면에서는 국내 오프라인 스크린골프 매장주들의 신규 장비 교체 투자(CAPEX)가 보수적으로 흐를 수 있습니다. 국내 영업에서는 초기 도입 비용을 낮춘 렌탈·구독형 금융 패키지를 강화하고, 성장을 주도하는 북미·아시아 수출 시장으로 매출 비중을 다변화하는 전략이 유효합니다.",
+      "source_name": "JetBrains Blog",
+      "source_url": "https://blog.jetbrains.com/blog/2026/11/13/scaling-ai-agents-what-we-learned-from-9-real-world-cases/",
+      "original_title": "Scaling AI Agents: What We Learned From 9 Real-World Cases",
+      "korean_title": "젯브레인즈, 9개 기업 실전 사례 분석… '전담 인프라 구축 시 PR 처리량 3배·결함 54% 감소'",
+      "summary": "젯브레인즈(JetBrains)가 핀(Fin), 셈러시(Semrush) 등 9개 기술 조직의 AI 에이전트 확장 사례를 분석한 보고서를 발표하며 단순 에이전트 도입률 확대만으로는 개발 속도가 오르지 않는다고 지적했습니다. 대표 사례인 핀(Fin)은 사내 에이전트 인프라 전담팀('Team 2x')을 구성해 공통 스킬, 플러그인, MCP(Model Context Protocol) 서버 및 과거 PR 기반 자동 평가 파이프라인을 구축했습니다. 그 결과 전체 AI 예산 증가에도 불구하고 풀 리퀘스트(PR) 처리량을 3배로 늘리고 결함 백로그를 54% 줄였으며, PR당 비용을 50% 절감하는 성과를 거두었습니다.",
+      "pm_insights": "시뮬레이터 소프트웨어 및 모바일 앱 개발 조직에서도 개별 개발자에게 코딩 에이전트를 배포하는 수준을 넘어, 사내 코드베이스 컨텍스트(MCP 서버)와 자동화된 린팅·검증 가드레일을 관리하는 플랫폼 엔지니어링 체계를 갖춰야 실질적인 출시 속도 향상을 얻을 수 있습니다. 펌웨어 및 그래픽 엔진 PR 리뷰 스킬을 표준화해 QA 병목을 줄이는 실험을 즉시 적용해 볼 수 있습니다.",
       "tags": [
-        "기획재정부",
-        "그린북",
-        "한국 GDP",
-        "설비투자",
-        "내수 경기"
+        "JetBrains",
+        "AI 에이전트 확장",
+        "MCP 서버",
+        "개발 생산성",
+        "엔지니어링 인프라"
       ]
     },
     {
       "id": "2026-11-13-golf-02",
+      "category": "Golf & Sports Tech",
+      "importance_score": 8,
+      "published_date": "2026-11-12",
+      "source_name": "Just Women's Sports",
+      "source_url": "https://justwomenssports.com/wtgl-debut-peaks-at-138000-viewers-on-espn/",
+      "original_title": "WTGL Debut Peaks at 138,000 Viewers on ESPN",
+      "korean_title": "여성 스크린골프 리그 WTGL 개막전, ESPN 최고 시청자 13만 8,000명 기록… LPGA 평균 상회",
+      "summary": "여성 실내 시뮬레이터 골프 리그 'WTGL'의 ESPN 개막 중계가 평균 시청자 9만 7,000명, 최고 동시 시청자 13만 8,000명을 기록하며 성공적인 출발을 알렸습니다. 이는 NFL 및 나스카(NASCAR) 경기가 동시에 편성된 불리한 주말 시간대였음에도 불구하고, 2026시즌 LPGA 투어 일반 대회(메이저 제외) 케이블 중계 평균 시청자 수인 8만 7,000명을 약 11.5% 웃돈 수치입니다.",
+      "pm_insights": "WTGL이 첫 중계부터 기존 필드 투어 평균을 넘어서는 시청 지표를 기록한 것은 빠른 템포의 시뮬레이터 팀 매치 포맷이 대중적 미디어 콘텐츠로서 높은 상품성을 지녔음을 입증합니다. 스크린골프 매장 및 온라인 플랫폼 내에 WTGL 경기 방식을 차용한 여성·혼성 팀 리그전과 실시간 관전 모드를 도입하면 신규 여성 골퍼 유입과 매장 활성화에 직접적인 기폭제가 될 것입니다.",
+      "tags": [
+        "WTGL",
+        "ESPN 시청률",
+        "LPGA",
+        "시뮬레이터 골프",
+        "스포테인먼트"
+      ]
+    },
+    {
+      "id": "2026-11-13-macro-03",
+      "category": "US-Korea Macro Economy",
+      "importance_score": 8,
+      "published_date": "2026-11-13",
+      "source_name": "Bank of Korea",
+      "source_url": "https://www.bok.or.kr/eng/bbs/E0000634/view.do?nttId=10093155",
+      "original_title": "Export/Import Price Indexes and Trade Indexes - October 2026(preliminary)",
+      "korean_title": "한국은행, 10월 수출물량지수 전년비 43.9% 급증 발표… IT·컴퓨터·광학기기 출하량이 주도",
+      "summary": "한국은행이 11월 13일 발표한 '2026년 10월 수출입물가지수 및 무역지수(잠정)'에 따르면, 10월 수출물량지수는 전년 동월 대비 43.9% 급증하며 역대 최고 수준의 물량 성장세를 기록했습니다. 컴퓨터·전자 및 광학기기 수출 물량이 51.2% 폭증하고 기계 및 장비가 38.7% 늘어나면서 단순 가격 상승 효과를 넘어선 실질 출하량 확대를 입증했습니다. 같은 기간 달러 기준 수출금액지수는 96.7% 상승했으며, 순상품교역조건지수도 전년 동월 대비 29.0% 개선되었습니다.",
+      "pm_insights": "컴퓨터·전자 및 광학기기 수출 물량이 50% 이상 급증하고 있는 현상은 글로벌 하드웨어 제조망에서 광학 모듈과 고성능 연산 부품의 실물 수요가 사상 최고조에 달했음을 보여줍니다. 광학 카메라 센서와 프로젝터를 핵심 부품으로 사용하는 골프 시뮬레이터 제조사는 국내외 광학 부품 협력사와의 장기 물량 계약을 조기에 확정해 생산 차질을 예방해야 합니다.",
+      "tags": [
+        "한국은행",
+        "수출물량지수",
+        "무역지수",
+        "광학기기 수출",
+        "교역조건"
+      ]
+    },
+    {
+      "id": "2026-11-13-golf-03",
       "category": "Golf & Sports Tech",
       "importance_score": 8,
       "published_date": "2026-11-09",
@@ -117,15 +174,15 @@
       ]
     },
     {
-      "id": "2026-11-13-ai-03",
+      "id": "2026-11-13-ai-04",
       "category": "AI Agents & LLM",
       "importance_score": 8,
       "published_date": "2026-11-12",
       "source_name": "Al Jazeera",
       "source_url": "https://www.aljazeera.com/news/2026/11/12/us-nonprofits-sue-tech-giants-to-halt-ai-development",
       "original_title": "US nonprofits sue tech giants to halt AI development",
-      "korean_title": "미국 시민단체 연합, 오픈AI·구글·앤트로픽 등 빅테크 5개사에 차세대 프론티어 AI 개발 중단 가처분 소송 제기",
-      "summary": "퍼블릭 시티즌(Public Citizen)과 안전한 AI를 위한 연합 등 미국 내 4개 비영리 단체가 11월 12일 샌프란시스코 고등법원에 오픈AI, 앤트로픽, 구글, 메타, 스페이스X를 상대로 차세대 프론티어 AI 모델의 학습 및 배포 중단을 요구하는 민사 소송을 제기했습니다. 원고 측은 빅테크 기업들이 자율 에이전트로 인한 사이버 공격 및 통제력 상실 위험을 인지하고도 안전 장치가 입증되지 않은 모델을 무리하게 출시해 캘리포니아주의 불공정경쟁법 및 공공 불법행위 법리를 위반했다고 주장했습니다.",
+      "korean_title": "미국 시민단체 연합, 오픈AI·구글·앤트로픽 등 빅테크 5개사에 차세대 프론티어 AI 개발 중단 소송 제기",
+      "summary": "퍼블릭 시티즌(Public Citizen)과 히트 이니셔티브(Heat Initiative) 등 미국 내 비영리 단체 연합이 샌프란시스코 고등법원에 오픈AI, 앤트로픽, 구글, 메타, 스페이스X를 상대로 차세대 프론티어 AI 모델의 개발 및 배포 중단을 요구하는 소송을 제기했습니다. 원고 측은 빅테크 기업들이 자율 에이전트로 인한 사이버 공격 및 통제력 상실 위험을 스스로 인정하면서도 안전 장치가 입증되지 않은 모델을 경쟁적으로 출시해 공공 불법행위 및 캘리포니아주 불공정경쟁법을 위반했다고 주장했습니다.",
       "pm_insights": "자율형 AI 에이전트에 대한 미국 내 법적·규제적 압박이 거세지면서 빅테크의 프론티어 모델 API 정책이나 안전 필터링 기준이 예고 없이 강화될 위험이 있습니다. 제품 내 AI 기능을 특정 단일 벤더의 클라우드 모델에만 의존하지 않도록 멀티 모델 라우팅 구조를 설계하고, 사용자 스윙 영상 및 생체 데이터의 온디바이스 처리 비중을 높여 규제 리스크를 회피해야 합니다.",
       "tags": [
         "AI 규제",
@@ -136,26 +193,7 @@
       ]
     },
     {
-      "id": "2026-11-13-golf-03",
-      "category": "Golf & Sports Tech",
-      "importance_score": 7,
-      "published_date": "2026-11-08",
-      "source_name": "Front Office Sports",
-      "source_url": "https://frontofficesports.com/wtgl-has-surreal-debut-as-newest-womens-sports-league",
-      "original_title": "WTGL Has 'Surreal' Debut As Newest Women's Sports League",
-      "korean_title": "여성 스크린골프 테크 리그 'WTGL' 화려한 개막… 1,500석 매진 속 LA 골프 클럽 첫 승",
-      "summary": "TMRW 스포츠와 LPGA가 합작한 여성 팀 골프 리그 'WTGL'이 플로리다주 팜비치가든스 소파이(SoFi) 센터에서 1,500석 전석 매진을 기록하며 성공적인 첫 시즌 개막전을 치렀습니다. 총상금 1,100만 달러 규모로 5개 팀 25명의 스타 선수가 참가하는 이 리그는 15홀 팀 매치 포맷으로 진행되었으며, 개막전에서는 미셸 위 웨스트·앨리슨 리·가비 로페즈가 활약한 로스앤젤레스 골프 클럽이 리디아 고·로즈 장이 속한 뉴욕 골프 클럽을 3대 1로 꺾었습니다.",
-      "pm_insights": "WTGL의 흥행은 실내 골프 시뮬레이터가 단순 개인 연습 도구를 넘어 여성 및 젊은 층이 열광하는 팀 기반 스포테인먼트(Sportainment) 관람·참여 콘텐츠로 확장되었음을 보여줍니다. 매장 및 홈 시뮬레이터 소프트웨어에 15홀 고속 팀 매치, 샷클락 도입 등 WTGL 스타일의 박진감 넘치는 소셜 게임 모드를 발 빠르게 추가해 여성 골퍼와 신규 유입층의 체류 시간을 늘려야 합니다.",
-      "tags": [
-        "WTGL",
-        "LPGA",
-        "TMRW Sports",
-        "스크린골프 리그",
-        "스포테인먼트"
-      ]
-    },
-    {
-      "id": "2026-11-13-macro-03",
+      "id": "2026-11-13-macro-04",
       "category": "US-Korea Macro Economy",
       "importance_score": 7,
       "published_date": "2026-11-13",
@@ -171,25 +209,6 @@
         "코스피",
         "외국인 순매도",
         "인플레이션"
-      ]
-    },
-    {
-      "id": "2026-11-13-ai-04",
-      "category": "AI Agents & LLM",
-      "importance_score": 7,
-      "published_date": "2026-11-10",
-      "source_name": "Rediff Money",
-      "source_url": "https://www.rediff.com/money/report/cognizant-launches-new-ai-capability-group-with-25000-professionals/20261110.htm",
-      "original_title": "Cognizant Launches New AI Capability Group With 25,000 Professionals",
-      "korean_title": "코그니전트, 앤트로픽 클로드 전담 인력 2만 5,000명 규모 '프론티어 AI 조직' 신설",
-      "summary": "글로벌 IT 서비스 기업 코그니전트(Cognizant)가 엔터프라이즈 고객의 프로덕션 AI 에이전트 도입을 가속화하기 위해 2만 5,000명 이상의 전문 인력으로 구성된 '클로드 프론티어 역량 그룹(Claude Frontier Capability Group)'을 공식 출범했습니다. 코그니전트는 클로드, 오픈AI, 제미나이 등 빅테크 모델별로 중복되지 않는 전담 딜리버리 조직을 분리 구축해 기업들의 레거시 시스템 현대화와 자율 에이전트 구축 수요에 대응하고 있습니다.",
-      "pm_insights": "글로벌 SI 업계가 단일 범용 AI 조직에서 모델별 특화 에이전트 구축 전담 조직으로 재편되고 있는 것은 엔터프라이즈 현장에서 AI가 실험 단계를 지나 본격적인 시스템 통합(SI) 단계에 진입했음을 뜻합니다. 골프장 ERP, 예약 시스템, 시뮬레이터 매장 관리 솔루션을 공급할 때도 외부 파트너사들이 즉시 연동할 수 있도록 MCP(Model Context Protocol) 기반의 표준 에이전트 API 인터페이스를 제공해야 B2B 확장성을 선점할 수 있습니다.",
-      "tags": [
-        "Cognizant",
-        "Anthropic Claude",
-        "엔터프라이즈 AI",
-        "SI 조직개편",
-        "AI 에이전트 도입"
       ]
     }
   ]
