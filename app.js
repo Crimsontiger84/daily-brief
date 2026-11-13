@@ -1,6 +1,6 @@
 /**
- * THE PM BRIEF — app.js
- * Swiss Architectural Bento & Quiet Luxury Memo
+ * PM 인텔리전스 브리핑 — app.js
+ * Calm SaaS Intelligence & Soft Layered Bento
  * SPEC.md 3장 규격 준수 (바닐라 JS, 상대 경로 fetch('./data/news.json'), 모든 텍스트 textContent 바인딩)
  */
 (function () {
@@ -15,39 +15,39 @@
   const CATEGORY_META = {
     'Golf & Sports Tech': {
       symbol: '●',
-      shortCode: 'GOLF · TECH',
       label: 'Golf & Sports Tech',
-      topBarClass: 'cat-bar-golf',
       badgeClass:
-        'bg-cat-golfBg text-cat-golf border-cat-golf/30 dark:bg-cat-golfDarkBg dark:text-cat-golfDark dark:border-cat-golfDark/40',
+        'rounded-full bg-cat-golfBg text-cat-golfText border-cat-golfBorder dark:bg-cat-golfDarkBg/60 dark:text-cat-golfDarkText dark:border-cat-golfDarkBorder/50',
       activeTabClass:
-        'bg-cat-golf text-white border-cat-golf dark:bg-cat-golfDark dark:text-carbon-bg dark:border-cat-golfDark',
-      pmAccentClass: 'border-l-cat-golf dark:border-l-cat-golfDark',
-      pmLabelClass: 'text-cat-golf dark:text-cat-golfDark'
+        'bg-cat-golfText text-white border-cat-golfText dark:bg-cat-golfAccent dark:text-canvas-dark dark:border-cat-golfAccent shadow-sm',
+      pmBoxClass:
+        'bg-cat-golfBg/45 dark:bg-cat-golfDarkBg/25 border-cat-golfBorder/80 dark:border-cat-golfDarkBorder/40',
+      pmDotClass: 'bg-cat-golfAccent',
+      pmLabelClass: 'text-cat-golfText dark:text-cat-golfDarkText'
     },
     'AI Agents & LLM': {
       symbol: '◆',
-      shortCode: 'AI · AGENT',
       label: 'AI Agents & LLM',
-      topBarClass: 'cat-bar-ai',
       badgeClass:
-        'bg-cat-aiBg text-cat-ai border-cat-ai/30 dark:bg-cat-aiDarkBg dark:text-cat-aiDark dark:border-cat-aiDark/40',
+        'rounded-lg bg-cat-aiBg text-cat-aiText border-cat-aiBorder dark:bg-cat-aiDarkBg/60 dark:text-cat-aiDarkText dark:border-cat-aiDarkBorder/50',
       activeTabClass:
-        'bg-cat-ai text-white border-cat-ai dark:bg-cat-aiDark dark:text-carbon-bg dark:border-cat-aiDark',
-      pmAccentClass: 'border-l-cat-ai dark:border-l-cat-aiDark',
-      pmLabelClass: 'text-cat-ai dark:text-cat-aiDark'
+        'bg-cat-aiText text-white border-cat-aiText dark:bg-cat-aiAccent dark:text-white dark:border-cat-aiAccent shadow-sm',
+      pmBoxClass:
+        'bg-cat-aiBg/45 dark:bg-cat-aiDarkBg/25 border-cat-aiBorder/80 dark:border-cat-aiDarkBorder/40',
+      pmDotClass: 'bg-cat-aiAccent',
+      pmLabelClass: 'text-cat-aiText dark:text-cat-aiDarkText'
     },
     'US-Korea Macro Economy': {
       symbol: '■',
-      shortCode: 'MACRO · FX',
       label: 'US-Korea Macro Economy',
-      topBarClass: 'cat-bar-macro',
       badgeClass:
-        'bg-cat-macroBg text-cat-macro border-cat-macro/30 dark:bg-cat-macroDarkBg dark:text-cat-macroDark dark:border-cat-macroDark/40',
+        'rounded-md bg-cat-macroBg text-cat-macroText border-cat-macroBorder dark:bg-cat-macroDarkBg/60 dark:text-cat-macroDarkText dark:border-cat-macroDarkBorder/50',
       activeTabClass:
-        'bg-cat-macro text-white border-cat-macro dark:bg-cat-macroDark dark:text-carbon-bg dark:border-cat-macroDark',
-      pmAccentClass: 'border-l-cat-macro dark:border-l-cat-macroDark',
-      pmLabelClass: 'text-cat-macro dark:text-cat-macroDark'
+        'bg-cat-macroText text-white border-cat-macroText dark:bg-cat-macroAccent dark:text-canvas-dark dark:border-cat-macroAccent shadow-sm',
+      pmBoxClass:
+        'bg-cat-macroBg/55 dark:bg-cat-macroDarkBg/25 border-cat-macroBorder/80 dark:border-cat-macroDarkBorder/40',
+      pmDotClass: 'bg-cat-macroAccent',
+      pmLabelClass: 'text-cat-macroText dark:text-cat-macroDarkText'
     }
   };
 
@@ -74,7 +74,7 @@
     try {
       window.localStorage.setItem(key, value);
     } catch (_) {
-      // localStorage 접근 불가 시에도 정상 동작 보장 (SPEC.md 3.5)
+      // localStorage 접근 불가 시에도 화면 정상 동작 보장 (SPEC.md 3.5)
     }
   }
 
@@ -187,7 +187,7 @@
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
 
       const meta = CATEGORY_META[cat];
-      const countSuffix = state.articles.length > 0 ? ` (${counts[cat] ?? 0})` : '';
+      const countSuffix = state.articles.length > 0 ? ` ${counts[cat] ?? 0}` : '';
       if (cat === 'all') {
         tab.textContent = `전체${countSuffix}`;
       } else if (meta) {
@@ -197,26 +197,25 @@
       if (active) {
         if (cat === 'all') {
           tab.className =
-            'cat-tab px-3 py-1.5 text-xs sm:text-sm font-bold border bg-paper-ink text-paper-surface border-paper-ink dark:bg-carbon-ink dark:text-carbon-bg dark:border-carbon-ink transition-colors';
+            'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-ink-primary text-white border-ink-primary dark:bg-ink-darkPrimary dark:text-canvas-dark dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums';
         } else {
-          tab.className = `cat-tab px-3 py-1.5 text-xs sm:text-sm font-bold border transition-colors ${meta.activeTabClass}`;
+          tab.className = `cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums ${meta.activeTabClass}`;
         }
       } else {
         tab.className =
-          'cat-tab px-3 py-1.5 text-xs sm:text-sm font-semibold border bg-paper-surface dark:bg-carbon-surface text-paper-ink dark:text-carbon-ink border-paper-border dark:border-carbon-border hover:border-paper-borderStrong dark:hover:border-carbon-borderStrong transition-colors';
+          'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-transparent bg-surface-subtle/70 dark:bg-surface-darkSubtle/70 text-ink-body dark:text-ink-darkBody hover:bg-slate-200/70 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums';
       }
     });
 
-    // 지표 박스의 카테고리 버튼 선택 강조 동기화
     const metricBtns = document.querySelectorAll('.metric-cat-btn');
     metricBtns.forEach((btn) => {
       const cat = btn.getAttribute('data-metric-category');
       const isSelected = state.category === cat;
       btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
       if (isSelected) {
-        btn.classList.add('ring-2', 'ring-paper-ink', 'dark:ring-carbon-ink');
+        btn.classList.add('ring-2', 'ring-accent', 'dark:ring-accent-dark');
       } else {
-        btn.classList.remove('ring-2', 'ring-paper-ink', 'dark:ring-carbon-ink');
+        btn.classList.remove('ring-2', 'ring-accent', 'dark:ring-accent-dark');
       }
     });
   }
@@ -246,7 +245,7 @@
     if (elAi) elAi.textContent = `${ai}건`;
     if (elMacro) elMacro.textContent = `${macro}건`;
     if (elAvg) elAvg.textContent = `${avg} / 10`;
-    if (elHigh) elHigh.textContent = `9+ CRITICAL: ${highPriority}건`;
+    if (elHigh) elHigh.textContent = `핵심(9점+) ${highPriority}건`;
 
     if (total > 0) {
       const barGolf = document.getElementById('bar-golf');
@@ -258,43 +257,41 @@
     }
   }
 
-  function createScoreMeter(score) {
+  function createScoreBadge(score, isHero) {
     const wrap = document.createElement('div');
     wrap.className = 'inline-flex items-center gap-2';
 
-    const dots = document.createElement('div');
-    dots.className = 'hidden sm:flex items-center gap-0.5';
-    dots.setAttribute('aria-hidden', 'true');
+    if (isHero) {
+      const meter = document.createElement('div');
+      meter.className = 'hidden sm:flex items-center gap-1';
+      meter.setAttribute('aria-hidden', 'true');
 
-    for (let i = 1; i <= 10; i += 1) {
-      const seg = document.createElement('span');
-      if (i <= score) {
-        seg.className =
-          score >= 9
-            ? 'w-1.5 h-2.5 bg-signal dark:bg-signal-dark'
-            : 'w-1.5 h-2.5 bg-paper-ink dark:bg-carbon-ink';
-      } else {
-        seg.className = 'w-1.5 h-2.5 bg-paper-border dark:bg-carbon-border';
+      for (let i = 1; i <= 10; i += 1) {
+        const dot = document.createElement('span');
+        if (i <= score) {
+          dot.className =
+            score >= 9
+              ? 'w-1.5 h-3 rounded-full bg-accent dark:bg-accent-dark'
+              : 'w-1.5 h-3 rounded-full bg-ink-primary dark:bg-ink-darkPrimary';
+        } else {
+          dot.className = 'w-1.5 h-3 rounded-full bg-slate-200 dark:bg-slate-700';
+        }
+        meter.appendChild(dot);
       }
-      dots.appendChild(seg);
+      wrap.appendChild(meter);
     }
 
     const badge = document.createElement('span');
     if (score >= 9) {
       badge.className =
-        'px-2 py-0.5 font-mono text-xs font-bold bg-signal text-white tabular-nums';
-      badge.textContent = `CRITICAL ${score}/10`;
-    } else if (score >= 6) {
-      badge.className =
-        'px-2 py-0.5 font-mono text-xs font-bold bg-paper-subtle dark:bg-carbon-subtle text-paper-ink dark:text-carbon-ink border border-paper-border dark:border-carbon-border tabular-nums';
-      badge.textContent = `SCORE ${score}/10`;
+        'px-2.5 py-1 rounded-full text-xs font-bold bg-accent-soft text-accent dark:bg-accent/20 dark:text-accent-dark border border-accent/20 dark:border-accent-dark/30 tabular-nums';
+      badge.textContent = `중요도 ${score} / 10`;
     } else {
       badge.className =
-        'px-2 py-0.5 font-mono text-xs font-medium bg-paper-subtle dark:bg-carbon-subtle text-paper-muted dark:text-carbon-muted border border-paper-border dark:border-carbon-border tabular-nums';
-      badge.textContent = `REF ${score}/10`;
+        'px-2.5 py-1 rounded-full text-xs font-semibold bg-surface-subtle dark:bg-surface-darkSubtle text-ink-body dark:text-ink-darkBody border border-slate-200/80 dark:border-slate-700/70 tabular-nums';
+      badge.textContent = `중요도 ${score} / 10`;
     }
 
-    wrap.appendChild(dots);
     wrap.appendChild(badge);
     return wrap;
   }
@@ -302,7 +299,7 @@
   function createFooterBlock(article) {
     const footerWrap = document.createElement('div');
     footerWrap.className =
-      'pt-3.5 mt-4 border-t border-paper-border dark:border-carbon-border space-y-3';
+      'pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 space-y-3';
 
     if (Array.isArray(article.tags) && article.tags.length > 0) {
       const tagsContainer = document.createElement('div');
@@ -312,7 +309,7 @@
         const chip = document.createElement('button');
         chip.type = 'button';
         chip.className =
-          'px-2 py-0.5 text-[11px] font-medium bg-paper-subtle dark:bg-carbon-subtle text-paper-body dark:text-carbon-body border border-paper-border dark:border-carbon-border hover:border-signal hover:text-signal dark:hover:border-signal-dark dark:hover:text-signal-dark transition-colors';
+          'px-2.5 py-1 rounded-lg text-xs font-medium bg-surface-subtle/80 dark:bg-surface-darkSubtle text-ink-body dark:text-ink-darkBody hover:bg-accent-soft hover:text-accent dark:hover:bg-accent/20 dark:hover:text-accent-dark transition-colors';
         chip.textContent = `#${tag}`;
         chip.addEventListener('click', () => {
           setSearchQuery(String(tag));
@@ -324,10 +321,10 @@
     }
 
     const bottomRow = document.createElement('div');
-    bottomRow.className = 'flex items-center justify-between gap-2 text-xs font-mono';
+    bottomRow.className = 'flex items-center justify-between gap-2 text-xs';
 
     const metaText = document.createElement('span');
-    metaText.className = 'text-paper-muted dark:text-carbon-muted truncate tabular-nums';
+    metaText.className = 'text-ink-muted dark:text-ink-darkMuted font-medium truncate tabular-nums';
     metaText.textContent = `${article.source_name || ''} · ${article.published_date || ''}`;
 
     const sourceLink = document.createElement('a');
@@ -335,7 +332,7 @@
     sourceLink.target = '_blank';
     sourceLink.rel = 'noopener noreferrer';
     sourceLink.className =
-      'shrink-0 inline-flex items-center gap-1 font-sans font-bold text-xs text-paper-ink dark:text-carbon-ink hover:text-signal dark:hover:text-signal-dark underline underline-offset-4 transition-colors';
+      'shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-subtle/70 dark:bg-surface-darkSubtle font-semibold text-xs text-ink-primary dark:text-ink-darkPrimary hover:bg-accent hover:text-white dark:hover:bg-accent-dark dark:hover:text-canvas-dark transition-colors';
     sourceLink.textContent = '원문 보기 ↗';
 
     bottomRow.appendChild(metaText);
@@ -346,68 +343,61 @@
   }
 
   // SPEC.md 3.4: 기사 카드 생성 (모든 기사 텍스트는 textContent로 바인딩)
-  function createArticleCard(article, isTopStory, displayIndex) {
+  function createArticleCard(article, isTopStory) {
     const catMeta = CATEGORY_META[article.category] || {
       symbol: '●',
-      shortCode: 'BRIEF',
       label: String(article.category || ''),
-      topBarClass: 'cat-bar-golf',
-      badgeClass: 'bg-paper-subtle text-paper-ink border-paper-border',
-      pmAccentClass: 'border-l-signal',
-      pmLabelClass: 'text-signal dark:text-signal-dark'
+      badgeClass: 'rounded-full bg-surface-subtle text-ink-primary border-slate-200',
+      pmBoxClass: 'bg-surface-subtle border-slate-200',
+      pmDotClass: 'bg-accent',
+      pmLabelClass: 'text-accent dark:text-accent-dark'
     };
 
     const score = Number(article.importance_score) || 0;
 
     if (isTopStory) {
       const heroCard = document.createElement('article');
-      heroCard.className = `bg-paper-surface dark:bg-carbon-surface border-2 border-paper-ink dark:border-carbon-ink ${catMeta.topBarClass} p-5 sm:p-7`;
+      heroCard.className =
+        'hero-surface rounded-2xl border border-accent/25 dark:border-accent-dark/30 shadow-soft-lg dark:shadow-soft-dark p-6 sm:p-8 transition-all duration-200';
 
       // 상단 메타 헤더
       const topBar = document.createElement('div');
       topBar.className =
-        'flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-paper-border dark:border-carbon-border';
+        'flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-slate-200/70 dark:border-slate-800';
 
       const leftMeta = document.createElement('div');
       leftMeta.className = 'flex flex-wrap items-center gap-2';
 
-      const idxBadge = document.createElement('span');
-      idxBadge.className =
-        'font-mono text-xs font-bold text-paper-muted dark:text-carbon-muted tabular-nums';
-      idxBadge.textContent = 'NO. 01 // LEAD';
-
       const catBadge = document.createElement('span');
-      catBadge.className = `inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-bold border ${catMeta.badgeClass}`;
+      catBadge.className = `inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold border ${catMeta.badgeClass}`;
       catBadge.textContent = `${catMeta.symbol} ${catMeta.label}`;
 
-      leftMeta.appendChild(idxBadge);
       leftMeta.appendChild(catBadge);
-
       topBar.appendChild(leftMeta);
-      topBar.appendChild(createScoreMeter(score));
+      topBar.appendChild(createScoreBadge(score, true));
       heroCard.appendChild(topBar);
 
-      // 비대칭 2열 본문 그리드 (좌측: 제목 + 요약 / 우측: PM Strategic Insight 도시에 + 메타)
+      // 비대칭 2열 본문 그리드 (좌측: 제목 + 요약 / 우측: PM 시사점 + 태그/출처)
       const grid = document.createElement('div');
       grid.id = 'top-story-grid';
-      grid.className = 'grid grid-cols-1 lg:grid-cols-12 gap-6 items-start';
+      grid.className = 'grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start';
 
       const leftCol = document.createElement('div');
-      leftCol.className = 'lg:col-span-7 space-y-3';
+      leftCol.className = 'lg:col-span-7 space-y-3.5';
 
-      const korTitle = document.createElement('h2');
+      const korTitle = document.createElement('h3');
       korTitle.className =
-        'font-serif text-xl sm:text-2xl lg:text-[28px] font-bold text-paper-ink dark:text-carbon-ink leading-[1.36] tracking-tight';
+        'text-xl sm:text-2xl lg:text-[26px] font-extrabold text-ink-primary dark:text-ink-darkPrimary leading-[1.38] tracking-tight';
       korTitle.textContent = article.korean_title || '';
 
       const origTitle = document.createElement('p');
       origTitle.className =
-        'text-xs sm:text-sm italic text-paper-muted dark:text-carbon-muted leading-relaxed';
+        'text-xs sm:text-sm text-ink-muted dark:text-ink-darkMuted leading-relaxed font-normal';
       origTitle.textContent = article.original_title || '';
 
       const summaryP = document.createElement('p');
       summaryP.className =
-        'text-sm sm:text-[15.5px] text-paper-body dark:text-carbon-body leading-[1.78] pt-1';
+        'text-sm sm:text-[15.5px] text-ink-body dark:text-ink-darkBody leading-[1.8] pt-1 font-normal';
       summaryP.textContent = article.summary || '';
 
       leftCol.appendChild(korTitle);
@@ -416,23 +406,28 @@
 
       const rightCol = document.createElement('div');
       rightCol.className =
-        'lg:col-span-5 bg-paper-dossier dark:bg-carbon-dossier border border-paper-border dark:border-carbon-border p-4 sm:p-5 flex flex-col justify-between h-full';
+        'lg:col-span-5 bg-surface-light/90 dark:bg-surface-darkSubtle/80 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 flex flex-col justify-between h-full';
 
       const pmWrap = document.createElement('div');
-      pmWrap.className = `border-l-4 ${catMeta.pmAccentClass} pl-3.5`;
+      pmWrap.className = `rounded-xl p-4 border ${catMeta.pmBoxClass}`;
 
       const pmHeader = document.createElement('div');
-      pmHeader.className = 'flex items-center justify-between gap-2 mb-1.5';
+      pmHeader.className = 'flex items-center gap-2 mb-2';
+
+      const pmDot = document.createElement('span');
+      pmDot.className = `w-2 h-2 rounded-full ${catMeta.pmDotClass}`;
+      pmDot.setAttribute('aria-hidden', 'true');
 
       const pmHeading = document.createElement('p');
-      pmHeading.className = `font-mono text-[11px] font-bold uppercase tracking-wider ${catMeta.pmLabelClass}`;
-      pmHeading.textContent = 'PM INSIGHT · 제품/사업 시사점';
+      pmHeading.className = `text-xs font-bold ${catMeta.pmLabelClass}`;
+      pmHeading.textContent = 'PM 시사점 · 프로덕트 전략 인사이트';
 
+      pmHeader.appendChild(pmDot);
       pmHeader.appendChild(pmHeading);
 
       const pmText = document.createElement('p');
       pmText.className =
-        'text-xs sm:text-sm text-paper-ink dark:text-carbon-ink leading-[1.72] font-medium';
+        'text-xs sm:text-sm text-ink-primary dark:text-ink-darkPrimary leading-[1.74] font-medium';
       pmText.textContent = article.pm_insights || '';
 
       pmWrap.appendChild(pmHeader);
@@ -450,71 +445,64 @@
 
     // 일반 그리드 카드
     const card = document.createElement('article');
-    card.className = `bg-paper-surface dark:bg-carbon-surface border border-paper-border dark:border-carbon-border ${catMeta.topBarClass} p-5 flex flex-col justify-between transition-colors hover:border-paper-borderStrong dark:hover:border-carbon-borderStrong`;
+    card.className =
+      'bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200/80 dark:border-slate-800/90 shadow-soft dark:shadow-soft-dark p-5 sm:p-6 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 hover:shadow-soft-lg hover:border-slate-300 dark:hover:border-slate-700';
 
     const bodyWrap = document.createElement('div');
 
     const topBar = document.createElement('div');
-    topBar.className = 'flex items-center justify-between gap-2 mb-3';
-
-    const leftGroup = document.createElement('div');
-    leftGroup.className = 'flex items-center gap-1.5 min-w-0';
-
-    const idxSpan = document.createElement('span');
-    idxSpan.className =
-      'font-mono text-[11px] font-bold text-paper-muted dark:text-carbon-muted shrink-0 tabular-nums';
-    idxSpan.textContent = `NO.${String(displayIndex).padStart(2, '0')}`;
+    topBar.className = 'flex items-center justify-between gap-2 mb-3.5';
 
     const catLabel = document.createElement('span');
-    catLabel.className = `inline-block px-2 py-0.5 text-[11px] font-bold border truncate ${catMeta.badgeClass}`;
+    catLabel.className = `inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold border truncate ${catMeta.badgeClass}`;
     catLabel.textContent = `${catMeta.symbol} ${catMeta.label}`;
 
-    leftGroup.appendChild(idxSpan);
-    leftGroup.appendChild(catLabel);
-
-    const scoreBadge = document.createElement('span');
-    scoreBadge.className =
-      score >= 9
-        ? 'shrink-0 px-2 py-0.5 font-mono text-xs font-bold bg-signal text-white tabular-nums'
-        : 'shrink-0 px-2 py-0.5 font-mono text-xs font-semibold bg-paper-subtle dark:bg-carbon-subtle text-paper-ink dark:text-carbon-ink border border-paper-border dark:border-carbon-border tabular-nums';
-    scoreBadge.textContent = `${score}/10`;
-
-    topBar.appendChild(leftGroup);
-    topBar.appendChild(scoreBadge);
+    topBar.appendChild(catLabel);
+    topBar.appendChild(createScoreBadge(score, false));
     bodyWrap.appendChild(topBar);
 
     const korTitle = document.createElement('h3');
     korTitle.className =
-      'font-serif text-lg sm:text-[19px] font-bold text-paper-ink dark:text-carbon-ink leading-[1.4] mb-1.5';
+      'text-[17px] sm:text-[18.5px] font-bold text-ink-primary dark:text-ink-darkPrimary leading-[1.42] tracking-tight mb-1.5';
     korTitle.textContent = article.korean_title || '';
     bodyWrap.appendChild(korTitle);
 
     const origTitle = document.createElement('p');
     origTitle.className =
-      'text-xs italic text-paper-muted dark:text-carbon-muted mb-3.5 leading-relaxed';
+      'text-xs text-ink-muted dark:text-ink-darkMuted mb-3.5 leading-relaxed font-normal';
     origTitle.textContent = article.original_title || '';
     bodyWrap.appendChild(origTitle);
 
     const summaryP = document.createElement('p');
     summaryP.className =
-      'text-sm text-paper-body dark:text-carbon-body leading-[1.74] mb-4';
+      'text-sm text-ink-body dark:text-ink-darkBody leading-[1.76] mb-4 font-normal';
     summaryP.textContent = article.summary || '';
     bodyWrap.appendChild(summaryP);
 
     // PM Insight 박스 — 요약과 시각적으로 명확히 구분 (SPEC.md 3.4)
     const pmBox = document.createElement('div');
-    pmBox.className = `bg-paper-dossier dark:bg-carbon-dossier border border-paper-border dark:border-carbon-border border-l-4 ${catMeta.pmAccentClass} p-3.5`;
+    pmBox.className = `rounded-xl p-4 border ${catMeta.pmBoxClass}`;
+
+    const pmHeader = document.createElement('div');
+    pmHeader.className = 'flex items-center gap-1.5 mb-1.5';
+
+    const pmDot = document.createElement('span');
+    pmDot.className = `w-2 h-2 rounded-full ${catMeta.pmDotClass}`;
+    pmDot.setAttribute('aria-hidden', 'true');
 
     const pmHeading = document.createElement('p');
-    pmHeading.className = `font-mono text-[11px] font-bold uppercase tracking-wider ${catMeta.pmLabelClass} mb-1`;
-    pmHeading.textContent = 'PM INSIGHT · 시사점';
+    pmHeading.className = `text-xs font-bold ${catMeta.pmLabelClass}`;
+    pmHeading.textContent = 'PM 시사점';
+
+    pmHeader.appendChild(pmDot);
+    pmHeader.appendChild(pmHeading);
 
     const pmText = document.createElement('p');
     pmText.className =
-      'text-xs sm:text-[13px] text-paper-ink dark:text-carbon-ink leading-[1.68] font-medium';
+      'text-xs sm:text-[13.5px] text-ink-primary dark:text-ink-darkPrimary leading-[1.7] font-medium';
     pmText.textContent = article.pm_insights || '';
 
-    pmBox.appendChild(pmHeading);
+    pmBox.appendChild(pmHeader);
     pmBox.appendChild(pmText);
     bodyWrap.appendChild(pmBox);
 
@@ -544,7 +532,7 @@
     if (hasSearch) {
       parts.push(`검색어: "${state.search.trim()}"`);
     }
-    statusText.textContent = `적용된 필터 (${ parts.join(' · ') }) — 총 ${filteredCount}건 표시 중`;
+    statusText.textContent = `적용된 필터 (${parts.join(' · ')}) — 총 ${filteredCount}건 표시 중`;
     statusBox.classList.remove('hidden');
   }
 
@@ -640,18 +628,18 @@
     });
 
     if (topStoryContainer && topStorySection) {
-      topStoryContainer.replaceChildren(createArticleCard(topArticle, true, 1));
+      topStoryContainer.replaceChildren(createArticleCard(topArticle, true));
       topStorySection.classList.remove('hidden');
     }
 
     if (gridContainer && gridSection) {
       gridContainer.replaceChildren();
       if (restArticles.length > 0) {
-        restArticles.forEach((article, idx) => {
-          gridContainer.appendChild(createArticleCard(article, false, idx + 2));
+        restArticles.forEach((article) => {
+          gridContainer.appendChild(createArticleCard(article, false));
         });
         if (feedCountLabel) {
-          feedCountLabel.textContent = `SHOWING ${restArticles.length} ADDITIONAL ARTICLES`;
+          feedCountLabel.textContent = `외 ${restArticles.length}건의 브리핑`;
         }
         gridSection.classList.remove('hidden');
       } else {
