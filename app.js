@@ -19,7 +19,7 @@
       badgeClass:
         'rounded-full bg-cat-golfBg text-cat-golfText border-cat-golfBorder dark:bg-cat-golfDarkBg/60 dark:text-cat-golfDarkText dark:border-cat-golfDarkBorder/50',
       activeTabClass:
-        'bg-cat-golfText text-white border-cat-golfText dark:bg-cat-golfAccent dark:text-canvas-dark dark:border-cat-golfAccent shadow-sm',
+        'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-emerald-800 bg-cat-golfText text-white border-emerald-800 border-cat-golfText dark:bg-emerald-500 dark:bg-cat-golfAccent dark:text-slate-950 dark:text-canvas-dark dark:border-emerald-500 dark:border-cat-golfAccent shadow-sm',
       pmBoxClass:
         'bg-cat-golfBg/45 dark:bg-cat-golfDarkBg/25 border-cat-golfBorder/80 dark:border-cat-golfDarkBorder/40',
       pmDotClass: 'bg-cat-golfAccent',
@@ -31,7 +31,7 @@
       badgeClass:
         'rounded-lg bg-cat-aiBg text-cat-aiText border-cat-aiBorder dark:bg-cat-aiDarkBg/60 dark:text-cat-aiDarkText dark:border-cat-aiDarkBorder/50',
       activeTabClass:
-        'bg-cat-aiText text-white border-cat-aiText dark:bg-cat-aiAccent dark:text-white dark:border-cat-aiAccent shadow-sm',
+        'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-indigo-800 bg-cat-aiText text-white border-indigo-800 border-cat-aiText dark:bg-indigo-400 dark:text-slate-950 dark:text-canvas-dark dark:border-indigo-400 shadow-sm',
       pmBoxClass:
         'bg-cat-aiBg/45 dark:bg-cat-aiDarkBg/25 border-cat-aiBorder/80 dark:border-cat-aiDarkBorder/40',
       pmDotClass: 'bg-cat-aiAccent',
@@ -43,7 +43,7 @@
       badgeClass:
         'rounded-md bg-cat-macroBg text-cat-macroText border-cat-macroBorder dark:bg-cat-macroDarkBg/60 dark:text-cat-macroDarkText dark:border-cat-macroDarkBorder/50',
       activeTabClass:
-        'bg-cat-macroText text-white border-cat-macroText dark:bg-cat-macroAccent dark:text-canvas-dark dark:border-cat-macroAccent shadow-sm',
+        'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-amber-800 bg-cat-macroText text-white border-amber-800 border-cat-macroText dark:bg-amber-500 dark:bg-cat-macroAccent dark:text-slate-950 dark:text-canvas-dark dark:border-amber-500 dark:border-cat-macroAccent shadow-sm',
       pmBoxClass:
         'bg-cat-macroBg/55 dark:bg-cat-macroDarkBg/25 border-cat-macroBorder/80 dark:border-cat-macroDarkBorder/40',
       pmDotClass: 'bg-cat-macroAccent',
@@ -197,13 +197,13 @@
       if (active) {
         if (cat === 'all') {
           tab.className =
-            'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-ink-primary text-white border-ink-primary dark:bg-ink-darkPrimary dark:text-canvas-dark dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums';
-        } else {
-          tab.className = `cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums ${meta.activeTabClass}`;
+            'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-slate-900 bg-ink-primary text-white border-slate-900 border-ink-primary dark:bg-slate-50 dark:bg-ink-darkPrimary dark:text-slate-950 dark:text-canvas-dark dark:border-slate-50 dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums';
+        } else if (meta) {
+          tab.className = meta.activeTabClass;
         }
       } else {
         tab.className =
-          'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-transparent bg-surface-subtle/70 dark:bg-surface-darkSubtle/70 text-ink-body dark:text-ink-darkBody hover:bg-slate-200/70 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums';
+          'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums';
       }
     });
 

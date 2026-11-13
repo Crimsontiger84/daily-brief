@@ -119,6 +119,66 @@
       background: linear-gradient(135deg, rgba(18, 23, 34, 1) 0%, rgba(24, 31, 46, 0.96) 100%);
     }
 
+    /* 카테고리 필터 탭 상태 스타일 — 라이트/다크 모드 모두 WCAG AA 이상 명도 대비 및 선택 구분 보장 */
+    .cat-tab[aria-selected="false"] {
+      background-color: #F1F5F9;
+      color: #334155;
+      border-color: #CBD5E1;
+    }
+    .cat-tab[aria-selected="false"]:hover {
+      background-color: #E2E8F0;
+      color: #0F172A;
+    }
+    .dark .cat-tab[aria-selected="false"] {
+      background-color: #181F2E;
+      color: #CBD5E1;
+      border-color: #334155;
+    }
+    .dark .cat-tab[aria-selected="false"]:hover {
+      background-color: #1E2738;
+      color: #F8FAFC;
+    }
+    .cat-tab[aria-selected="true"][data-category="all"] {
+      background-color: #0F172A;
+      color: #FFFFFF;
+      border-color: #0F172A;
+    }
+    .dark .cat-tab[aria-selected="true"][data-category="all"] {
+      background-color: #F8FAFC;
+      color: #0B0E14;
+      border-color: #F8FAFC;
+    }
+    .cat-tab[aria-selected="true"][data-category="Golf & Sports Tech"] {
+      background-color: #065F46;
+      color: #FFFFFF;
+      border-color: #065F46;
+    }
+    .dark .cat-tab[aria-selected="true"][data-category="Golf & Sports Tech"] {
+      background-color: #10B981;
+      color: #0B0E14;
+      border-color: #10B981;
+    }
+    .cat-tab[aria-selected="true"][data-category="AI Agents & LLM"] {
+      background-color: #3730A3;
+      color: #FFFFFF;
+      border-color: #3730A3;
+    }
+    .dark .cat-tab[aria-selected="true"][data-category="AI Agents & LLM"] {
+      background-color: #818CF8;
+      color: #0B0E14;
+      border-color: #818CF8;
+    }
+    .cat-tab[aria-selected="true"][data-category="US-Korea Macro Economy"] {
+      background-color: #92400E;
+      color: #FFFFFF;
+      border-color: #92400E;
+    }
+    .dark .cat-tab[aria-selected="true"][data-category="US-Korea Macro Economy"] {
+      background-color: #F59E0B;
+      color: #0B0E14;
+      border-color: #F59E0B;
+    }
+
     /* 인쇄 스타일: 필터 바 숨김 및 1열 배치 (SPEC.md 3.5) */
     @media print {
       body {
@@ -329,7 +389,7 @@
             role="tab"
             data-category="all"
             aria-selected="true"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150"
+            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-slate-900 bg-ink-primary text-white border-slate-900 border-ink-primary dark:bg-slate-50 dark:bg-ink-darkPrimary dark:text-slate-950 dark:text-canvas-dark dark:border-slate-50 dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums"
           >
             전체
           </button>
@@ -338,7 +398,7 @@
             role="tab"
             data-category="Golf & Sports Tech"
             aria-selected="false"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150"
+            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
           >
             ● Golf &amp; Sports Tech
           </button>
@@ -347,7 +407,7 @@
             role="tab"
             data-category="AI Agents & LLM"
             aria-selected="false"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150"
+            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
           >
             ◆ AI Agents &amp; LLM
           </button>
@@ -356,7 +416,7 @@
             role="tab"
             data-category="US-Korea Macro Economy"
             aria-selected="false"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150"
+            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
           >
             ■ US-Korea Macro Economy
           </button>
