@@ -3,7 +3,7 @@
   "title": "Daily Market Briefing",
   "description": "data/news.json 규격. scripts/validate_and_deploy.py 가 이 파일을 읽어 검증한다.",
   "type": "object",
-  "required": ["updated_at", "executive_summary", "articles"],
+  "required": ["updated_at", "executive_summary", "executive_summary_en", "articles"],
   "additionalProperties": false,
   "properties": {
     "updated_at": {
@@ -15,6 +15,11 @@
       "type": "string",
       "minLength": 50,
       "description": "오늘의 핵심 흐름을 3~5문장으로 정리한 한국어 요약"
+    },
+    "executive_summary_en": {
+      "type": "string",
+      "minLength": 80,
+      "description": "executive_summary 와 같은 내용의 쉬운 영어 버전 (3~5문장)"
     },
     "articles": {
       "type": "array",
@@ -33,6 +38,9 @@
           "korean_title",
           "summary",
           "pm_insights",
+          "english_title",
+          "summary_en",
+          "pm_insights_en",
           "tags"
         ],
         "additionalProperties": false,
@@ -79,6 +87,21 @@
             "type": "string",
             "minLength": 30,
             "description": "제품/사업 관점 시사점 (한국어)"
+          },
+          "english_title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "쉬운 영어로 쓴 제목"
+          },
+          "summary_en": {
+            "type": "string",
+            "minLength": 80,
+            "description": "summary 와 같은 내용의 쉬운 영어 요약 2~4문장"
+          },
+          "pm_insights_en": {
+            "type": "string",
+            "minLength": 40,
+            "description": "pm_insights 와 같은 내용의 쉬운 영어 버전"
           },
           "tags": {
             "type": "array",

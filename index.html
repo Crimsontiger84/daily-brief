@@ -178,6 +178,16 @@
       color: #0B0E14;
       border-color: #F59E0B;
     }
+    .cat-tab[aria-selected="true"][data-category="scrap"] {
+      background-color: #2563EB;
+      color: #FFFFFF;
+      border-color: #2563EB;
+    }
+    .dark .cat-tab[aria-selected="true"][data-category="scrap"] {
+      background-color: #60A5FA;
+      color: #0B0E14;
+      border-color: #60A5FA;
+    }
 
     /* 인쇄 스타일: 필터 바 숨김 및 1열 배치 (SPEC.md 3.5) */
     @media print {
@@ -186,8 +196,10 @@
         color: #000000 !important;
       }
       #filter-bar,
+      #lang-toggle,
       #theme-toggle,
-      #back-to-top {
+      #back-to-top,
+      .scrap-btn {
         display: none !important;
       }
       #articles-grid,
@@ -208,32 +220,44 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
-    <!-- 1. 헤더 (SPEC.md 3.3: 제호, 오늘 날짜(한국어 요일 포함), updated_at 기준 마지막 갱신 시각, 다크 모드 토글) -->
+    <!-- 1. 헤더 (SPEC.md 3.3 & 5.3: 제호, 오늘 날짜, 마지막 갱신 시각, 한국어/English 언어 토글, 다크 모드 토글) -->
     <header class="mb-8">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
         <div class="space-y-1.5 min-w-0">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft dark:bg-surface-darkSubtle text-accent dark:text-accent-dark text-xs font-semibold">
             <span class="w-2 h-2 rounded-full bg-accent dark:bg-accent-dark" aria-hidden="true"></span>
-            <span>일일 프로덕트 전략 대시보드</span>
+            <span id="header-badge-text">일일 프로덕트 전략 대시보드</span>
           </div>
-          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink-primary dark:text-ink-darkPrimary">
+          <h1 id="header-title" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink-primary dark:text-ink-darkPrimary">
             PM 인텔리전스 브리핑
           </h1>
-          <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-darkMuted font-normal">
+          <p id="header-subtitle" class="text-xs sm:text-sm text-ink-muted dark:text-ink-darkMuted font-normal">
             골프·스포츠 테크, AI 에이전트, 한·미 거시경제 핵심 동향과 제품 시사점
           </p>
         </div>
 
-        <!-- 날짜, 마지막 갱신 시각, 다크 모드 토글 -->
+        <!-- 날짜, 마지막 갱신 시각, 언어 토글, 다크 모드 토글 -->
         <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-slate-200/80 dark:border-slate-800 shadow-soft text-xs sm:text-sm">
-            <span class="text-ink-muted dark:text-ink-darkMuted font-medium">오늘</span>
+            <span id="today-label" class="text-ink-muted dark:text-ink-darkMuted font-medium">오늘</span>
             <span id="today-date" class="font-semibold text-ink-primary dark:text-ink-darkPrimary tabular-nums">날짜 확인 중...</span>
           </div>
 
           <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-slate-200/80 dark:border-slate-800 shadow-soft text-xs sm:text-sm">
             <span id="last-updated" class="font-medium text-ink-body dark:text-ink-darkBody tabular-nums">마지막 갱신: -</span>
           </div>
+
+          <button
+            id="lang-toggle"
+            type="button"
+            aria-label="언어 전환 (한국어 / English)"
+            aria-pressed="false"
+            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-slate-200/80 dark:border-slate-800 shadow-soft text-xs sm:text-sm font-semibold text-ink-primary dark:text-ink-darkPrimary hover:bg-surface-subtle dark:hover:bg-surface-darkSubtle transition-all duration-150"
+          >
+            <span id="lang-opt-ko" class="font-bold text-accent dark:text-accent-dark">한국어</span>
+            <span class="text-slate-300 dark:text-slate-600" aria-hidden="true">/</span>
+            <span id="lang-opt-en" class="font-medium text-ink-muted dark:text-ink-darkMuted">English</span>
+          </button>
 
           <button
             id="theme-toggle"
@@ -250,7 +274,7 @@
     </header>
 
     <!-- 2 & 3. 소프트 벤토 오버뷰: Executive Summary + 브리핑 지표 요약 (SPEC.md 3.3) -->
-    <section aria-label="오늘의 핵심 흐름 및 브리핑 지표" class="mb-8">
+    <section id="overview-section" aria-label="오늘의 핵심 흐름 및 브리핑 지표" class="mb-8">
       <div id="bento-top-deck" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
 
         <!-- 좌측 카드 (7열): Executive Summary -->
@@ -259,11 +283,11 @@
             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
               <div class="flex items-center gap-2.5">
                 <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-accent-soft dark:bg-surface-darkSubtle text-accent dark:text-accent-dark text-sm font-bold" aria-hidden="true">✦</span>
-                <h2 class="text-base sm:text-lg font-bold text-ink-primary dark:text-ink-darkPrimary tracking-tight">
+                <h2 id="exec-summary-heading" class="text-base sm:text-lg font-bold text-ink-primary dark:text-ink-darkPrimary tracking-tight">
                   오늘의 핵심 흐름
                 </h2>
               </div>
-              <span class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted px-2.5 py-1 rounded-full bg-surface-subtle dark:bg-surface-darkSubtle">
+              <span id="exec-summary-badge" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted px-2.5 py-1 rounded-full bg-surface-subtle dark:bg-surface-darkSubtle">
                 3대 분야 종합 요약
               </span>
             </div>
@@ -285,7 +309,7 @@
 
           <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-muted dark:text-ink-darkMuted">
             <div class="flex flex-wrap items-center gap-3">
-              <span class="font-medium">카테고리 구분:</span>
+              <span id="cat-legend-label" class="font-medium">카테고리 구분:</span>
               <span class="inline-flex items-center gap-1 font-semibold text-cat-golfText dark:text-cat-golfDarkText">● Golf &amp; Sports Tech</span>
               <span class="inline-flex items-center gap-1 font-semibold text-cat-aiText dark:text-cat-aiDarkText">◆ AI Agents &amp; LLM</span>
               <span class="inline-flex items-center gap-1 font-semibold text-cat-macroText dark:text-cat-macroDarkText">■ US-Korea Macro</span>
@@ -297,7 +321,7 @@
         <div class="lg:col-span-5 bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200/80 dark:border-slate-800/90 shadow-soft dark:shadow-soft-dark p-6 sm:p-7 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between gap-2 mb-4">
-              <h2 class="text-base sm:text-lg font-bold text-ink-primary dark:text-ink-darkPrimary tracking-tight">
+              <h2 id="metrics-heading" class="text-base sm:text-lg font-bold text-ink-primary dark:text-ink-darkPrimary tracking-tight">
                 브리핑 지표 요약
               </h2>
               <span id="stat-high-priority" class="text-xs font-semibold text-accent dark:text-accent-dark bg-accent-soft dark:bg-surface-darkSubtle px-2.5 py-1 rounded-full tabular-nums">
@@ -308,12 +332,12 @@
             <!-- 상단 2개 핵심 KPI: 총 기사 수 & 평균 중요도 -->
             <div class="grid grid-cols-2 gap-3 mb-3.5">
               <div class="bg-surface-muted dark:bg-surface-darkSubtle/70 rounded-xl p-4 border border-slate-200/60 dark:border-slate-800">
-                <p class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted">총 기사 수</p>
+                <p id="stat-total-label" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted">총 기사 수</p>
                 <p id="stat-total" class="text-2xl sm:text-3xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1 tabular-nums tracking-tight">-</p>
               </div>
 
               <div class="bg-surface-muted dark:bg-surface-darkSubtle/70 rounded-xl p-4 border border-slate-200/60 dark:border-slate-800">
-                <p class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted">평균 중요도</p>
+                <p id="stat-avg-label" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted">평균 중요도</p>
                 <p id="stat-avg" class="text-2xl sm:text-3xl font-extrabold text-accent dark:text-accent-dark mt-1 tabular-nums tracking-tight">-</p>
               </div>
             </div>
@@ -361,8 +385,8 @@
           <!-- 카테고리 비중 바 -->
           <div class="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800/80">
             <div class="flex items-center justify-between text-xs text-ink-muted dark:text-ink-darkMuted mb-2">
-              <span class="font-medium">분야별 기사 비중</span>
-              <span class="text-[11px]">카드를 눌러 분야별 필터링</span>
+              <span id="ratio-bar-label" class="font-medium">분야별 기사 비중</span>
+              <span id="ratio-bar-hint" class="text-[11px]">카드를 눌러 분야별 필터링</span>
             </div>
             <div class="w-full h-2 bg-surface-subtle dark:bg-surface-darkSubtle rounded-full overflow-hidden flex gap-0.5" aria-hidden="true">
               <div id="bar-golf" class="h-full bg-cat-golfAccent transition-all duration-300 rounded-l-full" style="width: 33.3%"></div>
@@ -375,14 +399,14 @@
       </div>
     </section>
 
-    <!-- 4. 스티키 필터 및 검색 바: 카테고리 필터, 정렬(중요도순·최신순), 제목·요약·태그 검색 (SPEC.md 3.3 & 3.5) -->
+    <!-- 4. 필터 및 검색 바: 카테고리 필터, 스크랩 보기, 정렬(중요도순·최신순), 제목·요약·태그 검색 (SPEC.md 3.3, 3.5, 5.4) -->
     <nav
       id="filter-bar"
       aria-label="기사 필터 및 검색"
-      class="sticky top-3 z-30 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-xl rounded-2xl border border-slate-200/90 dark:border-slate-800/90 shadow-soft dark:shadow-soft-dark px-4 py-3.5 mb-8 print:hidden"
+      class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200/90 dark:border-slate-800/90 shadow-soft dark:shadow-soft-dark px-4 py-3.5 mb-8 print:hidden"
     >
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-        <!-- 카테고리 탭 (색 + 기호 ● ◆ ■ 구분) -->
+        <!-- 카테고리 탭 (색 + 기호 ● ◆ ■ 구분 + 스크랩 보기) -->
         <div id="category-tabs" role="tablist" aria-label="카테고리 필터" class="flex flex-wrap items-center gap-1.5">
           <button
             type="button"
@@ -420,12 +444,22 @@
           >
             ■ US-Korea Macro Economy
           </button>
+          <button
+            id="scrap-tab"
+            type="button"
+            role="tab"
+            data-category="scrap"
+            aria-selected="false"
+            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
+          >
+            ★ 스크랩 0
+          </button>
         </div>
 
         <!-- 정렬 및 검색 컨트롤 -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-          <div class="flex items-center justify-between sm:justify-start gap-2 bg-surface-subtle/80 dark:bg-surface-darkSubtle rounded-xl px-3.5 py-2 border border-slate-200/60 dark:border-slate-700/60">
-            <label for="sort-select" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted shrink-0">
+          <div id="sort-control-wrap" class="flex items-center justify-between sm:justify-start gap-2 bg-surface-subtle/80 dark:bg-surface-darkSubtle rounded-xl px-3.5 py-2 border border-slate-200/60 dark:border-slate-700/60">
+            <label id="sort-label" for="sort-select" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted shrink-0">
               정렬
             </label>
             <select
@@ -433,8 +467,8 @@
               aria-label="기사 정렬 기준"
               class="bg-transparent text-xs sm:text-sm font-semibold text-ink-primary dark:text-ink-darkPrimary focus:outline-none cursor-pointer"
             >
-              <option value="importance" class="bg-surface-light dark:bg-surface-dark">중요도순</option>
-              <option value="latest" class="bg-surface-light dark:bg-surface-dark">최신순</option>
+              <option id="sort-opt-importance" value="importance" class="bg-surface-light dark:bg-surface-dark">중요도순</option>
+              <option id="sort-opt-latest" value="latest" class="bg-surface-light dark:bg-surface-dark">최신순</option>
             </select>
           </div>
 
@@ -496,7 +530,7 @@
         class="hidden bg-surface-light dark:bg-surface-dark rounded-2xl border border-red-200 dark:border-red-900/60 shadow-soft p-8 sm:p-10 text-center my-6"
       >
         <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 text-xl font-bold mb-3" aria-hidden="true">!</div>
-        <p class="text-lg sm:text-xl font-bold text-ink-primary dark:text-ink-darkPrimary mb-2">
+        <p id="error-heading" class="text-lg sm:text-xl font-bold text-ink-primary dark:text-ink-darkPrimary mb-2">
           브리핑 데이터를 불러오지 못했습니다
         </p>
         <p id="error-message" class="text-xs sm:text-sm text-ink-muted dark:text-ink-darkMuted mb-6">
@@ -511,15 +545,15 @@
         </button>
       </div>
 
-      <!-- 필터 결과가 없을 때 빈 상태 문구 (SPEC.md 3.5) -->
+      <!-- 필터 결과가 없을 때 빈 상태 문구 (SPEC.md 3.5 & 5.4) -->
       <div
         id="empty-state"
         class="hidden bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-soft p-10 sm:p-12 text-center my-6"
       >
-        <p class="text-lg sm:text-xl font-bold text-ink-primary dark:text-ink-darkPrimary mb-2">
+        <p id="empty-heading" class="text-lg sm:text-xl font-bold text-ink-primary dark:text-ink-darkPrimary mb-2">
           선택한 조건에 일치하는 기사가 없습니다
         </p>
-        <p class="text-xs sm:text-sm text-ink-muted dark:text-ink-darkMuted mb-6">
+        <p id="empty-desc" class="text-xs sm:text-sm text-ink-muted dark:text-ink-darkMuted mb-6">
           다른 카테고리를 선택하거나 검색어를 초기화해 보세요.
         </p>
         <button
@@ -535,10 +569,10 @@
       <section id="top-story-section" aria-label="최고 중요도 핵심 기사" class="hidden mb-10">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3.5">
           <div class="flex items-center gap-2.5">
-            <span class="px-3 py-1 rounded-full text-xs font-bold bg-accent text-white shadow-sm">
+            <span id="top-story-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-accent text-white shadow-sm">
               최우선 주목 브리핑
             </span>
-            <h2 class="text-sm sm:text-base font-bold text-ink-primary dark:text-ink-darkPrimary">
+            <h2 id="top-story-heading" class="text-sm sm:text-base font-bold text-ink-primary dark:text-ink-darkPrimary">
               오늘 가장 중요도가 높은 핵심 기사
             </h2>
           </div>
@@ -549,7 +583,7 @@
       <!-- 6. 기사 그리드: 데스크톱 3열, 태블릿 2열, 모바일 1열, 인쇄 1열 (SPEC.md 3.4 & 3.5) -->
       <section id="articles-grid-section" aria-label="전체 브리핑 기사 목록" class="hidden">
         <div class="flex items-center justify-between gap-2 mb-4">
-          <h2 class="text-base sm:text-lg font-bold text-ink-primary dark:text-ink-darkPrimary tracking-tight">
+          <h2 id="grid-section-heading" class="text-base sm:text-lg font-bold text-ink-primary dark:text-ink-darkPrimary tracking-tight">
             분야별 브리핑 피드
           </h2>
           <span id="feed-count-label" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted tabular-nums"></span>
@@ -566,10 +600,10 @@
     <footer class="mt-16 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 text-xs text-ink-muted dark:text-ink-darkMuted">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="space-y-1.5">
-          <p class="font-bold text-ink-primary dark:text-ink-darkPrimary">
+          <p id="footer-disclaimer-title" class="font-bold text-ink-primary dark:text-ink-darkPrimary">
             출처 고지: 요약은 AI 생성, 원문 확인 필요
           </p>
-          <p class="text-xs leading-relaxed">
+          <p id="footer-disclaimer-body" class="text-xs leading-relaxed">
             본 대시보드의 요약과 PM 시사점은 빠른 파악을 돕기 위해 AI로 작성되었습니다. 의사결정 시 반드시 각 기사의 원문 링크를 통해 정확한 사실과 수치를 확인하시기 바랍니다.
           </p>
         </div>
