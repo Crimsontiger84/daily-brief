@@ -18,7 +18,11 @@ param(
     # Time limit for the research step.
     [int]$TimeoutMinutes = 20,
     # Validate only, skip git commit/push.
-    [switch]$CheckOnly
+    [switch]$CheckOnly,
+    # Refresh even if data\news.json was already updated today (KST).
+    [switch]$Force,
+    # Attempts for the research step. A hung agy is killed after TimeoutMinutes + 5 and retried.
+    [int]$MaxAttempts = 2
 )
 
 $ErrorActionPreference = 'Stop'
@@ -54,6 +58,20 @@ if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
 }
 
 $NewsFile = Join-Path $ProjectRoot 'data\news.json'
+
+# The task also fires at logon / unlock as a catch-up, so skip when today's briefing already exists.
+if (-not $Force -and (Test-Path $NewsFile)) {
+    try {
+        $stamp = [string](Get-Content $NewsFile -Raw -Encoding utf8 | ConvertFrom-Json).updated_at
+        if ($stamp.StartsWith((Get-Date -Format 'yyyy-MM-dd'))) {
+            Write-Log "Skip: data\news.json already updated today ($stamp). Use -Force to refresh again."
+            exit 0
+        }
+    } catch {
+        Write-Log "Note: could not read updated_at, refreshing anyway."
+    }
+}
+
 $Before = if (Test-Path $NewsFile) { (Get-Item $NewsFile).LastWriteTimeUtc } else { [datetime]::MinValue }
 
 # No double quotes inside the prompt: Windows PowerShell 5.1 mangles them when passing to an exe.
@@ -65,14 +83,42 @@ if ($Model) { $AgyArgs += @('--model', $Model) }
 # Native stderr merged with 2>&1 must not abort the script in Windows PowerShell 5.1.
 $ErrorActionPreference = 'Continue'
 
-Write-Log "Step 1/2: agy refreshes data\news.json (mode=$Mode, timeout=${TimeoutMinutes}m)"
-& $Agy.Source @AgyArgs 2>&1 | ForEach-Object { Add-Content -Path $LogFile -Value "$_" -Encoding utf8; Write-Host $_ }
-if ($LASTEXITCODE -ne 0) {
-    Write-Log "ERROR: agy exited with code $LASTEXITCODE. If this is an auth error, run 'agy' once and sign in. Deploy skipped."
-    exit 1
+# Run agy as a background job so a hang (e.g. right after the PC wakes from sleep) can be killed.
+$HardLimitSeconds = ($TimeoutMinutes + 5) * 60
+$Refreshed = $false
+for ($attempt = 1; $attempt -le $MaxAttempts -and -not $Refreshed; $attempt++) {
+    Write-Log "Step 1/2: agy refreshes data\news.json (attempt $attempt/$MaxAttempts, mode=$Mode, limit=$($TimeoutMinutes + 5)m)"
+    $job = Start-Job -ScriptBlock {
+        param($exe, $argList, $dir)
+        Set-Location $dir
+        & $exe @argList 2>&1 | ForEach-Object { "$_" }
+        "AGY_EXIT=$LASTEXITCODE"
+    } -ArgumentList $Agy.Source, $AgyArgs, $ProjectRoot
+
+    $done = Wait-Job $job -Timeout $HardLimitSeconds
+    $output = Receive-Job $job -ErrorAction SilentlyContinue
+    if ($output) { $output | ForEach-Object { Add-Content -Path $LogFile -Value "$_" -Encoding utf8; Write-Host $_ } }
+    if (-not $done) {
+        Write-Log "WARN: agy did not finish within $($TimeoutMinutes + 5) minutes. Killing it."
+        Stop-Job $job
+        Get-CimInstance Win32_Process -Filter "Name='agy.exe'" |
+            Where-Object { $_.CommandLine -like '*daily refresh described in SPEC.md*' } |
+            ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+    }
+    Remove-Job $job -Force
+
+    $exitLine = @($output) | Where-Object { "$_" -like 'AGY_EXIT=*' } | Select-Object -Last 1
+    if ($done -and $exitLine -and "$exitLine" -ne 'AGY_EXIT=0') {
+        Write-Log "WARN: agy failed ($exitLine). If this is an auth error, run 'agy' once and sign in."
+    }
+    $Refreshed = (Test-Path $NewsFile) -and (Get-Item $NewsFile).LastWriteTimeUtc -gt $Before
+    if (-not $Refreshed -and $attempt -lt $MaxAttempts) {
+        Write-Log "Retrying in 60 seconds."
+        Start-Sleep -Seconds 60
+    }
 }
-if (-not (Test-Path $NewsFile) -or (Get-Item $NewsFile).LastWriteTimeUtc -le $Before) {
-    Write-Log "ERROR: agy finished but data\news.json was not rewritten. Deploy skipped."
+if (-not $Refreshed) {
+    Write-Log "ERROR: data\news.json was not rewritten after $MaxAttempts attempts. Deploy skipped."
     exit 1
 }
 

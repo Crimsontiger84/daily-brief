@@ -125,4 +125,5 @@
 - `localStorage`를 못 쓰는 환경에서도 화면은 정상 동작해야 한다.
 
 ### 5.5 고정 요소 금지
+- `data/news.json`은 `fetch('./data/news.json?t=' + Date.now(), { cache: 'no-store' })`처럼 캐시를 무시하고 불러온다. 그래야 매일 갱신된 데이터가 바로 보인다.
 - 필터 바와 헤더는 스크롤하면 함께 올라가야 한다. 화면 상단에 고정(sticky/fixed)하지 않는다. 기사 읽기를 가린다.

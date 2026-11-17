@@ -1348,7 +1348,7 @@
     if (errorState) errorState.classList.add('hidden');
 
     try {
-      const response = await fetch('./data/news.json');
+      const response = await fetch(`./data/news.json?t=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
