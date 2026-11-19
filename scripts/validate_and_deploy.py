@@ -19,6 +19,7 @@ import os
 import re
 import shutil
 import socket
+import ssl
 import subprocess
 import sys
 import urllib.error
@@ -186,6 +187,9 @@ def probe_url(url):
             return "unverified", url, "timeout"
         if isinstance(exc.reason, socket.gaierror):
             return "broken", url, "domain not found"
+        if isinstance(exc.reason, ssl.SSLError):
+            # 이 PC의 인증서 저장소 문제일 수 있어 링크 자체가 깨졌다고 보지 않는다.
+            return "unverified", url, f"SSL check failed: {exc.reason.__class__.__name__}"
         return "broken", url, f"connection failed: {exc.reason}"
     except (socket.timeout, TimeoutError):
         return "unverified", url, "timeout"
