@@ -2,8 +2,14 @@
 """data/news.json 을 schema.json 기준으로 검증하고, 통과하면 GitHub 로 배포한다.
 
 사용법:
-    python scripts\\validate_and_deploy.py           # 검증 + git add/commit/push
-    python scripts\\validate_and_deploy.py --check   # 검증만 (배포 안 함)
+    python scripts\\validate_and_deploy.py              # 검증 + 링크 검사 + git add/commit/push
+    python scripts\\validate_and_deploy.py --check      # 검증 + 링크 검사만 (배포 안 함)
+    python scripts\\validate_and_deploy.py --no-links   # 링크 검사 생략 (오프라인용)
+
+링크 검사: 각 기사의 source_url 에 실제 HTTP 요청을 보낸다.
+  - 구글 검색 리다이렉트(grounding-api-redirect) 주소는 최종 도착 URL 로 바꿔 news.json 에 저장한다.
+  - 404/410, 없는 도메인, 연결 실패, 리다이렉트 해석 실패는 FAIL.
+  - 401/403/429/5xx/시간 초과는 봇 차단일 수 있어 경고만 한다 (브라우저에서는 열리는 경우가 많다).
 
 종료 코드: 0 성공 / 1 검증 실패 / 2 파일·환경 문제 / 3 git 실패
 표준 라이브러리만 사용한다.
@@ -12,8 +18,12 @@ import json
 import os
 import re
 import shutil
+import socket
 import subprocess
 import sys
+import urllib.error
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,6 +31,19 @@ NEWS_PATH = os.path.join(ROOT, "data", "news.json")
 SCHEMA_PATH = os.path.join(ROOT, "schema.json")
 COMMIT_MESSAGE = "chore: daily market briefing update"
 MIN_PER_CATEGORY = 2  # SPEC.md 2.2: 카테고리당 최소 기사 수
+# SPEC.md 5.6: 골프 사업 비중을 늘리기 위해 카테고리별 최소치를 따로 둔다.
+MIN_BY_CATEGORY = {"Golf & Sports Tech": 4}
+MAX_PER_SOURCE = 2  # SPEC.md 5.6: 같은 매체는 하루 최대 2건
+
+LINK_TIMEOUT = 20
+LINK_WORKERS = 6
+BROKEN_STATUS = {404, 410}
+LINK_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/130.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
 TYPE_MAP = {
     "string": str,
@@ -104,12 +127,13 @@ def validate(value, schema, path, errors):
 
 
 def extra_checks(news, schema, errors):
-    """스키마로 표현하기 어려운 규칙: id 중복, 카테고리 분포."""
+    """스키마로 표현하기 어려운 규칙: id 중복, 카테고리 분포, 매체 쏠림."""
     articles = news.get("articles")
     if not isinstance(articles, list):
         return
     seen = {}
     counts = {}
+    sources = {}
     for index, article in enumerate(articles):
         if not isinstance(article, dict):
             continue
@@ -122,12 +146,89 @@ def extra_checks(news, schema, errors):
         category = article.get("category")
         if isinstance(category, str):
             counts[category] = counts.get(category, 0) + 1
+        source = article.get("source_name")
+        if isinstance(source, str) and source.strip():
+            key = source.strip().lower()
+            sources[key] = sources.get(key, 0) + 1
     categories = schema["properties"]["articles"]["items"]["properties"]["category"]["enum"]
     for category in categories:
-        if counts.get(category, 0) < MIN_PER_CATEGORY:
+        minimum = MIN_BY_CATEGORY.get(category, MIN_PER_CATEGORY)
+        if counts.get(category, 0) < minimum:
             errors.append(
-                f"$.articles: '{category}' 기사가 {MIN_PER_CATEGORY}개 이상이어야 함 (실제 {counts.get(category, 0)}개)"
+                f"$.articles: '{category}' 기사가 {minimum}개 이상이어야 함 (실제 {counts.get(category, 0)}개)"
             )
+    for source, count in sources.items():
+        if count > MAX_PER_SOURCE:
+            errors.append(f"$.articles: 같은 매체 '{source}' 기사가 {count}건 — 하루 최대 {MAX_PER_SOURCE}건")
+
+
+def is_search_redirect(url):
+    return "grounding-api-redirect" in url or "vertexaisearch.cloud.google.com" in url
+
+
+def probe_url(url):
+    """실제 요청을 보내 (판정, 최종 URL, 상세) 를 돌려준다. 판정: ok | broken | unverified.
+
+    리다이렉트는 따라가며, 최종 URL 은 마지막으로 도착한 주소다.
+    HEAD 를 거부하는 사이트가 많아 GET 으로 확인한다.
+    """
+    request = urllib.request.Request(url, headers=LINK_HEADERS, method="GET")
+    try:
+        with urllib.request.urlopen(request, timeout=LINK_TIMEOUT) as response:
+            return "ok", response.geturl(), f"HTTP {response.status}"
+    except urllib.error.HTTPError as exc:
+        final_url = exc.geturl() or url
+        if exc.code in BROKEN_STATUS:
+            return "broken", final_url, f"HTTP {exc.code}"
+        return "unverified", final_url, f"HTTP {exc.code}"
+    except urllib.error.URLError as exc:
+        if isinstance(exc.reason, (socket.timeout, TimeoutError)):
+            return "unverified", url, "timeout"
+        if isinstance(exc.reason, socket.gaierror):
+            return "broken", url, "domain not found"
+        return "broken", url, f"connection failed: {exc.reason}"
+    except (socket.timeout, TimeoutError):
+        return "unverified", url, "timeout"
+    except Exception as exc:  # noqa: BLE001 - 어떤 오류든 결과에 남긴다
+        return "broken", url, f"error: {exc}"
+
+
+def check_links(news, errors, warnings):
+    """source_url 을 검사하고 검색 리다이렉트를 최종 URL 로 바꾼다. 바뀐 기사 수를 돌려준다."""
+    articles = news.get("articles")
+    if not isinstance(articles, list):
+        return 0
+    targets = [
+        (index, article)
+        for index, article in enumerate(articles)
+        if isinstance(article, dict) and isinstance(article.get("source_url"), str)
+    ]
+    with ThreadPoolExecutor(max_workers=LINK_WORKERS) as pool:
+        results = list(pool.map(lambda t: probe_url(t[1]["source_url"]), targets))
+
+    rewritten = 0
+    for (index, article), (status, final_url, detail) in zip(targets, results):
+        url = article["source_url"]
+        label = f"$.articles[{index}].source_url ({article.get('id', '?')})"
+        if is_search_redirect(url):
+            if status == "broken" or is_search_redirect(final_url):
+                errors.append(f"{label}: 검색 리다이렉트 주소를 원문 URL 로 풀지 못함 ({detail})")
+                continue
+            article["source_url"] = final_url
+            rewritten += 1
+            print(f"[FIX] {label}: 리다이렉트 → {final_url}")
+            url = final_url
+        if status == "broken":
+            errors.append(f"{label}: 열리지 않음 ({detail}) {url}")
+        elif status == "unverified":
+            warnings.append(f"{label}: 확인 불가 ({detail}, 봇 차단일 수 있음) {url}")
+    return rewritten
+
+
+def save_news(news):
+    with open(NEWS_PATH, "w", encoding="utf-8", newline="\n") as handle:
+        json.dump(news, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
 
 
 def load_json(path, label):
@@ -182,13 +283,23 @@ def main():
             pass
 
     check_only = "--check" in sys.argv[1:]
+    skip_links = "--no-links" in sys.argv[1:]
     schema = load_json(SCHEMA_PATH, "schema.json")
     news = load_json(NEWS_PATH, "news.json")
 
     errors = []
+    warnings = []
+    if skip_links:
+        print("[INFO] --no-links: 원문 링크 검사를 건너뜁니다.")
+    else:
+        if check_links(news, errors, warnings):
+            save_news(news)
+            print("[OK] 리다이렉트 주소를 원문 URL 로 바꿔 news.json 에 저장했습니다.")
     validate(news, schema, "$", errors)
     extra_checks(news, schema, errors)
 
+    for message in warnings:
+        print(f"[WARN] {message}")
     if errors:
         print(f"FAIL: 검증 오류 {len(errors)}건 — 배포하지 않습니다.")
         for message in errors:

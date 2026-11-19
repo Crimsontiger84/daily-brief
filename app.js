@@ -1,7 +1,7 @@
 /**
  * PM 인텔리전스 브리핑 — app.js
  * Calm SaaS Intelligence & Soft Layered Bento
- * SPEC.md 3장 및 5.3(언어 토글), 5.4(스크랩) 규격 준수
+ * SPEC.md 3장 및 5.3(언어 토글), 5.4(스크랩), 5.6(4대 카테고리: Golf & Sports Tech, AI Agents & LLM, US-Korea Macro Economy, Science & Research) 규격 준수
  * 바닐라 JS, 상대 경로 fetch('./data/news.json'), 모든 텍스트 textContent 바인딩, 정적 Tailwind 클래스만 사용
  */
 (function () {
@@ -20,7 +20,7 @@
       docTitle: 'PM 데일리 인텔리전스 브리핑',
       headerBadge: '일일 프로덕트 전략 대시보드',
       headerTitle: 'PM 인텔리전스 브리핑',
-      headerSubtitle: '골프·스포츠 테크, AI 에이전트, 한·미 거시경제 핵심 동향과 제품 시사점',
+      headerSubtitle: '골프·스포츠 테크, AI 에이전트, 한·미 거시경제, 과학·연구 핵심 동향과 제품 시사점',
       todayLabel: '오늘',
       lastUpdatedPrefix: '마지막 갱신: ',
       langToggleAria: '언어 전환 (한국어 / English)',
@@ -31,8 +31,22 @@
       darkMode: '다크 모드',
       overviewAria: '오늘의 핵심 흐름 및 브리핑 지표',
       execSummaryHeading: '오늘의 핵심 흐름',
-      execSummaryBadge: '3대 분야 종합 요약',
+      execSummaryBadge: '4대 분야 종합 요약',
       catLegendLabel: '카테고리 구분:',
+      legendGolf: '● Golf & Sports Tech (골프·스포츠)',
+      legendAi: '◆ AI Agents & LLM (AI 에이전트)',
+      legendMacro: '■ US-Korea Macro (한·미 거시경제)',
+      legendSci: '▲ Science & Research (과학·연구)',
+      metricTitleGolf: '● 골프·스포츠 · Golf',
+      metricTitleAi: '◆ AI 에이전트 · AI',
+      metricTitleMacro: '■ 한·미 거시경제 · Macro',
+      metricTitleSci: '▲ 과학·연구 · Science',
+      catLabels: {
+        'Golf & Sports Tech': '골프·스포츠',
+        'AI Agents & LLM': 'AI 에이전트',
+        'US-Korea Macro Economy': '한·미 거시경제',
+        'Science & Research': '과학·연구'
+      },
       metricsHeading: '브리핑 지표 요약',
       statTotalLabel: '총 기사 수',
       statAvgLabel: '평균 중요도',
@@ -84,7 +98,7 @@
       docTitle: 'Daily PM News Briefing',
       headerBadge: 'Daily Product Dashboard',
       headerTitle: 'Daily PM News Briefing',
-      headerSubtitle: 'Key news and product tips in golf tech, AI agents, and the US-Korea economy',
+      headerSubtitle: 'Key news and product tips in golf tech, AI agents, the US-Korea economy, and Science & Research',
       todayLabel: 'Today',
       lastUpdatedPrefix: 'Updated: ',
       langToggleAria: 'Switch language (Korean / English)',
@@ -95,8 +109,22 @@
       darkMode: 'Dark mode',
       overviewAria: 'Daily summary and key stats',
       execSummaryHeading: 'Today at a Glance',
-      execSummaryBadge: '3 Key Areas',
+      execSummaryBadge: '4 Key Areas',
       catLegendLabel: 'Categories:',
+      legendGolf: '● Golf & Sports Tech',
+      legendAi: '◆ AI Agents & LLM',
+      legendMacro: '■ US-Korea Macro',
+      legendSci: '▲ Science & Research',
+      metricTitleGolf: '● Golf & Sports',
+      metricTitleAi: '◆ AI Agents',
+      metricTitleMacro: '■ US-KR Macro',
+      metricTitleSci: '▲ Science',
+      catLabels: {
+        'Golf & Sports Tech': 'Golf & Sports',
+        'AI Agents & LLM': 'AI Agents',
+        'US-Korea Macro Economy': 'US-KR Macro',
+        'Science & Research': 'Science'
+      },
       metricsHeading: 'Briefing Stats',
       statTotalLabel: 'Total Articles',
       statAvgLabel: 'Avg. Score',
@@ -148,69 +176,163 @@
 
   const TAB_CLASSES = {
     inactive:
-      'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums',
+      'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums',
     activeAll:
-      'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-slate-900 bg-ink-primary text-white border-slate-900 border-ink-primary dark:bg-slate-50 dark:bg-ink-darkPrimary dark:text-slate-950 dark:text-canvas-dark dark:border-slate-50 dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums',
+      'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border bg-slate-900 bg-ink-primary text-white border-slate-900 border-ink-primary dark:bg-slate-50 dark:bg-ink-darkPrimary dark:text-slate-950 dark:text-canvas-dark dark:border-slate-50 dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums',
     activeScrap:
-      'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-blue-600 bg-accent text-white border-blue-600 border-accent dark:bg-blue-400 dark:bg-accent-dark dark:text-slate-950 dark:text-canvas-dark dark:border-blue-400 dark:border-accent-dark shadow-sm transition-all duration-150 tabular-nums'
+      'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border bg-blue-600 bg-accent text-white border-blue-600 border-accent dark:bg-blue-400 dark:bg-accent-dark dark:text-slate-950 dark:text-canvas-dark dark:border-blue-400 dark:border-accent-dark shadow-sm transition-all duration-150 tabular-nums'
   };
 
   const CATEGORY_META = {
     'Golf & Sports Tech': {
+      idPrefix: 'golf',
       symbol: '●',
       label: 'Golf & Sports Tech',
+      koLabel: '골프·스포츠',
+      enLabel: 'Golf & Sports',
+      tabKoText: '● 골프·스포츠 (Golf)',
+      tabEnText: '● Golf & Sports Tech',
       heroBadgeClass:
         'inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold border rounded-full bg-cat-golfBg text-cat-golfText border-cat-golfBorder dark:bg-cat-golfDarkBg/60 dark:text-cat-golfDarkText dark:border-cat-golfDarkBorder/50',
       cardBadgeClass:
         'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold border truncate rounded-full bg-cat-golfBg text-cat-golfText border-cat-golfBorder dark:bg-cat-golfDarkBg/60 dark:text-cat-golfDarkText dark:border-cat-golfDarkBorder/50',
       activeTabClass:
-        'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-emerald-800 bg-cat-golfText text-white border-emerald-800 border-cat-golfText dark:bg-emerald-500 dark:bg-cat-golfAccent dark:text-slate-950 dark:text-canvas-dark dark:border-emerald-500 dark:border-cat-golfAccent shadow-sm',
+        'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-emerald-800 bg-cat-golfText text-white border-emerald-800 border-cat-golfText dark:bg-emerald-500 dark:bg-cat-golfAccent dark:text-slate-950 dark:text-canvas-dark dark:border-emerald-500 dark:border-cat-golfAccent shadow-sm',
       pmBoxClass:
         'rounded-xl p-4 border bg-cat-golfBg/45 dark:bg-cat-golfDarkBg/25 border-cat-golfBorder/80 dark:border-cat-golfDarkBorder/40',
       pmDotClass: 'w-2 h-2 rounded-full bg-cat-golfAccent',
       pmLabelClass: 'text-xs font-bold text-cat-golfText dark:text-cat-golfDarkText'
     },
     'AI Agents & LLM': {
+      idPrefix: 'ai',
       symbol: '◆',
       label: 'AI Agents & LLM',
+      koLabel: 'AI 에이전트',
+      enLabel: 'AI Agents',
+      tabKoText: '◆ AI 에이전트 (AI)',
+      tabEnText: '◆ AI Agents & LLM',
       heroBadgeClass:
         'inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold border rounded-lg bg-cat-aiBg text-cat-aiText border-cat-aiBorder dark:bg-cat-aiDarkBg/60 dark:text-cat-aiDarkText dark:border-cat-aiDarkBorder/50',
       cardBadgeClass:
         'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold border truncate rounded-lg bg-cat-aiBg text-cat-aiText border-cat-aiBorder dark:bg-cat-aiDarkBg/60 dark:text-cat-aiDarkText dark:border-cat-aiDarkBorder/50',
       activeTabClass:
-        'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-indigo-800 bg-cat-aiText text-white border-indigo-800 border-cat-aiText dark:bg-indigo-400 dark:text-slate-950 dark:text-canvas-dark dark:border-indigo-400 shadow-sm',
+        'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-indigo-800 bg-cat-aiText text-white border-indigo-800 border-cat-aiText dark:bg-indigo-400 dark:text-slate-950 dark:text-canvas-dark dark:border-indigo-400 shadow-sm',
       pmBoxClass:
         'rounded-xl p-4 border bg-cat-aiBg/45 dark:bg-cat-aiDarkBg/25 border-cat-aiBorder/80 dark:border-cat-aiDarkBorder/40',
       pmDotClass: 'w-2 h-2 rounded-full bg-cat-aiAccent',
       pmLabelClass: 'text-xs font-bold text-cat-aiText dark:text-cat-aiDarkText'
     },
     'US-Korea Macro Economy': {
+      idPrefix: 'macro',
       symbol: '■',
       label: 'US-Korea Macro Economy',
+      koLabel: '한·미 거시경제',
+      enLabel: 'US-KR Macro',
+      tabKoText: '■ 한·미 거시경제 (Macro)',
+      tabEnText: '■ US-Korea Macro Economy',
       heroBadgeClass:
         'inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold border rounded-md bg-cat-macroBg text-cat-macroText border-cat-macroBorder dark:bg-cat-macroDarkBg/60 dark:text-cat-macroDarkText dark:border-cat-macroDarkBorder/50',
       cardBadgeClass:
         'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold border truncate rounded-md bg-cat-macroBg text-cat-macroText border-cat-macroBorder dark:bg-cat-macroDarkBg/60 dark:text-cat-macroDarkText dark:border-cat-macroDarkBorder/50',
       activeTabClass:
-        'cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-amber-800 bg-cat-macroText text-white border-amber-800 border-cat-macroText dark:bg-amber-500 dark:bg-cat-macroAccent dark:text-slate-950 dark:text-canvas-dark dark:border-amber-500 dark:border-cat-macroAccent shadow-sm',
+        'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-amber-800 bg-cat-macroText text-white border-amber-800 border-cat-macroText dark:bg-amber-500 dark:bg-cat-macroAccent dark:text-slate-950 dark:text-canvas-dark dark:border-amber-500 dark:border-cat-macroAccent shadow-sm',
       pmBoxClass:
         'rounded-xl p-4 border bg-cat-macroBg/55 dark:bg-cat-macroDarkBg/25 border-cat-macroBorder/80 dark:border-cat-macroDarkBorder/40',
       pmDotClass: 'w-2 h-2 rounded-full bg-cat-macroAccent',
       pmLabelClass: 'text-xs font-bold text-cat-macroText dark:text-cat-macroDarkText'
+    },
+    'Science & Research': {
+      idPrefix: 'sci',
+      symbol: '▲',
+      label: 'Science & Research',
+      koLabel: '과학·연구',
+      enLabel: 'Science',
+      tabKoText: '▲ 과학·연구 (Science)',
+      tabEnText: '▲ Science & Research',
+      heroBadgeClass:
+        'inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold border rounded-xl bg-cat-sciBg text-cat-sciText border-cat-sciBorder dark:bg-cat-sciDarkBg/60 dark:text-cat-sciDarkText dark:border-cat-sciDarkBorder/50',
+      cardBadgeClass:
+        'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold border truncate rounded-xl bg-cat-sciBg text-cat-sciText border-cat-sciBorder dark:bg-cat-sciDarkBg/60 dark:text-cat-sciDarkText dark:border-cat-sciDarkBorder/50',
+      activeTabClass:
+        'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-150 tabular-nums bg-rose-800 bg-cat-sciText text-white border-rose-800 border-cat-sciText dark:bg-rose-400 dark:text-slate-950 dark:text-canvas-dark dark:border-rose-400 shadow-sm',
+      pmBoxClass:
+        'rounded-xl p-4 border bg-cat-sciBg/50 dark:bg-cat-sciDarkBg/25 border-cat-sciBorder/80 dark:border-cat-sciDarkBorder/40',
+      pmDotClass: 'w-2 h-2 rounded-full bg-cat-sciAccent',
+      pmLabelClass: 'text-xs font-bold text-cat-sciText dark:text-cat-sciDarkText'
     }
   };
 
+  const CATEGORY_BY_PREFIX = {
+    golf: 'Golf & Sports Tech',
+    ai: 'AI Agents & LLM',
+    macro: 'US-Korea Macro Economy',
+    sci: 'Science & Research'
+  };
+
   const DEFAULT_CAT_META = {
-    symbol: '●',
+    idPrefix: 'other',
+    symbol: '•',
     label: '',
+    koLabel: '',
+    enLabel: '',
+    tabKoText: '',
+    tabEnText: '',
     heroBadgeClass:
-      'inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold border rounded-full bg-surface-subtle text-ink-primary border-slate-200',
+      'inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold border rounded-full bg-surface-subtle text-ink-primary border-slate-200 dark:bg-surface-darkSubtle dark:text-ink-darkPrimary dark:border-slate-700',
     cardBadgeClass:
-      'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold border truncate rounded-full bg-surface-subtle text-ink-primary border-slate-200',
-    pmBoxClass: 'rounded-xl p-4 border bg-surface-subtle border-slate-200',
-    pmDotClass: 'w-2 h-2 rounded-full bg-accent',
+      'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold border truncate rounded-full bg-surface-subtle text-ink-primary border-slate-200 dark:bg-surface-darkSubtle dark:text-ink-darkPrimary dark:border-slate-700',
+    activeTabClass:
+      'cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border bg-slate-900 bg-ink-primary text-white border-slate-900 border-ink-primary dark:bg-slate-50 dark:bg-ink-darkPrimary dark:text-slate-950 dark:text-canvas-dark dark:border-slate-50 dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums',
+    pmBoxClass:
+      'rounded-xl p-4 border bg-surface-subtle dark:bg-surface-darkSubtle border-slate-200 dark:border-slate-700',
+    pmDotClass: 'w-2 h-2 rounded-full bg-accent dark:bg-accent-dark',
     pmLabelClass: 'text-xs font-bold text-accent dark:text-accent-dark'
   };
+
+  function inferCategoryFromId(idStr) {
+    if (typeof idStr !== 'string') return '';
+    const match =
+      idStr.match(/^\d{4}-\d{2}-\d{2}-(golf|ai|macro|sci)-\d+/i) ||
+      idStr.match(/(?:^|[-_])(golf|ai|macro|sci)(?:[-_]|$)/i);
+    if (!match) return '';
+    const prefix = match[1].toLowerCase();
+    return CATEGORY_BY_PREFIX[prefix] || '';
+  }
+
+  function resolveArticleCategory(article) {
+    if (!article || typeof article !== 'object') return '';
+    const rawCat = typeof article.category === 'string' ? article.category.trim() : '';
+    if (rawCat) return rawCat;
+    return inferCategoryFromId(article.id);
+  }
+
+  function getCategoryMeta(categoryName) {
+    const safeName = typeof categoryName === 'string' ? categoryName.trim() : '';
+    if (safeName && Object.prototype.hasOwnProperty.call(CATEGORY_META, safeName)) {
+      return CATEGORY_META[safeName];
+    }
+    const fallbackLabel = safeName || (state.lang === 'en' ? 'Other' : '기타');
+    return {
+      ...DEFAULT_CAT_META,
+      label: fallbackLabel,
+      koLabel: fallbackLabel,
+      enLabel: fallbackLabel,
+      tabKoText: `${DEFAULT_CAT_META.symbol} ${fallbackLabel}`,
+      tabEnText: `${DEFAULT_CAT_META.symbol} ${fallbackLabel}`
+    };
+  }
+
+  function formatCategoryBadgeText(catMeta) {
+    if (!catMeta) return '';
+    if (
+      state.lang === 'ko' &&
+      catMeta.koLabel &&
+      catMeta.koLabel !== catMeta.label
+    ) {
+      return `${catMeta.symbol} ${catMeta.label} · ${catMeta.koLabel}`;
+    }
+    return `${catMeta.symbol} ${catMeta.label}`;
+  }
 
   const state = {
     articles: [],
@@ -312,9 +434,12 @@
         ? parsedMs
         : Date.now() - (indexFallback || 0);
 
+    const resolvedCategory =
+      resolveArticleCategory(baseArticle) || resolveArticleCategory(raw);
+
     const cleanArticle = {
       id,
-      category: baseArticle.category || '',
+      category: resolvedCategory,
       importance_score: Number(baseArticle.importance_score) || 0,
       published_date: baseArticle.published_date || '',
       source_name: baseArticle.source_name || '',
@@ -513,6 +638,14 @@
     setTextById('exec-summary-heading', strings.execSummaryHeading);
     setTextById('exec-summary-badge', strings.execSummaryBadge);
     setTextById('cat-legend-label', strings.catLegendLabel);
+    setTextById('legend-golf', strings.legendGolf);
+    setTextById('legend-ai', strings.legendAi);
+    setTextById('legend-macro', strings.legendMacro);
+    setTextById('legend-sci', strings.legendSci);
+    setTextById('metric-title-golf', strings.metricTitleGolf);
+    setTextById('metric-title-ai', strings.metricTitleAi);
+    setTextById('metric-title-macro', strings.metricTitleMacro);
+    setTextById('metric-title-sci', strings.metricTitleSci);
     setTextById('metrics-heading', strings.metricsHeading);
     setTextById('stat-total-label', strings.statTotalLabel);
     setTextById('stat-avg-label', strings.statAvgLabel);
@@ -632,6 +765,7 @@
       'Golf & Sports Tech',
       'AI Agents & LLM',
       'US-Korea Macro Economy',
+      'Science & Research',
       'scrap'
     ];
     const savedCat = getStorage(STORAGE_KEYS.CATEGORY, 'all');
@@ -652,9 +786,18 @@
     const strings = t();
     const counts = {
       all: state.articles.length,
-      'Golf & Sports Tech': state.articles.filter((a) => a.category === 'Golf & Sports Tech').length,
-      'AI Agents & LLM': state.articles.filter((a) => a.category === 'AI Agents & LLM').length,
-      'US-Korea Macro Economy': state.articles.filter((a) => a.category === 'US-Korea Macro Economy').length,
+      'Golf & Sports Tech': state.articles.filter(
+        (a) => resolveArticleCategory(a) === 'Golf & Sports Tech'
+      ).length,
+      'AI Agents & LLM': state.articles.filter(
+        (a) => resolveArticleCategory(a) === 'AI Agents & LLM'
+      ).length,
+      'US-Korea Macro Economy': state.articles.filter(
+        (a) => resolveArticleCategory(a) === 'US-Korea Macro Economy'
+      ).length,
+      'Science & Research': state.articles.filter(
+        (a) => resolveArticleCategory(a) === 'Science & Research'
+      ).length,
       scrap: state.scraps.length
     };
 
@@ -663,15 +806,18 @@
       const active = cat === state.category;
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
 
-      const meta = CATEGORY_META[cat];
-      const countSuffix = state.articles.length > 0 ? ` ${counts[cat] ?? 0}` : '';
+      const hasKnownMeta = Object.prototype.hasOwnProperty.call(CATEGORY_META, cat);
+      const meta = hasKnownMeta ? CATEGORY_META[cat] : null;
+      const countSuffix =
+        state.hasLoadedData || state.articles.length > 0 ? ` ${counts[cat] ?? 0}` : '';
 
       if (cat === 'all') {
         tab.textContent = `${strings.tabAll}${countSuffix}`;
       } else if (cat === 'scrap') {
         tab.textContent = `${strings.tabScrap} ${counts.scrap}`;
       } else if (meta) {
-        tab.textContent = `${meta.symbol} ${meta.label}${countSuffix}`;
+        const baseText = state.lang === 'en' ? meta.tabEnText : meta.tabKoText;
+        tab.textContent = `${baseText}${countSuffix}`;
       }
 
       if (active) {
@@ -681,6 +827,8 @@
           tab.className = TAB_CLASSES.activeScrap;
         } else if (meta) {
           tab.className = meta.activeTabClass;
+        } else {
+          tab.className = DEFAULT_CAT_META.activeTabClass;
         }
       } else {
         tab.className = TAB_CLASSES.inactive;
@@ -703,9 +851,10 @@
   function renderMetrics(articles) {
     const list = Array.isArray(articles) ? articles : [];
     const total = list.length;
-    const golf = list.filter((a) => a.category === 'Golf & Sports Tech').length;
-    const ai = list.filter((a) => a.category === 'AI Agents & LLM').length;
-    const macro = list.filter((a) => a.category === 'US-Korea Macro Economy').length;
+    const golf = list.filter((a) => resolveArticleCategory(a) === 'Golf & Sports Tech').length;
+    const ai = list.filter((a) => resolveArticleCategory(a) === 'AI Agents & LLM').length;
+    const macro = list.filter((a) => resolveArticleCategory(a) === 'US-Korea Macro Economy').length;
+    const sci = list.filter((a) => resolveArticleCategory(a) === 'Science & Research').length;
     const highPriority = list.filter((a) => (Number(a.importance_score) || 0) >= 9).length;
     const avg =
       total > 0
@@ -718,6 +867,7 @@
     const elGolf = document.getElementById('stat-golf');
     const elAi = document.getElementById('stat-ai');
     const elMacro = document.getElementById('stat-macro');
+    const elSci = document.getElementById('stat-sci');
     const elAvg = document.getElementById('stat-avg');
     const elHigh = document.getElementById('stat-high-priority');
 
@@ -726,6 +876,7 @@
       if (elGolf) elGolf.textContent = '-';
       if (elAi) elAi.textContent = '-';
       if (elMacro) elMacro.textContent = '-';
+      if (elSci) elSci.textContent = '-';
       if (elAvg) elAvg.textContent = '-';
       if (elHigh) {
         elHigh.textContent = state.lang === 'en' ? 'Top (9+) -' : '핵심(9점+) -건';
@@ -738,6 +889,7 @@
       if (elGolf) elGolf.textContent = `${golf}`;
       if (elAi) elAi.textContent = `${ai}`;
       if (elMacro) elMacro.textContent = `${macro}`;
+      if (elSci) elSci.textContent = `${sci}`;
       if (elAvg) elAvg.textContent = `${avg} / 10`;
       if (elHigh) elHigh.textContent = `Top (9+) ${highPriority}`;
     } else {
@@ -745,17 +897,26 @@
       if (elGolf) elGolf.textContent = `${golf}건`;
       if (elAi) elAi.textContent = `${ai}건`;
       if (elMacro) elMacro.textContent = `${macro}건`;
+      if (elSci) elSci.textContent = `${sci}건`;
       if (elAvg) elAvg.textContent = `${avg} / 10`;
       if (elHigh) elHigh.textContent = `핵심(9점+) ${highPriority}건`;
     }
 
+    const barGolf = document.getElementById('bar-golf');
+    const barAi = document.getElementById('bar-ai');
+    const barMacro = document.getElementById('bar-macro');
+    const barSci = document.getElementById('bar-sci');
+
     if (total > 0) {
-      const barGolf = document.getElementById('bar-golf');
-      const barAi = document.getElementById('bar-ai');
-      const barMacro = document.getElementById('bar-macro');
       if (barGolf) barGolf.style.width = `${(golf / total) * 100}%`;
       if (barAi) barAi.style.width = `${(ai / total) * 100}%`;
       if (barMacro) barMacro.style.width = `${(macro / total) * 100}%`;
+      if (barSci) barSci.style.width = `${(sci / total) * 100}%`;
+    } else {
+      if (barGolf) barGolf.style.width = '25%';
+      if (barAi) barAi.style.width = '25%';
+      if (barMacro) barMacro.style.width = '25%';
+      if (barSci) barSci.style.width = '25%';
     }
   }
 
@@ -915,13 +1076,11 @@
     return footerWrap;
   }
 
-  // SPEC.md 3.4 & 5.3 & 5.4: 기사 카드 생성 (모든 텍스트는 textContent로 바인딩)
+  // SPEC.md 3.4 & 5.3 & 5.4 & 5.6: 기사 카드 생성 (모든 텍스트는 textContent로 바인딩)
   function createArticleCard(article, isTopStory) {
     const strings = t();
-    const catMeta = CATEGORY_META[article.category] || {
-      ...DEFAULT_CAT_META,
-      label: String(article.category || '')
-    };
+    const categoryName = resolveArticleCategory(article);
+    const catMeta = getCategoryMeta(categoryName);
 
     const score = Number(article.importance_score) || 0;
     const displayTitle = pickArticleField(
@@ -949,7 +1108,7 @@
 
       const catBadge = document.createElement('span');
       catBadge.className = catMeta.heroBadgeClass;
-      catBadge.textContent = `${catMeta.symbol} ${catMeta.label}`;
+      catBadge.textContent = formatCategoryBadgeText(catMeta);
 
       leftMeta.appendChild(catBadge);
 
@@ -1040,7 +1199,7 @@
 
     const catLabel = document.createElement('span');
     catLabel.className = catMeta.cardBadgeClass;
-    catLabel.textContent = `${catMeta.symbol} ${catMeta.label}`;
+    catLabel.textContent = formatCategoryBadgeText(catMeta);
 
     const rightControls = document.createElement('div');
     rightControls.className = 'inline-flex items-center gap-1.5';
@@ -1131,11 +1290,16 @@
       statusText.textContent = `Active filters (${parts.join(' · ')}) — Showing ${filteredCount} ${noun}`;
     } else {
       if (hasCategory) {
-        parts.push(
-          state.category === 'scrap'
-            ? '보기: 스크랩'
-            : `카테고리: ${state.category}`
-        );
+        if (state.category === 'scrap') {
+          parts.push('보기: 스크랩');
+        } else {
+          const catMeta = getCategoryMeta(state.category);
+          const koSuffix =
+            catMeta.koLabel && catMeta.koLabel !== state.category
+              ? ` (${catMeta.koLabel})`
+              : '';
+          parts.push(`카테고리: ${state.category}${koSuffix}`);
+        }
       }
       if (hasSearch) {
         parts.push(`검색어: "${state.search.trim()}"`);
@@ -1176,7 +1340,10 @@
 
   function matchesSearch(article, queryLower) {
     if (!queryLower) return true;
+    const categoryName = resolveArticleCategory(article);
+    const catMeta = getCategoryMeta(categoryName);
     const fields = [
+      article.id,
       article.korean_title,
       article.english_title,
       article.original_title,
@@ -1185,7 +1352,11 @@
       article.pm_insights,
       article.pm_insights_en,
       article.source_name,
-      article.category
+      categoryName,
+      catMeta.label,
+      catMeta.koLabel,
+      catMeta.enLabel,
+      catMeta.idPrefix
     ];
     const inText = fields.some(
       (f) => typeof f === 'string' && f.toLowerCase().includes(queryLower)
@@ -1268,7 +1439,8 @@
     }
 
     const filtered = state.articles.filter((article) => {
-      if (state.category !== 'all' && article.category !== state.category) {
+      const catName = resolveArticleCategory(article);
+      if (state.category !== 'all' && catName !== state.category) {
         return false;
       }
       return matchesSearch(article, q);
@@ -1290,10 +1462,16 @@
     // 최고 중요도 기사 1건 선정 (SPEC.md 3.3)
     let topIndex = 0;
     let highestScore = -1;
+    let topDate = '';
     filtered.forEach((article, idx) => {
       const score = Number(article.importance_score) || 0;
-      if (score > highestScore) {
+      const pubDate = String(article.published_date || '');
+      if (
+        score > highestScore ||
+        (score === highestScore && state.sort === 'latest' && pubDate.localeCompare(topDate) > 0)
+      ) {
         highestScore = score;
+        topDate = pubDate;
         topIndex = idx;
       }
     });
@@ -1304,13 +1482,13 @@
     // 정렬 (중요도순 / 최신순)
     restArticles.sort((a, b) => {
       if (state.sort === 'latest') {
-        const byDate = String(b.published_date).localeCompare(String(a.published_date));
+        const byDate = String(b.published_date || '').localeCompare(String(a.published_date || ''));
         if (byDate !== 0) return byDate;
         return (Number(b.importance_score) || 0) - (Number(a.importance_score) || 0);
       }
       const byScore = (Number(b.importance_score) || 0) - (Number(a.importance_score) || 0);
       if (byScore !== 0) return byScore;
-      return String(b.published_date).localeCompare(String(a.published_date));
+      return String(b.published_date || '').localeCompare(String(a.published_date || ''));
     });
 
     if (topStoryContainer && topStorySection) {

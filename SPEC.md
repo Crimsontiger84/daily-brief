@@ -28,7 +28,7 @@
 | `US-Korea Macro Economy` | 연준·한국은행 금리, CPI·고용·GDP, 원/달러 환율, 수출입·반도체 경기, 관세·통상 정책, 증시 흐름 | Financial Times, Bloomberg, Reuters, WSJ, 한국은행, 연합뉴스, 한국경제 |
 
 ### 2.2 선정 기준
-- 기사 수: 총 8~12개, 카테고리당 최소 2개.
+- 기사 수: 5.6 참고 (총 10~14개, 골프 최소 4개, 나머지 최소 2개).
 - 최신성: 최근 48시간 이내 발행 기사 우선. 부족하면 최대 7일까지 허용.
 - 반드시 웹 검색으로 확인한 실제 기사만 쓴다. `source_url`은 직접 열어 본 원문 주소여야 하며, 추측·조합한 URL이나 기억에 의존한 내용은 금지한다.
 - 같은 사건을 다룬 기사는 가장 원출처에 가까운 하나만 싣는다.
@@ -39,7 +39,7 @@
 |---|---|
 | `updated_at` | 생성 시각, ISO 8601 KST. 예: `2026-11-13T07:00:00+09:00` |
 | `executive_summary` | 한국어 3~5문장. 세 분야를 관통하는 오늘의 흐름 |
-| `id` | `YYYY-MM-DD-<golf|ai|macro>-NN`, 중복 금지 |
+| `id` | `YYYY-MM-DD-<golf|ai|macro|sci>-NN`, 중복 금지 |
 | `importance_score` | 1~10 정수. 9~10 사업 판단에 즉시 영향 / 6~8 주목 / 1~5 참고 |
 | `published_date` | 원문 발행일 `YYYY-MM-DD` |
 | `original_title` | 원문 제목 그대로 |
@@ -100,6 +100,7 @@
 - 출처는 미국·영국 매체 위주로 한다(전체 기사의 80% 이상). 예: Reuters, Bloomberg, Financial Times, WSJ, BBC, The Guardian, The Verge, TechCrunch, Golf Digest, GolfWRX, MyGolfSpy, Sports Business Journal.
 - 한국 매체는 한국 고유 사안(한국은행 결정, 한국 수출 통계 등)에 한해 최대 2건까지만 쓴다.
 - `US-Korea Macro Economy`도 미국·영국 매체의 보도를 우선 인용한다.
+- `source_url`은 직접 열어 확인한 기사 페이지 주소를 그대로 복사한다. 제목으로 주소를 추측해 만들지 않고, 검색 리다이렉트 주소(`vertexaisearch`, `grounding-api-redirect`)도 쓰지 않는다. 검증 스크립트가 모든 링크에 실제로 접속해 보며, 404 등 열리지 않으면 배포가 막힌다.
 
 ### 5.2 영어 필드 (schema.json 에 필수로 추가됨)
 | 필드 | 규칙 |
@@ -127,3 +128,27 @@
 ### 5.5 고정 요소 금지
 - `data/news.json`은 `fetch('./data/news.json?t=' + Date.now(), { cache: 'no-store' })`처럼 캐시를 무시하고 불러온다. 그래야 매일 갱신된 데이터가 바로 보인다.
 - 필터 바와 헤더는 스크롤하면 함께 올라가야 한다. 화면 상단에 고정(sticky/fixed)하지 않는다. 기사 읽기를 가린다.
+
+### 5.6 구성 변경 (2026-11-19) — 앞의 기사 수·카테고리 규칙보다 우선
+- 카테고리는 4개: `Golf & Sports Tech`, `AI Agents & LLM`, `US-Korea Macro Economy`, `Science & Research`. `id` 접두어는 `golf`, `ai`, `macro`, `sci`.
+- 기사 수는 총 10~14개. `Golf & Sports Tech` 최소 4개, 나머지 카테고리는 최소 2개.
+- 같은 매체(`source_name`)는 하루 최대 2건. 여러 매체에서 고루 고른다.
+
+#### 골프는 사업 소식을 우선한다
+- 골프 기사 중 절반 이상은 사업 소식으로 채운다: 실내·스크린골프 매장과 프랜차이즈, 시뮬레이터·런치 모니터 회사의 실적·투자·M&A·파트너십, 골프장·연습장(드라이빙 레인지) 운영, 엔터테인먼트 골프(Topgolf, Drive Shack, Five Iron Golf, Puttshack), 테크 리그(TGL, WTGL)의 사업 성과, 골프 인구·참여 통계, 장비 업계 실적(Acushnet, Topgolf Callaway Brands 등).
+- 신제품 소개만 있는 기사보다 시장·경쟁·돈의 흐름을 보여 주는 기사를 우선한다.
+
+#### Science & Research
+- 그날 화제가 된 과학 소식: 우주·천문, 물리·화학, 생명과학·의학 연구, 기후·에너지, 신소재·양자컴퓨팅, 스포츠 과학(운동역학·센서·부상 연구).
+- 동료 평가를 거친 연구나 공식 발표를 다룬 기사를 우선하고, 가능하면 연구 기관이나 학술지가 무엇인지 요약에 밝힌다.
+- `pm_insights`에는 이 연구가 제품·기술·사업에 줄 수 있는 시사점을 적는다. 억지로 골프와 연결하지 않아도 된다.
+
+#### 매체 목록 (확장) — 미국·영국 우선, 목록에 없는 신뢰할 만한 매체도 사용 가능
+| 분야 | 매체 |
+|---|---|
+| 골프 사업 | Golf Inc., Golf Business News, Golf Business Monitor, National Club Golfer, Golf Monthly, Today's Golfer, Golf Digest, Golf.com, GolfWRX, MyGolfSpy, Sports Business Journal, Sportico, Front Office Sports, The Athletic, Bloomberg, Reuters, 각 사 실적 발표·보도자료 |
+| AI | 각 사 공식 블로그, TechCrunch, The Verge, Ars Technica, Wired, MIT Technology Review, Axios, VentureBeat, The Information, Platformer, Reuters, Bloomberg |
+| 거시경제 | Reuters, AP, Bloomberg, Financial Times, WSJ, The Economist, CNBC, BBC Business, The Guardian, Axios Markets, NYT DealBook, 미 연준·BLS·IMF·한국은행 공식 발표 |
+| 과학 | Nature, Science, New Scientist, Scientific American, Quanta Magazine, Ars Technica Science, BBC Science, The Guardian Science, NASA, ESA, Phys.org, ScienceDaily, STAT News, Nature News |
+
+- 유료 구독 벽 때문에 본문을 읽을 수 없는 기사는 쓰지 않는다. 같은 사건을 다룬 무료 매체나 공식 발표를 대신 쓴다.

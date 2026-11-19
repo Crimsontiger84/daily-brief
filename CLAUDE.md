@@ -3,7 +3,7 @@
 ## 프로젝트
 - 루트: `C:\Users\a\Documents\Tech` (Windows 11, PowerShell)
 - 목적: 매일 아침 갱신되는 개인 전문 뉴스 대시보드를 GitHub Pages로 배포
-- 분야: Golf & Sports Tech / AI Agents & LLM / US-Korea Macro Economy
+- 분야: Golf & Sports Tech(사업 비중 우선) / AI Agents & LLM / US-Korea Macro Economy / Science & Research
 
 ## 역할 분담
 | 담당 | 책임 | 소유 파일 |
@@ -26,9 +26,9 @@
 
 ## 작업 흐름
 1. `scripts\run_daily_pipeline.ps1` → `agy`가 `data\news.json` 갱신
-2. `scripts\validate_and_deploy.py` → `schema.json` 기준 검증
-3. 통과 시 `git add .` → `git commit -m "chore: daily market briefing update"` → `git push origin main`
-4. 실패 시 배포하지 않고 오류 목록을 Antigravity에 전달해 재생성
+2. `scripts\validate_and_deploy.py` → `schema.json` 기준 검증 + 모든 `source_url` 실제 접속 검사 (검색 리다이렉트는 최종 URL로 자동 변환, 404 등은 FAIL, 403 등 봇 차단은 경고)
+3. 실패 시 파이프라인이 오류 목록을 `agy`에 넘겨 수정시키고 다시 검증 (최대 2회). 그래도 실패하면 배포하지 않는다.
+4. 통과 시 `git add .` → `git commit -m "chore: daily market briefing update"` → `git push origin main`
 
 ## 변경 규칙
 - 스키마를 바꾸면 `schema.json`, `SPEC.md`, 검증 스크립트를 함께 맞춘다.

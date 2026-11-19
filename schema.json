@@ -23,8 +23,8 @@
     },
     "articles": {
       "type": "array",
-      "minItems": 8,
-      "maxItems": 12,
+      "minItems": 10,
+      "maxItems": 14,
       "items": {
         "type": "object",
         "required": [
@@ -48,14 +48,15 @@
           "id": {
             "type": "string",
             "minLength": 1,
-            "description": "기사 고유 ID, 파일 내 중복 금지. 예: 2026-11-13-golf-01"
+            "description": "기사 고유 ID, 파일 내 중복 금지. 예: 2026-11-13-golf-01 (접두어 golf|ai|macro|sci)"
           },
           "category": {
             "type": "string",
             "enum": [
               "Golf & Sports Tech",
               "AI Agents & LLM",
-              "US-Korea Macro Economy"
+              "US-Korea Macro Economy",
+              "Science & Research"
             ]
           },
           "importance_score": {

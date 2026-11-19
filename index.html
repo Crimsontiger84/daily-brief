@@ -6,7 +6,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PM 데일리 인텔리전스 브리핑</title>
-  <meta name="description" content="Golf &amp; Sports Tech, AI Agents &amp; LLM, US-Korea Macro Economy 일일 PM 인텔리전스 브리핑" />
+  <meta name="description" content="Golf &amp; Sports Tech, AI Agents &amp; LLM, US-Korea Macro Economy, Science &amp; Research 일일 PM 인텔리전스 브리핑" />
 
   <!-- Google Fonts: Noto Sans KR 단일 서체 (SPEC.md 3.2) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -71,7 +71,14 @@
               macroAccent: '#F59E0B',
               macroDarkText: '#FCD34D',
               macroDarkBg: '#451A03',
-              macroDarkBorder: '#D97706'
+              macroDarkBorder: '#D97706',
+              sciText: '#9F1239',
+              sciBg: '#FFF1F2',
+              sciBorder: '#FECDD3',
+              sciAccent: '#F43F5E',
+              sciDarkText: '#FDA4AF',
+              sciDarkBg: '#4C0519',
+              sciDarkBorder: '#E11D48'
             }
           },
           boxShadow: {
@@ -178,6 +185,16 @@
       color: #0B0E14;
       border-color: #F59E0B;
     }
+    .cat-tab[aria-selected="true"][data-category="Science & Research"] {
+      background-color: #9F1239;
+      color: #FFFFFF;
+      border-color: #9F1239;
+    }
+    .dark .cat-tab[aria-selected="true"][data-category="Science & Research"] {
+      background-color: #FB7185;
+      color: #0B0E14;
+      border-color: #FB7185;
+    }
     .cat-tab[aria-selected="true"][data-category="scrap"] {
       background-color: #2563EB;
       color: #FFFFFF;
@@ -232,7 +249,7 @@
             PM 인텔리전스 브리핑
           </h1>
           <p id="header-subtitle" class="text-xs sm:text-sm text-ink-muted dark:text-ink-darkMuted font-normal">
-            골프·스포츠 테크, AI 에이전트, 한·미 거시경제 핵심 동향과 제품 시사점
+            골프·스포츠 테크, AI 에이전트, 한·미 거시경제, 과학·연구 핵심 동향과 제품 시사점
           </p>
         </div>
 
@@ -273,7 +290,7 @@
       </div>
     </header>
 
-    <!-- 2 & 3. 소프트 벤토 오버뷰: Executive Summary + 브리핑 지표 요약 (SPEC.md 3.3) -->
+    <!-- 2 & 3. 소프트 벤토 오버뷰: Executive Summary + 브리핑 지표 요약 (SPEC.md 3.3 & 5.6) -->
     <section id="overview-section" aria-label="오늘의 핵심 흐름 및 브리핑 지표" class="mb-8">
       <div id="bento-top-deck" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
 
@@ -288,7 +305,7 @@
                 </h2>
               </div>
               <span id="exec-summary-badge" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted px-2.5 py-1 rounded-full bg-surface-subtle dark:bg-surface-darkSubtle">
-                3대 분야 종합 요약
+                4대 분야 종합 요약
               </span>
             </div>
 
@@ -308,11 +325,12 @@
           </div>
 
           <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-muted dark:text-ink-darkMuted">
-            <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
               <span id="cat-legend-label" class="font-medium">카테고리 구분:</span>
-              <span class="inline-flex items-center gap-1 font-semibold text-cat-golfText dark:text-cat-golfDarkText">● Golf &amp; Sports Tech</span>
-              <span class="inline-flex items-center gap-1 font-semibold text-cat-aiText dark:text-cat-aiDarkText">◆ AI Agents &amp; LLM</span>
-              <span class="inline-flex items-center gap-1 font-semibold text-cat-macroText dark:text-cat-macroDarkText">■ US-Korea Macro</span>
+              <span id="legend-golf" class="inline-flex items-center gap-1 font-semibold text-cat-golfText dark:text-cat-golfDarkText">● Golf &amp; Sports Tech (골프·스포츠)</span>
+              <span id="legend-ai" class="inline-flex items-center gap-1 font-semibold text-cat-aiText dark:text-cat-aiDarkText">◆ AI Agents &amp; LLM (AI 에이전트)</span>
+              <span id="legend-macro" class="inline-flex items-center gap-1 font-semibold text-cat-macroText dark:text-cat-macroDarkText">■ US-Korea Macro (한·미 거시경제)</span>
+              <span id="legend-sci" class="inline-flex items-center gap-1 font-semibold text-cat-sciText dark:text-cat-sciDarkText">▲ Science &amp; Research (과학·연구)</span>
             </div>
           </div>
         </div>
@@ -342,42 +360,54 @@
               </div>
             </div>
 
-            <!-- 하단 3개 카테고리별 기사 수 (색 + 형태 기호 ● ◆ ■ 구분, 클릭 시 해당 카테고리 필터 연동) -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <!-- 하단 4개 카테고리별 기사 수 (색 + 형태 기호 ● ◆ ■ ▲ 구분, 375px 및 데스크톱 2x2 배치, 클릭 시 해당 카테고리 필터 연동) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2.5">
               <button
                 type="button"
                 data-metric-category="Golf & Sports Tech"
-                class="metric-cat-btn text-left rounded-xl p-3.5 bg-cat-golfBg/70 dark:bg-cat-golfDarkBg/35 border border-cat-golfBorder/80 dark:border-cat-golfDarkBorder/40 hover:scale-[1.01] transition-all duration-150"
+                class="metric-cat-btn min-w-0 text-left rounded-xl p-3 bg-cat-golfBg/70 dark:bg-cat-golfDarkBg/35 border border-cat-golfBorder/80 dark:border-cat-golfDarkBorder/40 hover:scale-[1.01] transition-all duration-150"
               >
-                <span class="inline-flex items-center gap-1 text-xs font-bold text-cat-golfText dark:text-cat-golfDarkText">
-                  ● Golf &amp; Sports
+                <span id="metric-title-golf" class="block text-xs font-bold text-cat-golfText dark:text-cat-golfDarkText truncate">
+                  ● 골프·스포츠 · Golf
                 </span>
-                <p class="text-[11px] text-ink-muted dark:text-ink-darkMuted truncate mt-0.5">Golf &amp; Sports Tech</p>
-                <p id="stat-golf" class="text-lg sm:text-xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1.5 tabular-nums">-</p>
+                <p id="metric-sub-golf" class="text-[11px] text-ink-muted dark:text-ink-darkMuted truncate mt-0.5">Golf &amp; Sports Tech</p>
+                <p id="stat-golf" class="text-lg sm:text-xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1 tabular-nums">-</p>
               </button>
 
               <button
                 type="button"
                 data-metric-category="AI Agents & LLM"
-                class="metric-cat-btn text-left rounded-xl p-3.5 bg-cat-aiBg/70 dark:bg-cat-aiDarkBg/40 border border-cat-aiBorder/80 dark:border-cat-aiDarkBorder/40 hover:scale-[1.01] transition-all duration-150"
+                class="metric-cat-btn min-w-0 text-left rounded-xl p-3 bg-cat-aiBg/70 dark:bg-cat-aiDarkBg/40 border border-cat-aiBorder/80 dark:border-cat-aiDarkBorder/40 hover:scale-[1.01] transition-all duration-150"
               >
-                <span class="inline-flex items-center gap-1 text-xs font-bold text-cat-aiText dark:text-cat-aiDarkText">
-                  ◆ AI Agents
+                <span id="metric-title-ai" class="block text-xs font-bold text-cat-aiText dark:text-cat-aiDarkText truncate">
+                  ◆ AI 에이전트 · AI
                 </span>
-                <p class="text-[11px] text-ink-muted dark:text-ink-darkMuted truncate mt-0.5">AI Agents &amp; LLM</p>
-                <p id="stat-ai" class="text-lg sm:text-xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1.5 tabular-nums">-</p>
+                <p id="metric-sub-ai" class="text-[11px] text-ink-muted dark:text-ink-darkMuted truncate mt-0.5">AI Agents &amp; LLM</p>
+                <p id="stat-ai" class="text-lg sm:text-xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1 tabular-nums">-</p>
               </button>
 
               <button
                 type="button"
                 data-metric-category="US-Korea Macro Economy"
-                class="metric-cat-btn text-left rounded-xl p-3.5 bg-cat-macroBg/80 dark:bg-cat-macroDarkBg/35 border border-cat-macroBorder/80 dark:border-cat-macroDarkBorder/40 hover:scale-[1.01] transition-all duration-150"
+                class="metric-cat-btn min-w-0 text-left rounded-xl p-3 bg-cat-macroBg/80 dark:bg-cat-macroDarkBg/35 border border-cat-macroBorder/80 dark:border-cat-macroDarkBorder/40 hover:scale-[1.01] transition-all duration-150"
               >
-                <span class="inline-flex items-center gap-1 text-xs font-bold text-cat-macroText dark:text-cat-macroDarkText">
-                  ■ US-KR Macro
+                <span id="metric-title-macro" class="block text-xs font-bold text-cat-macroText dark:text-cat-macroDarkText truncate">
+                  ■ 한·미 거시경제 · Macro
                 </span>
-                <p class="text-[11px] text-ink-muted dark:text-ink-darkMuted truncate mt-0.5">US-Korea Macro Economy</p>
-                <p id="stat-macro" class="text-lg sm:text-xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1.5 tabular-nums">-</p>
+                <p id="metric-sub-macro" class="text-[11px] text-ink-muted dark:text-ink-darkMuted truncate mt-0.5">US-Korea Macro Economy</p>
+                <p id="stat-macro" class="text-lg sm:text-xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1 tabular-nums">-</p>
+              </button>
+
+              <button
+                type="button"
+                data-metric-category="Science & Research"
+                class="metric-cat-btn min-w-0 text-left rounded-xl p-3 bg-cat-sciBg/80 dark:bg-cat-sciDarkBg/35 border border-cat-sciBorder/80 dark:border-cat-sciDarkBorder/40 hover:scale-[1.01] transition-all duration-150"
+              >
+                <span id="metric-title-sci" class="block text-xs font-bold text-cat-sciText dark:text-cat-sciDarkText truncate">
+                  ▲ 과학·연구 · Science
+                </span>
+                <p id="metric-sub-sci" class="text-[11px] text-ink-muted dark:text-ink-darkMuted truncate mt-0.5">Science &amp; Research</p>
+                <p id="stat-sci" class="text-lg sm:text-xl font-extrabold text-ink-primary dark:text-ink-darkPrimary mt-1 tabular-nums">-</p>
               </button>
             </div>
           </div>
@@ -389,9 +419,10 @@
               <span id="ratio-bar-hint" class="text-[11px]">카드를 눌러 분야별 필터링</span>
             </div>
             <div class="w-full h-2 bg-surface-subtle dark:bg-surface-darkSubtle rounded-full overflow-hidden flex gap-0.5" aria-hidden="true">
-              <div id="bar-golf" class="h-full bg-cat-golfAccent transition-all duration-300 rounded-l-full" style="width: 33.3%"></div>
-              <div id="bar-ai" class="h-full bg-cat-aiAccent transition-all duration-300" style="width: 33.3%"></div>
-              <div id="bar-macro" class="h-full bg-cat-macroAccent transition-all duration-300 rounded-r-full" style="width: 33.4%"></div>
+              <div id="bar-golf" class="h-full bg-cat-golfAccent transition-all duration-300 rounded-l-full" style="width: 25%"></div>
+              <div id="bar-ai" class="h-full bg-cat-aiAccent transition-all duration-300" style="width: 25%"></div>
+              <div id="bar-macro" class="h-full bg-cat-macroAccent transition-all duration-300" style="width: 25%"></div>
+              <div id="bar-sci" class="h-full bg-cat-sciAccent transition-all duration-300 rounded-r-full" style="width: 25%"></div>
             </div>
           </div>
         </div>
@@ -399,21 +430,21 @@
       </div>
     </section>
 
-    <!-- 4. 필터 및 검색 바: 카테고리 필터, 스크랩 보기, 정렬(중요도순·최신순), 제목·요약·태그 검색 (SPEC.md 3.3, 3.5, 5.4) -->
+    <!-- 4. 필터 및 검색 바: 카테고리 필터, 스크랩 보기, 정렬(중요도순·최신순), 제목·요약·태그 검색 (SPEC.md 3.3, 3.5, 5.4, 5.5, 5.6) -->
     <nav
       id="filter-bar"
       aria-label="기사 필터 및 검색"
-      class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200/90 dark:border-slate-800/90 shadow-soft dark:shadow-soft-dark px-4 py-3.5 mb-8 print:hidden"
+      class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200/90 dark:border-slate-800/90 shadow-soft dark:shadow-soft-dark px-3.5 sm:px-4 py-3.5 mb-8 print:hidden"
     >
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-        <!-- 카테고리 탭 (색 + 기호 ● ◆ ■ 구분 + 스크랩 보기) -->
-        <div id="category-tabs" role="tablist" aria-label="카테고리 필터" class="flex flex-wrap items-center gap-1.5">
+      <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+        <!-- 카테고리 탭 (색 + 기호 ● ◆ ■ ▲ 구분 + 스크랩 보기) -->
+        <div id="category-tabs" role="tablist" aria-label="카테고리 필터" class="flex flex-wrap items-center gap-1.5 min-w-0">
           <button
             type="button"
             role="tab"
             data-category="all"
             aria-selected="true"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-slate-900 bg-ink-primary text-white border-slate-900 border-ink-primary dark:bg-slate-50 dark:bg-ink-darkPrimary dark:text-slate-950 dark:text-canvas-dark dark:border-slate-50 dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums"
+            class="cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border bg-slate-900 bg-ink-primary text-white border-slate-900 border-ink-primary dark:bg-slate-50 dark:bg-ink-darkPrimary dark:text-slate-950 dark:text-canvas-dark dark:border-slate-50 dark:border-ink-darkPrimary shadow-sm transition-all duration-150 tabular-nums"
           >
             전체
           </button>
@@ -422,27 +453,36 @@
             role="tab"
             data-category="Golf & Sports Tech"
             aria-selected="false"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
+            class="cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
           >
-            ● Golf &amp; Sports Tech
+            ● 골프·스포츠 (Golf)
           </button>
           <button
             type="button"
             role="tab"
             data-category="AI Agents & LLM"
             aria-selected="false"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
+            class="cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
           >
-            ◆ AI Agents &amp; LLM
+            ◆ AI 에이전트 (AI)
           </button>
           <button
             type="button"
             role="tab"
             data-category="US-Korea Macro Economy"
             aria-selected="false"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
+            class="cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
           >
-            ■ US-Korea Macro Economy
+            ■ 한·미 거시경제 (Macro)
+          </button>
+          <button
+            type="button"
+            role="tab"
+            data-category="Science & Research"
+            aria-selected="false"
+            class="cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
+          >
+            ▲ 과학·연구 (Science)
           </button>
           <button
             id="scrap-tab"
@@ -450,14 +490,14 @@
             role="tab"
             data-category="scrap"
             aria-selected="false"
-            class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
+            class="cat-tab px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 bg-surface-subtle dark:bg-slate-800 dark:bg-surface-darkSubtle text-slate-700 text-ink-body dark:text-slate-300 dark:text-ink-darkBody hover:bg-slate-200 dark:hover:bg-surface-darkMuted transition-all duration-150 tabular-nums"
           >
             ★ 스크랩 0
           </button>
         </div>
 
         <!-- 정렬 및 검색 컨트롤 -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
           <div id="sort-control-wrap" class="flex items-center justify-between sm:justify-start gap-2 bg-surface-subtle/80 dark:bg-surface-darkSubtle rounded-xl px-3.5 py-2 border border-slate-200/60 dark:border-slate-700/60">
             <label id="sort-label" for="sort-select" class="text-xs font-medium text-ink-muted dark:text-ink-darkMuted shrink-0">
               정렬
