@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "command(python scripts\\validate_and_deploy.py --check)",
+      "command(python scripts/validate_and_deploy.py --check)"
+    ]
+  }
+}
